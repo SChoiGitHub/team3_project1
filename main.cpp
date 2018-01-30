@@ -6,12 +6,13 @@
 */
 #include <iostream>
 #include "io.h"
+#include "log.h"
 
 int main(int argc, char **argv)
 {
 	
-	
-	return (0);
+	std::cout << "Hello World! - Team 3 - Project 1 - EECS448\n";
 
+	return (0);
 }
 
