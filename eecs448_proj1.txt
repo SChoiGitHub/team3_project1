@@ -1,0 +1,15 @@
+CLASSES TO BE DEVELOPED:
+ - I/O -> In charge of performing any read from or write to file operation
+ - Log -> Keeps track of all error occurrences in log file, and presents error messages
+ - Interface -> Takes care of the interface shown to the user, gets inputs, presents output, etc
+ - Event -> Takes care of creating new events (in admin mode), or adding attendees to existing events (in user mode)
+
+FILES ("Database"):
+ - Events file
+	Format: ID,name,date,#_slots,slot1,#_attendees_slot1,slot2,#_attendees_slot2,...,#_attendees_total,attendee1,attendee2,...
+ 
+ - Log file
+	Format:
+timeNdate_of_occurrence,error_name,function_responsible
+
+
