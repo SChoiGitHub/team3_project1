@@ -9,7 +9,9 @@
 
 #include <iostream>
 #include <string>
-//#include "interface.h"
+#include <fstream>
+#include <time.h> 
+#include "interface.h"
 
 template <typename T>
 class Log
@@ -36,8 +38,8 @@ class Log
 
 	private:
     
-	std::string filename;		//Name of log file, since there will only be one
-	int size;			//Number of entries in file
+	std::ofstream logFile;			//Output stream for error log file
+	int size;				//Number of entries in file
 };
 
 #include "log.hpp"

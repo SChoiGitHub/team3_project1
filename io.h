@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <string>
+#include "log.h"
 
 template <typename T>
 class IO
@@ -29,7 +30,7 @@ class IO
 	*   @post Adds new event to file
 	*   @return None
 	*/
-	void addEvent(std::string filename);
+	void addEvent();
 
 	/** @pre ID is the event's unique identifier. elementName is the name of the element to retrieve
 	*   @post Retrieves some event's specific element value from the events file
@@ -42,11 +43,14 @@ class IO
 	*   @post Updates some event's specific element
 	*   @return None
 	*/
-	void updateElement(int ID, std::string elementName, T value);
+	void updateElement(int ID, std::string elementName, void* value);
 
 	private:
     
-	int size;	//Number of entries in file
+	std::ofstream f;		//File stream
+	std::string file;		//Name of file
+	Log<void> logFile;		//Log object
+	int size;			//Number of entries in file
 };
 
 #include "io.hpp"
