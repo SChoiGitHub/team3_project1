@@ -1,37 +1,38 @@
 /**
 *	@author Team 3
-*	@date 
+*	@dat
 *	@file io.hpp
 */
+#include <iostream>
+#include <fstream>
+#include <string>
 
 template <typename T>
-IO<T>::IO(std::string filename) : file(filename)
+IO<T>::IO(std::string filename)
 {
-	f.open(file, std::ios::out | std::ios::app);
+
 }
 
 template <typename T>
-IO<T>::~IO() 
+IO<T>::~IO()
 {
-	f.close();
+
 }
 
 template <typename T>
-void IO<T>::addEvent()
+void IO<T>::addEvent(std::string filename)
 {
-	
+
 }
 
 template <typename T>
 T IO<T>::retrieveElement(int ID, std::string elementName)
 {
-	
+
 }
 
 template <typename T>
-void IO<T>::updateElement(int ID, std::string elementName, void* value)
+void IO<T>::updateElement(int ID, std::string elementName, T value)
 {
-	
+
 }
-
-
