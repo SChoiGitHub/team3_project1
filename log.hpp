@@ -17,7 +17,7 @@ Log<T>::~Log()
 }
 
 template <typename T>
-void Log<T>::addEntry(std::string timeNdate, std::string error_type, std::string function_responsible)
+void Log<T>::addEntry(std::string error_type, std::string function_responsible)
 {
 	time_t rawtime;
 	time (&rawtime);

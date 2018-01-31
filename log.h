@@ -33,7 +33,7 @@ class Log
 	*   @post Keeps log file of encountered errors in the running program. Shows error message to user
 	*   @return None
 	*/
-	void addEntry(std::string timeNdate, std::string error_type, std::string function_responsible);
+	void addEntry(std::string error_type, std::string function_responsible);
 	
 
 	private:

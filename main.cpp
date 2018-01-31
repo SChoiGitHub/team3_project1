@@ -16,13 +16,13 @@ int main(int argc, char **argv)
 
 	Log<void> logFile;
 	
-	logFile.addEntry("12:04 - 01/12/2018", "Seg fault", "main");
+	logFile.addEntry("Seg fault", "main");
 	
-	logFile.addEntry("13:04 - 01/13/2018", "Some sort of fault", "main");
+	logFile.addEntry("Some sort of fault", "main");
 
 	Log<void> fr;
 
-	fr.addEntry("10:04 - 12/13/2018", "Some sort of fault", "main");
+	fr.addEntry("Some sort of fault", "main");
 
 	return (0);
 }
