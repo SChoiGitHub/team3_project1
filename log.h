@@ -13,7 +13,6 @@
 #include <time.h> 
 #include "interface.h"
 
-template <typename T>
 class Log
 {
 	public:

@@ -4,20 +4,17 @@
 *	@file log.hpp
 */
 
-template <typename T>
-Log<T>::Log()
+Log::Log()
 {
 	logFile.open("error.log", std::ios::out | std::ios::app);
 }
 
-template <typename T>
-Log<T>::~Log() 
+Log::~Log() 
 {
 	logFile.close();
 }
 
-template <typename T>
-void Log<T>::addEntry(std::string error_type, std::string function_responsible)
+void Log::addEntry(std::string error_type, std::string function_responsible)
 {
 	time_t rawtime;
 	time (&rawtime);

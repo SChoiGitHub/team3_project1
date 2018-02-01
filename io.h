@@ -11,7 +11,6 @@
 #include <string>
 #include "log.h"
 
-template <typename T>
 class IO
 {
 	public:
@@ -26,17 +25,17 @@ class IO
 	*/
 	~IO();
 
-	/** @pre the filename is an existing file
+	/** @pre None
 	*   @post Adds new event to file
 	*   @return None
 	*/
-	void addEvent();
+	static void addEntry();
 
 	/** @pre ID is the event's unique identifier. elementName is the name of the element to retrieve
 	*   @post Retrieves some event's specific element value from the events file
 	*   @return Returns event's specific element (string or int)
 	*/
-	T retrieveElement(int ID, std::string elementName);
+	std::string retrieveElement(int ID, std::string elementName);
 
 	/** @pre ID is the event's unique identifier. elementName is the name of the element to update, value is 
 	*	 the element's new value
@@ -49,7 +48,7 @@ class IO
     
 	std::ofstream f;		//File stream
 	std::string file;		//Name of file
-	Log<void> logFile;		//Log object
+	Log logFile;			//Log object
 	int size;			//Number of entries in file
 };
 

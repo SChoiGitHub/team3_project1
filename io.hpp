@@ -4,32 +4,30 @@
 *	@file io.hpp
 */
 
-template <typename T>
-IO<T>::IO(std::string filename) : file(filename)
+IO::IO(std::string filename) : file(filename)
 {
 	f.open(file, std::ios::out | std::ios::app);
 }
 
-template <typename T>
-IO<T>::~IO() 
+IO::~IO() 
 {
 	f.close();
 }
 
-template <typename T>
-void IO<T>::addEvent()
+
+void IO::addEntry()
 {
 	
 }
 
-template <typename T>
-T IO<T>::retrieveElement(int ID, std::string elementName)
+
+std::string IO::retrieveElement(int ID, std::string elementName)
 {
-	
+	return NULL;
 }
 
-template <typename T>
-void IO<T>::updateElement(int ID, std::string elementName, void* value)
+
+void IO::updateElement(int ID, std::string elementName, void* value)
 {
 	
 }
