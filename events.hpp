@@ -33,13 +33,25 @@ void Events::setAvailability()
 
 void Events::createEvent()
 {
+	IO io("event.list");
+	
+	std::string eventName;
+	std::string date;
+	std::string timeSlot;
+	
 	std::cout << "Enter event name: ";
-	std::getline(eventName);
+	std::getline(std::cin,eventName);
 	std::cout << "Enter date: ";
-	std::getline(date);
+	std::getline(std::cin,date);
 	std::cout << "Enter time slot: ";
-	std::getline(timeSlot);
+	std::getline(std::cin,timeSlot);
 	std::cout << "Attendees";
+	
+	
+	//Add all string together with comma delimiter, line in event.list format, and then put it in io.new_line
+	//io.new_line = ...
+	
+	io.addEntry();
 }
 
 
