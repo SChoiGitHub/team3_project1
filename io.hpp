@@ -25,7 +25,7 @@ IO::~IO()
 
 void IO::addEntry()
 {
-	
+	//This adds lines to file events.list	
 }
 
 
