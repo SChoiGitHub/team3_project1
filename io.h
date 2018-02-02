@@ -9,16 +9,20 @@
 
 #include <iostream>
 #include <string>
+#include <sstream>
+#include <fstream>
 #include "log.h"
 
 class IO
 {
 	public:
 
+	bool timeFormat = false;
+
 	/** @pre None
 	*   @post A file is opened with given name. It is created if it does not exist yet
 	*/
-	IO(std::string filename);
+	IO(const std::string fileName);
 
 	/** @pre None
 	*   @post A file is closed with given name
@@ -44,12 +48,25 @@ class IO
 	*/
 	void updateElement(int ID, std::string elementName, void* value);
 
+	/** @pre None
+	*   @post Displays all elements in file, one at a time
+	*   @return None
+	*/
+	void displayEntries();
+
 	private:
     
-	std::ofstream f;		//File stream
-	std::string file;		//Name of file
+	/** @pre slot has the time value that needs to be formatted
+	*   @post Formats time between 12-hour format and 24-hour format
+	*   @return String with slot in new time format
+	*/
+	std::string timeFormatter(std::string slot);
+
+	int size;		//Number of entries in file
+	std::fstream file;		//File stream
+	std::string fileName_;		//Name of file
 	Log logFile;			//Log object
-	int size;			//Number of entries in file
+
 };
 
 #include "io.hpp"

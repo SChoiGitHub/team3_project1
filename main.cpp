@@ -5,9 +5,9 @@
 *	@brief driver for project
 */
 #include <iostream>
+#include "interface.h"
 #include "io.h"
 #include "log.h"
-#include "interface.h"
 #include "events.h"
 
 int main(int argc, char **argv)
@@ -23,10 +23,13 @@ int main(int argc, char **argv)
 	menu.Loop();
 
 	
-	
 	IO io("event.list");
+	
+	//std::cout << "Number of lines in events file (number of events): " << io.size << std::endl;
 
-	Log logFile;
+	std::cout << io.retrieveElement(1,"date") << std::endl;
+
+	/*Log logFile;
 	
 	logFile.addEntry("Seg fault", "main");
 	
@@ -35,7 +38,7 @@ int main(int argc, char **argv)
 	Log fr;
 
 	fr.addEntry("Some sort of fault", "main");
-
+*/
 	return (0);
 }
 

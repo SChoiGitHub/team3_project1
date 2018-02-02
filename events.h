@@ -23,6 +23,20 @@ class Events
 	*   @return None
 	*/
 	static void adminMode();
+
+	private:
+	
+	/** @pre None
+	*   @post Sets user's availability for a specific event
+	*   @return None
+	*/
+	static void setAvailability();
+
+	/** @pre None
+	*   @post Creates new event specified by user
+	*   @return None
+	*/
+	static void createEvent();
 };
 
 

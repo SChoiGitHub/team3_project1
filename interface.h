@@ -5,7 +5,8 @@
 #include <vector>
 #include <utility>
 #include <string>
-
+#include "log.h"
+#include "io.h"
 
 class Interface
 {
@@ -82,7 +83,8 @@ class Interface
 	
 
 	private:
-    
+    	
+		Log logFile;
 	
 };
 

@@ -56,7 +56,7 @@ void Interface::Menu::Loop()
 		Draw();
 
 		//Get user selection
-		auto key = getInput("Menu -> ");
+		auto key = getInput("\nMenu -> ");
 
 		unsigned int pos = atoi(key.c_str());
 
@@ -99,14 +99,15 @@ void Interface::Menu::Draw()
 
 	for (size_t i = 0; i < option_list.size(); ++i)
 	{
-		std::cout << "(Press " << i+1 << ")    ";
-		std::cout << option_list[i].first << std::endl;
+		std::cout << "\n(Press " << i+1 << ")    ";
+		std::cout << option_list[i].first;
 	}
 
 }
 
 void Interface::Menu::Header()
 {
+
 	std::cout << "***************************************************************************\n";
 	std::cout << " ______               _      _____      _              _       _           \n"
 		     "|  ____|             | |    / ____|    | |            | |     | |          \n"
@@ -116,15 +117,37 @@ void Interface::Menu::Header()
 		     "|______\\_/ \\___|_| |_|\\__| |_____/ \\___|_| |_|\\___|\\__,_|\\__,_|_|\\___|_|" << std::endl;
 	
 	std::cout << "\n***************************************************************************\n";
-	std::cout << "Developed by: Team 3 \t EECS 443 \t Project 1\n";
-	std::cout << "***************************************************************************\n";
+	std::cout << "   Developed by: Team 3 \tEECS 443 \tProject 1 \tKU - 2018\n";
+	std::cout << "***************************************************************************\n\n";
 
 	/*ADD SECTION PRINTING ALL EVENT LIST FILE ENTRIES -> USE IO*/
+	IO io("event.list");
+	io.displayEntries();
+
+	std::cout << "***************************************************************************";
 }
 
 void Interface::toggleTimeFormat()
 {
+	IO io("event.list");
 
+	if( io.timeFormat == false )
+		io.timeFormat = true;
+	else
+		io.timeFormat = false;
+	
+/*
+	IO io("event.list");
+
+	Menu menu({
+		{"Add Event", io.addEntry},
+		{"Toggle Time Format 12/24", toggleTimeFormat},
+		{"Go back", nullptr}
+	});
+
+	menu.Draw();
+
+	std::cout << "Hello\n";*/
 }
 
 
