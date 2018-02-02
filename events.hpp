@@ -33,7 +33,13 @@ void Events::setAvailability()
 
 void Events::createEvent()
 {
-	
+	std::cout << "Enter event name: ";
+	std::getline(eventName);
+	std::cout << "Enter date: ";
+	std::getline(date);
+	std::cout << "Enter time slot: ";
+	std::getline(timeSlot);
+	std::cout << "Attendees";
 }
 
 
