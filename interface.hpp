@@ -75,20 +75,16 @@ void Interface::Menu::Loop()
 			{
 				func_ptr();
 			}
-
 		}
 		else
 		{
 			clearScreen();
-
 			Header();
 
 			std::cout << "This option is not valid." << std::endl;
-
 			Wait();
 		}
 	}
-	
 }
 
 void Interface::Menu::Draw()
@@ -98,10 +94,7 @@ void Interface::Menu::Draw()
 	Header();
 
 	for (size_t i = 0; i < option_list.size(); ++i)
-	{
-		std::cout << "\n(Press " << i+1 << ")    ";
-		std::cout << option_list[i].first;
-	}
+		std::cout << "\n(Press " << i+1 << ")    " << option_list[i].first;
 
 }
 
@@ -115,7 +108,6 @@ void Interface::Menu::Header()
 		     "|  __\\ \\ / / _ \\ '_ \\| __|  \\___ \\ / __| '_ \\ / _ \\/ _` | | | | |/ _ \\ '__|\n"
 		     "| |___\\ V /  __/ | | | |_   ____) | (__| | | |  __/ (_| | |_| | |  __/ |   \n"
 		     "|______\\_/ \\___|_| |_|\\__| |_____/ \\___|_| |_|\\___|\\__,_|\\__,_|_|\\___|_|" << std::endl;
-	
 	std::cout << "\n***************************************************************************\n";
 	std::cout << "   Developed by: Team 3 \tEECS 443 \tProject 1 \tKU - 2018\n";
 	std::cout << "***************************************************************************\n\n";
@@ -135,19 +127,6 @@ void Interface::toggleTimeFormat()
 		io.timeFormat = true;
 	else
 		io.timeFormat = false;
-	
-/*
-	IO io("event.list");
-
-	Menu menu({
-		{"Add Event", io.addEntry},
-		{"Toggle Time Format 12/24", toggleTimeFormat},
-		{"Go back", nullptr}
-	});
-
-	menu.Draw();
-
-	std::cout << "Hello\n";*/
 }
 
 

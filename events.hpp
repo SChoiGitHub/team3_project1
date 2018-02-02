@@ -46,8 +46,7 @@ void Events::createEvent()
 	std::cout << "Enter time slot: ";
 	std::getline(std::cin,timeSlot);
 	std::cout << "Attendees";
-	
-	
+
 	//Add all string together with comma delimiter, line in event.list format, and then put it in io.new_line
 	//io.new_line = ...
 	

@@ -1,6 +1,6 @@
 /**
 *	@author Team 3
-*	@date 
+*	@date
 *	@file io.hpp
 */
 
@@ -25,14 +25,7 @@ IO::~IO()
 
 void IO::addEntry()
 {
-	//This adds lines to file events.list	
-
-
-
-
-
-
-
+	//This adds lines to file events.list
 }
 
 
@@ -92,10 +85,8 @@ std::string IO::retrieveElement(int ID, std::string elementName)
 		
 		//Get total number of slots
 		std::string slots = retrieveElement(ID,"total_slots");
-		
 		//Convert to int
 		int nelem = atoi(slots.c_str());
-		
 		slots = element;
 		
 		//Write slots' line
@@ -213,11 +204,3 @@ std::string IO::timeFormatter(std::string slot)
 	
 	return "hi\n";
 }
-
-
-
-
-
-
-
-
