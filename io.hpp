@@ -26,6 +26,13 @@ IO::~IO()
 void IO::addEntry()
 {
 	//This adds lines to file events.list	
+
+
+
+
+
+
+
 }
 
 
@@ -43,6 +50,7 @@ std::string IO::retrieveElement(int ID, std::string elementName)
 	file.seekg(0, std::ios::beg);
 	
 	std::string line;
+
 	std::string element;
 	
 	for( int i = 0 ; i <= ID ; ++i )
@@ -78,24 +86,32 @@ std::string IO::retrieveElement(int ID, std::string elementName)
 
 	if(elementName == "slots")
 	{
+		//Loop through line
 		for(int i = 0 ; i < 5 ; ++ i)
 			std::getline(ss, element, ',');
 		
+		//Get total number of slots
 		std::string slots = retrieveElement(ID,"total_slots");
+		
+		//Convert to int
 		int nelem = atoi(slots.c_str());
+		
 		slots = element;
 		
+		//Write slots' line
 		for(int i = 0 ; i < nelem*2 - 1 ; ++i)
 		{	
 			std::getline(ss, element, ',');
 			slots = slots + ',' + element;
 		}
 	
+		//Ready to return slots' line
 		element = slots;
 	}
 
 	if(elementName == "total_attendees")
 	{
+		
 		std::string subLine = retrieveElement(ID,"total_slots");
 		int nelem = atoi(subLine.c_str());
 
@@ -105,13 +121,16 @@ std::string IO::retrieveElement(int ID, std::string elementName)
 
 	if(elementName == "attendees")
 	{
+		//Get total number of attendees
 		std::string subLine = retrieveElement(ID,"total_slots");
+		//Convert string to int
 		int nelem = atoi(subLine.c_str());
 		
-
+		//Loop through line to position stream
 		for(int i = 0 ; i <= 4 + 2*nelem ; ++i)
 			std::getline(ss, element, ',');
 
+		//Get all attendees
 		std::getline(ss, element, '\n');
 	}	
 
@@ -134,7 +153,8 @@ void IO::displayEntries()
 	file.seekg(0, std::ios::beg);
 
 	for(int i = 0; i < size; ++i)
-	{
+	{	
+		//Display ID, name, date and number of attendees
 		std::cout << "-- Event " << i+1 << " --" << std::endl;
 		std::cout << "ID: " << retrieveElement(i,"ID") << "\n";
 		std::cout << "Name: " << retrieveElement(i,"name") << "\n";
@@ -144,7 +164,9 @@ void IO::displayEntries()
 		std::cout << "Attendees: ";
 		element = retrieveElement(i,"total_attendees");
 	
+		//Convert number of attendees to int
 		nelem = atoi(element.c_str());
+		//Get string of attendees' names
 		element = retrieveElement(i,"attendees");
 		std::string attendee[nelem];
 		std::stringstream sa(element);
@@ -152,6 +174,7 @@ void IO::displayEntries()
 		for(int j = 0 ; j < nelem ; ++j)
 			std::getline(sa,attendee[j],',');
 
+		//Print attendees' names
 		for(int j = 0 ; j < nelem ; ++j)
 		{
 			std::cout << attendee[j];
@@ -172,6 +195,7 @@ void IO::displayEntries()
 		for(int j = 0 ; j < 2*nelem ; ++j)
 			std::getline(ss,slot[j],',');
 
+		//Print slots available
 		for(int j = 0 ; j < 2*nelem ; j += 2)
 			std::cout << slot[j] << " - " << slot[j+1] << " attendee(s); ";
 		std::cout << "\n\n";
