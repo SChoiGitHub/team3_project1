@@ -25,9 +25,12 @@ IO::~IO()
 }
 
 
-void IO::addEntry()
+void IO::addEntry(std::string store)
 {
     //This adds lines to file events.list
+	size++;
+	file.seekg(0,std::ios::end);
+	file <<store;
 }
 
 

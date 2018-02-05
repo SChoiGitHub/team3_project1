@@ -33,7 +33,7 @@ public:
      *   @post Adds new event to file
      *   @return None
      */
-    static void addEntry();
+    void addEntry(std::string store);
     
     /** @pre ID is the event's unique identifier. elementName is the name of the element to retrieve
      *   @post Retrieves some event's specific element value from the events file
