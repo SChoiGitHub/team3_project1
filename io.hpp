@@ -27,9 +27,11 @@ IO::~IO()
 void IO::addEntry(std::string store)
 {
 	//This adds lines to file events.list
+
 	size++;
 	file.seekg(0,std::ios::end);
 	file << store;
+
 
 }
 
@@ -90,10 +92,15 @@ std::string IO::retrieveElement(int ID, std::string elementName)
 
 		//Get total number of slots
 		std::string slots = retrieveElement(ID,"total_slots");
+<<<<<<< HEAD
 
 		//Convert to int
 		int nelem = atoi(slots.c_str());
 
+=======
+		//Convert to int
+		int nelem = atoi(slots.c_str());
+>>>>>>> 9093dfb2aa4e5e13c940110fb85b4843b647a30e
 		slots = element;
 
 		//Write slots' line
