@@ -1,6 +1,6 @@
 /**
 *	@author Team 3
-*	@date 
+*	@date
 *	@file main.cpp
 *	@brief driver for project
 */
@@ -22,17 +22,17 @@ int main(int argc, char **argv)
 	//Enter menu loop
 	menu.Loop();
 
-	
+
 	IO io("event.list");
-	
+
 	//std::cout << "Number of lines in events file (number of events): " << io.size << std::endl;
 
-	std::cout << io.retrieveElement(1,"date") << std::endl;
+	//std::cout << io.retrieveElement(0,"date") << std::endl;
 
 	/*Log logFile;
-	
+
 	logFile.addEntry("Seg fault", "main");
-	
+
 	logFile.addEntry("Some sort of fault", "main");
 
 	Log fr;
@@ -41,4 +41,3 @@ int main(int argc, char **argv)
 */
 	return (0);
 }
-

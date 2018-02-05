@@ -1,15 +1,15 @@
 #	Author: Team 3
-#	Date: 
+#	Date:
 
 
-.PHONY: main main.o clean 
+.PHONY: main main.o clean
 
-main: main.o 
-	g++ -g -Wall -std=c++11 main.o -o main
+main: main.o
+	g++ -Wall -std=c++11 main.o -o main
 
 
 main.o: main.cpp io.h log.h events.h interface.h
-	g++ -g -Wall -std=c++11 -c main.cpp
+	g++ -Wall -std=c++11 -c main.cpp
 
 
 

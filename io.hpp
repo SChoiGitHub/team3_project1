@@ -1,6 +1,6 @@
 /**
 *	@author Team 3
-*	@date 
+*	@date
 *	@file io.hpp
 */
 
@@ -10,28 +10,26 @@ IO::IO(const std::string fileName) : fileName_(fileName)
 	std::string dummy_string;
 
 	file.open(fileName_, std::fstream::in | std::fstream::out | std::fstream::app);
-	
-	while(std::getline(file, dummy_string))
+
+
+	while(std::getline(file, dummy_string)){
         	++n_lines;
-	
+				}
 	size = n_lines;
 }
 
-IO::~IO() 
+IO::~IO()
 {
 	file.close();
 }
 
 
-void IO::addEntry()
+void IO::addEntry(std::string store)
 {
-	//This adds lines to file events.list	
-
-
-
-
-
-
+	//This adds lines to file events.list
+	size++;
+	file.seekg(0,std::ios::end);
+	file << store;
 
 }
 
@@ -48,11 +46,11 @@ std::string IO::retrieveElement(int ID, std::string elementName)
 	//Make sure stream is at beginning of file
 	file.clear();	//It is necessary to clear the eof flag
 	file.seekg(0, std::ios::beg);
-	
+
 	std::string line;
 
 	std::string element;
-	
+
 	for( int i = 0 ; i <= ID ; ++i )
 	{
 		std::getline(file,line);
@@ -89,29 +87,29 @@ std::string IO::retrieveElement(int ID, std::string elementName)
 		//Loop through line
 		for(int i = 0 ; i < 5 ; ++ i)
 			std::getline(ss, element, ',');
-		
+
 		//Get total number of slots
 		std::string slots = retrieveElement(ID,"total_slots");
-		
+
 		//Convert to int
 		int nelem = atoi(slots.c_str());
-		
+
 		slots = element;
-		
+
 		//Write slots' line
 		for(int i = 0 ; i < nelem*2 - 1 ; ++i)
-		{	
+		{
 			std::getline(ss, element, ',');
 			slots = slots + ',' + element;
 		}
-	
+
 		//Ready to return slots' line
 		element = slots;
 	}
 
 	if(elementName == "total_attendees")
 	{
-		
+
 		std::string subLine = retrieveElement(ID,"total_slots");
 		int nelem = atoi(subLine.c_str());
 
@@ -125,14 +123,14 @@ std::string IO::retrieveElement(int ID, std::string elementName)
 		std::string subLine = retrieveElement(ID,"total_slots");
 		//Convert string to int
 		int nelem = atoi(subLine.c_str());
-		
+
 		//Loop through line to position stream
 		for(int i = 0 ; i <= 4 + 2*nelem ; ++i)
 			std::getline(ss, element, ',');
 
 		//Get all attendees
 		std::getline(ss, element, '\n');
-	}	
+	}
 
 	return element;
 }
@@ -140,7 +138,7 @@ std::string IO::retrieveElement(int ID, std::string elementName)
 
 void IO::updateElement(int ID, std::string elementName, void* value)
 {
-	
+
 }
 
 void IO::displayEntries()
@@ -150,10 +148,10 @@ void IO::displayEntries()
 
 	//Make sure stream is at beginning of file
 	file.clear();	//It is necessary to clear the eof flag
-	file.seekg(0, std::ios::beg);
+	file.seekg(0, std::fstream::beg);
 
 	for(int i = 0; i < size; ++i)
-	{	
+	{
 		//Display ID, name, date and number of attendees
 		std::cout << "-- Event " << i+1 << " --" << std::endl;
 		std::cout << "ID: " << retrieveElement(i,"ID") << "\n";
@@ -163,14 +161,14 @@ void IO::displayEntries()
 
 		std::cout << "Attendees: ";
 		element = retrieveElement(i,"total_attendees");
-	
+
 		//Convert number of attendees to int
 		nelem = atoi(element.c_str());
 		//Get string of attendees' names
 		element = retrieveElement(i,"attendees");
 		std::string attendee[nelem];
 		std::stringstream sa(element);
-		
+
 		for(int j = 0 ; j < nelem ; ++j)
 			std::getline(sa,attendee[j],',');
 
@@ -181,8 +179,8 @@ void IO::displayEntries()
 			if( j == 0)
 				std::cout << " (creator)";
 			std::cout << "; ";
-			
-		}	
+
+		}
 		std::cout << "\n";
 
 		std::cout << "Slots Available: ";
@@ -199,7 +197,7 @@ void IO::displayEntries()
 		for(int j = 0 ; j < 2*nelem ; j += 2)
 			std::cout << slot[j] << " - " << slot[j+1] << " attendee(s); ";
 		std::cout << "\n\n";
-		
+
 	}
 }
 
@@ -210,14 +208,6 @@ std::string IO::timeFormatter(std::string slot)
 	{
 		std::cout << "Hello\n";
 	}
-	
+
 	return "hi\n";
 }
-
-
-
-
-
-
-
-

@@ -1,6 +1,6 @@
 /**
 *	@author	Team 3
-*	@date 
+*	@date
 *	@brief A header file for Input/Output (IO) class
 */
 
@@ -33,7 +33,7 @@ class IO
 	*   @post Adds new event to file
 	*   @return None
 	*/
-	static void addEntry();
+	void addEntry(std::string store);
 
 	/** @pre ID is the event's unique identifier. elementName is the name of the element to retrieve
 	*   @post Retrieves some event's specific element value from the events file
@@ -41,7 +41,7 @@ class IO
 	*/
 	std::string retrieveElement(int ID, std::string elementName);
 
-	/** @pre ID is the event's unique identifier. elementName is the name of the element to update, value is 
+	/** @pre ID is the event's unique identifier. elementName is the name of the element to update, value is
 	*	 the element's new value
 	*   @post Updates some event's specific element
 	*   @return None
@@ -55,7 +55,7 @@ class IO
 	void displayEntries();
 
 	private:
-    
+
 	/** @pre slot has the time value that needs to be formatted
 	*   @post Formats time between 12-hour format and 24-hour format
 	*   @return String with slot in new time format
