@@ -145,6 +145,9 @@ void IO::displayEntries()
     file.clear();    //It is necessary to clear the eof flag
     file.seekg(0, std::ios::beg);
     
+	file.clear();    //It is necessary to clear the eof flag
+    file.seekg(0, std::ios::beg);
+
     for(int i = 0; i < size; ++i)
     {
         //Display ID, name, date and number of attendees
@@ -261,51 +264,5 @@ std::string IO::timeFormatter(std::string slot)
     
     return formatted_slot;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

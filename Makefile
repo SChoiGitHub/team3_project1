@@ -11,7 +11,5 @@ main: main.o
 main.o: main.cpp io.h log.h events.h interface.h
 	g++ -Wall -std=c++11 -c main.cpp
 
-
-
 clean:
 	rm *.o main || true
