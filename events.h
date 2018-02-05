@@ -5,6 +5,7 @@
 #include <vector>
 #include <utility>
 #include <string>
+#include <cctype>
 #include "interface.h"
 #include "io.h"
 
@@ -25,7 +26,7 @@ class Events
 	static void adminMode();
 
 	private:
-	
+
 	/** @pre None
 	*   @post Sets user's availability for a specific event
 	*   @return None
