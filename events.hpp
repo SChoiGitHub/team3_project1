@@ -46,13 +46,14 @@ void Events::createEvent()
 	bool dateIsCorrect = true;
 	bool dateIsAvailable = true;
 	bool isLeapYear = true;
+	
+	int amountOfAtendees = 1;
 
 	std::cout << "Enter your name: ";
 	std::getline(std::cin, adminName);
 
 	std::cout << "Enter event name: ";
 	std::getline(std::cin, eventName);
-	outputString += (eventName + ",");
 
 	do {
 		dateIsCorrect = true;
@@ -132,7 +133,6 @@ void Events::createEvent()
 	} while ((!dateIsCorrect) || (!dateIsAvailable));
 
 	std::cout << "Succesful addition of the date " << date << '\n';
-	outputString += (date + ",");
 
 	char addMoreSlots = false;
 	std::string timeSlot = "";
@@ -234,7 +234,8 @@ void Events::createEvent()
 							timeSlotFormatIsCorrect = true;
 						}
 						//Converting to 24-hr format:::
-						timeSlot = io.timeFormatter("timeSlot");
+						timeSlot = io.timeFormatter(timeSlot);
+						index = timeSlot.find(':');
 						hour = std::stoi(timeSlot.substr(0,index));
 						minute = std::stoi(timeSlot.substr(index + 1));
 					}
@@ -323,7 +324,7 @@ void Events::createEvent()
 			if (successfulAddition) {
 				amountOfSlots++;
 				//Converting to 12-hr format:::
-				timeSlot = io.timeFormatter("timeSlot");
+				timeSlot = io.timeFormatter(timeSlot);
 				stringOfTimeSlots += timeSlot + ",1,";
 				std::cout << "Your " << timeSlot << " time slot was successfully added!\n";
 			}
@@ -337,7 +338,7 @@ void Events::createEvent()
 		std::cin.ignore(1, '\n');
 	} while (addMoreSlots == 'y');
 
-	outputString += (stringOfTimeSlots + std::to_string(amountOfSlots) + "," + adminName);
+	outputString += (eventName + "," + date + "," + std::to_string(amountOfSlots) + "," + stringOfTimeSlots + std::to_string(amountOfAtendees) + "," + adminName);
 	std::cout << outputString << std::endl;
 
 	//Add all string together with comma delimiter, line in event.list format, and then put it in io.new_line
