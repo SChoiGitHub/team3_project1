@@ -25,3 +25,4 @@ void Log::addEntry(std::string error_type, std::string function_responsible)
 
 	std::cout << "Error log entry added <- " << error_type << std::endl;
 }
+
