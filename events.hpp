@@ -35,10 +35,11 @@ void Events::createEvent()
 {
 	IO io("event.list");
 	
-	std::string eventName;
+	std::string outputString = "";
+	std::string adminName = "";
+	std::string eventName = "";
 
-	std::string date;
-
+	std::string date = "";
 	std::string month = "";
 	int day = 0;
 	int year = 0;
@@ -46,11 +47,12 @@ void Events::createEvent()
 	bool dateIsAvailable = true;
 	bool isLeapYear = true;
 
-	char addMoreSlots = false;
-	std::string timeSlot;
+	std::cout << "Enter your name: ";
+	std::getline(std::cin, adminName);
 
 	std::cout << "Enter event name: ";
 	std::getline(std::cin, eventName);
+	outputString += (eventName + ",");
 
 	do {
 		dateIsCorrect = true;
@@ -58,7 +60,7 @@ void Events::createEvent()
 		isLeapYear = true;
 
 		std::cout << "Enter date in MM/DD/YYYY format: ";
-		std::getline(std::cin,date);
+		std::getline(std::cin, date);
 
 		if (date.length() != 10) {
 			//std::cout << "Error -1\n";
@@ -104,13 +106,13 @@ void Events::createEvent()
 			}
 
 			if ((month == "02") && (isLeapYear) && (day > 29)) {
-				std::cout << "Error 9\n";
+				//std::cout << "Error 9\n";
 				dateIsCorrect = false;
 			} else if ((month == "02") && (!isLeapYear) && (day > 28)) {
-				std::cout << "Error 10\n";
+				//std::cout << "Error 10\n";
 				dateIsCorrect = false;
 			} else if (((month == "04") || (month == "06") || (month == "09") || (month == "11")) && (day > 30)) {
-				std::cout << "Error 11\n";
+				//std::cout << "Error 11\n";
 				dateIsCorrect = false;
 			}
 
@@ -124,19 +126,208 @@ void Events::createEvent()
 		}
 
 		if (!dateIsAvailable) {
-			std::cout << "Sorry, that day is not available. Please enter a different date.\n";
+			std::cout << "Sorry, that day is not available for meetings. Please enter a different date.\n";
 		}
 
-	} while (!dateIsCorrect || !dateIsAvailable);
+	} while ((!dateIsCorrect) || (!dateIsAvailable));
 
-	//std::cout << "Your date is: " << date << '\n';
+	std::cout << "Succesful addition of the date " << date << '\n';
+	outputString += (date + ",");
+
+	char addMoreSlots = false;
+	std::string timeSlot = "";
+	int amountOfSlots = 0;
+
+	int hour = -1;
+	int minute = -1;
+	int index = 0;
+	bool timeSlotFormatIsCorrect = false;
+	bool timeSlotHourAndMinuteAreCorrect = false;
+	bool timeSlotIsAvailable = true;
+	bool successfulAddition = false;
+
+	std::string stringOfTimeSlots = "";
+	int timeInMins = 0;
+	int slotStart = 0;
+	int slotEnd = 0;
+	std::pair<int,int> newSlot(0,0);
+
+	std::list<std::pair<int,int>> slotsList;
+	slotsList.push_back(std::pair<int,int>(0,300));
+	slotsList.push_back(std::pair<int,int>(720,780));
+
+	for(auto itr = slotsList.begin(); itr != slotsList.end(); itr++) {
+		std::cout << "<" << itr->first << ", " << itr->second << "> ";
+	}
+	std::cout << std::endl;
 
 	do {
-		/*do {
+		do {
+			hour = -1;
+			minute = -1;
+			index = 0;
+			timeSlotFormatIsCorrect = false;
+			timeSlotHourAndMinuteAreCorrect = false;
+			timeSlotIsAvailable = true;
+			successfulAddition = false;
+
 			std::cout << "Enter start time of a 20-minute time slot: ";
 			std::getline(std::cin,timeSlot);
 
-		} while(1);*/
+			index = timeSlot.find(':');
+
+			//DEBUGGING CODE
+			/*std::cout << "index: " << index << '\n';
+			std::cout << "First substring of length " << timeSlot.substr(0,index).length() << ": " << timeSlot.substr(0,index) << '\n';
+			if (timeSlot.substr(0,index).find_first_not_of("0123456789") != std::string::npos) {
+				std::cout << "First not of: " << timeSlot.substr(0,index).find_first_not_of("0123456789") << '\n';
+			} else {
+				std::cout << "First not of: " << "npos\n";
+			}
+			std::cout << "Second substring of length " << timeSlot.substr(index+1).length() << ": " << timeSlot.substr(index+1) << '\n';
+			if (timeSlot.substr(index + 1).find_first_not_of("0123456789") != std::string::npos) {
+				std::cout << "First not of: " << timeSlot.substr(index + 1).find_first_not_of("0123456789") << '\n';
+			} else {
+				std::cout << "First not of: " << "npos\n";
+			}*/
+			//END OF DEBUGGING CODE
+
+			if (index != std::string::npos) {
+				try {
+					hour = std::stoi(timeSlot.substr(0,index));
+				} catch(std::invalid_argument& e) {
+					std::cout << "Invalid argument.\n";
+					continue;
+				} catch(std::out_of_range& e) {
+					std::cout << "Out of range.\n";
+					continue;
+				} catch(...) {
+					std::cout << "Other error.\n";
+					continue;
+				}
+				//std::cout << "hour: " << hour << '\n';
+
+				try {
+					minute = std::stoi(timeSlot.substr(index + 1));
+				} catch(std::invalid_argument& e) {
+					std::cout << "Invalid argument.\n";
+					continue;
+				} catch(std::out_of_range& e) {
+					std::cout << "Out of range.\n";
+					continue;
+				} catch(...) {
+					std::cout << "Other error.\n";
+					continue;
+				}
+				//std::cout << "minute: " << minute << '\n';
+
+				if (((timeSlot.substr(0,index)).find_first_not_of("0123456789") == std::string::npos)
+				&& ((timeSlot.substr(index + 1)).find_first_not_of("0123456789") == 2)) {
+					//std::cout << "This is a 12 hour format.\n";
+					//If the length is 6 or 7 and no extra; disallows things like 2:03amp
+					if ((timeSlot.length() == 6) || ((timeSlot.length() == 7) && ((timeSlot.substr(index + 1)).length() == 4))) {
+						int lastIndex = timeSlot.length() - 1;
+						int secondToLastIndex = lastIndex - 1;
+						//std::cout << "At last index: " << timeSlot[lastIndex] << '\n';
+						//std::cout << "At second to last index: " << timeSlot[secondToLastIndex] << '\n';
+						if ((timeSlot[lastIndex] == 'm') && ((timeSlot[secondToLastIndex] == 'a') || (timeSlot[secondToLastIndex] == 'p'))) {
+							timeSlotFormatIsCorrect = true;
+						}
+						//Converting to 24-hr format:::
+						timeSlot = io.timeFormatter("timeSlot");
+						hour = std::stoi(timeSlot.substr(0,index));
+						minute = std::stoi(timeSlot.substr(index + 1));
+					}
+				} else if (((timeSlot.substr(0,index)).find_first_not_of("0123456789") == std::string::npos)
+				&& ((timeSlot.substr(index + 1)).find_first_not_of("0123456789") == std::string::npos)) {
+					//std::cout << "This is a 24 hour format.\n";
+					if ((timeSlot.length() == 4) || ((timeSlot.length() == 5))) {
+						timeSlotFormatIsCorrect = true;
+					}
+				} else {
+					std::cout << "Format is incorrect.\n";
+					continue;
+				}
+
+				//---------IMPORTANT double check conditions and couts
+
+				if((timeSlotFormatIsCorrect) && ((hour <= 23) && (hour >= 0)) && ((minute <= 59) && (minute >= 0))){
+					timeSlotHourAndMinuteAreCorrect = true;
+				}
+
+				//Assuming we have a correctly-formatted 24-hour time:
+				if ((timeSlotHourAndMinuteAreCorrect) && (timeSlotFormatIsCorrect)) {
+					timeInMins = (hour * 60) + minute;
+					std::cout << "Time in minutes: " << timeInMins << '\n';
+					//No events can be created after 11:40pm (aka 1420)
+					if ((timeInMins >= 1420) || ((timeInMins >= 0) && (timeInMins <= 300))) {
+						timeSlotIsAvailable = false;
+						std::cout << "Sorry, you cannot create a meeting between 12:00 am and 5:00 am. Please pick a different time.\n";
+						continue;
+					} else if ((timeInMins >= 720) && (timeInMins <= 780))  {
+						timeSlotIsAvailable = false;
+						std::cout << "Sorry, you cannot create a meeting between 12:00 pm and 1:00 pm. Please pick a different time.\n";
+						continue;
+					}
+
+					slotStart = timeInMins;
+					slotEnd = timeInMins + 20;
+					newSlot = {slotStart, slotEnd};
+					//std::cout << "New pair: <" << newSlot.first << ", " << newSlot.second << ">\n";
+
+					for (auto itr = slotsList.begin(); itr != slotsList.end(); itr++) {
+						if (newSlot.first >= itr->second) {
+							itr++;
+							if (itr == slotsList.end()) {
+								successfulAddition = true;
+								//std::cout << "We're at end. Inserting at end...\n";
+								slotsList.push_back(newSlot);
+								break;
+							} else {
+								itr--;
+								//std::cout << newSlot.first << " >= " << itr->second << " continuing..\n";
+								continue;
+							}
+						} else {
+							if (newSlot.second > itr->first) {
+								//std::cout << newSlot.second << " > " << itr->first << " ";
+								timeSlotIsAvailable = false;
+								std::cout << "Sorry, cannot add slot because there is a scheduling conflict. Please pick a different time.\n";
+								break;
+							} else {
+								successfulAddition = true;
+								//std::cout << newSlot.second << " <= " << itr->first << " ";
+								//std::cout << "Adding newSlot in previous position!\n";
+								slotsList.insert(itr, newSlot);
+								break;
+							}
+						}
+					}
+
+					/*for(auto itr = slotsList.begin(); itr != slotsList.end(); itr++) {
+						std::cout << "<" << itr->first << ", " << itr->second << "> ";
+					}
+					std::cout << std::endl;*/
+				}
+			} else {
+				std::cout << "No colon.\n";
+				continue;
+			}
+
+			if (!timeSlotHourAndMinuteAreCorrect) {
+				std::cout << "Hour and/or minutes are off bounds.\n";
+			}
+			if (!timeSlotFormatIsCorrect) {
+				std::cout << "Time slot format is not correct. Please enter a time in either 12 hour mode (e.g. 1:15pm) or 24 hour mode (e.g. 13:15).\n";
+			}
+			if (successfulAddition) {
+				amountOfSlots++;
+				//Converting to 12-hr format:::
+				timeSlot = io.timeFormatter("timeSlot");
+				stringOfTimeSlots += timeSlot + ",1,";
+				std::cout << "Your " << timeSlot << " time slot was successfully added!\n";
+			}
+		} while((!timeSlotIsAvailable) || (!timeSlotHourAndMinuteAreCorrect) || (!timeSlotFormatIsCorrect));
 
 		std::cout << "Do you want to add more slots?\n"
 							<< "To add more slots, type 'y'\n"
@@ -146,13 +337,13 @@ void Events::createEvent()
 		std::cin.ignore(1, '\n');
 	} while (addMoreSlots == 'y');
 
-
-	std::cout << "Attendees: admin" << std::endl;
+	outputString += (stringOfTimeSlots + std::to_string(amountOfSlots) + "," + adminName);
+	std::cout << outputString << std::endl;
 
 	//Add all string together with comma delimiter, line in event.list format, and then put it in io.new_line
 	//io.new_line = ...
 	
-	io.addEntry();
+	io.addEntry(outputString);
 }
 
 

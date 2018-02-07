@@ -6,6 +6,8 @@
 #include <utility>
 #include <string>
 #include <cctype>
+#include <stdexcept>
+#include <list>
 #include "interface.h"
 #include "io.h"
 
