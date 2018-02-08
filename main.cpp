@@ -20,10 +20,17 @@ int main(int argc, char **argv)
 		{"Exit", nullptr}
 	});
 	//Enter menu loop
-	menu.Loop();
+	menu.Loop();	
 
 
-	IO io("event.list");
+	//IO io("event.list");
+
+	//io.updateElement(0,"total_attendees", NULL);
+	//io.updateElement(0,"attendees", (char *) "peter");
+
+	//io.updateElement(1,"total_attendees", NULL);
+	//io.updateElement(1,"attendees", (char *) "peter");
+	//std::cout << io.size << std::endl;
 
 	//std::cout << "Number of lines in events file (number of events): " << io.size << std::endl;
 
@@ -39,5 +46,7 @@ int main(int argc, char **argv)
 
 	fr.addEntry("Some sort of fault", "main");
 */
+	//std::cout << io.size << std::endl;
+
 	return (0);
 }

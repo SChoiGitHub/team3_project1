@@ -28,12 +28,100 @@ void Events::adminMode()
 
 void Events::setAvailability()
 {
+	Interface interface_;
+	IO io_("event.list");
+	bool digit_flag = true;
+	bool new_attendee = false;
+	int dummy_int = 0;
+
+	std::string input = interface_.getInput("Please select an event ID from the list above: ");
 	
+	for(unsigned int i = 0; i < input.size() ; ++i)
+		if( isdigit(input[i]) == 0 )
+			digit_flag = false; 
+
+	if(digit_flag == true)
+	{
+		int input_ = atoi(input.c_str());
+
+		if( input_ < 0 || input_ > io_.size - 1)
+		{
+			std::cout << "Invalid event ID." << std::endl;
+			interface_.Wait();
+		}
+		else
+		{
+			input = io_.retrieveElement(input_,"total_slots");
+			dummy_int = atoi(input.c_str());
+			input = io_.retrieveElement(input_,"slots");
+			
+			std::string slots[dummy_int];
+			std::string dummy_string;
+			std::stringstream ss(input);
+			
+			for(int i = 0; i < dummy_int ; ++i)
+			{
+				//Get slots
+				getline(ss, slots[i], ',');
+				//Just to move the string forward (over the number of people in a slot)
+				getline(ss, input, ',');
+
+				dummy_string = "slot" + std::to_string(i+1);
+
+				if(io_.timeFormat == true )
+					std::cout << "Are you available at " << slots[i] << " ? [Y/n]: ";
+				else
+					std::cout << "Are you available at " << io_.timeFormatter(slots[i]) << " ? [Y/n]: ";
+
+				getline(std::cin, input);
+
+				if(input == "Yes" || input == "yes" || input == "y" || input == "Y")
+				{
+					io_.updateElement(input_,dummy_string,NULL);
+					new_attendee = true;
+				}
+				else if(input != "No" && input != "no" && input != "n" && input != "N")
+				{
+					std::cout << "Invalid input. Please try again." << std::endl;
+
+					ss.clear();
+					ss.seekg(0, std::ios::beg);
+
+					for(int j = 0; j < 2*i ; ++j)
+						getline(ss, input, ',');	
+
+					--i;
+				}
+			}
+			
+			if(new_attendee == true)
+			{
+				std::string name = interface_.getInput("What's your name? ");
+				const char* name_ = name.c_str();
+				io_.updateElement(input_,"total_attendees",NULL);
+				io_.updateElement(input_,"attendees", (char *) name_);
+			}
+		}
+	}
+	else
+	{
+		std::cout << "Invalid event ID." << std::endl;
+		interface_.Wait();
+	}
 }
 
 void Events::createEvent()
 {
 	IO io("event.list");
+	
+	std::fstream file;
+	file.open("event.list", std::fstream::app);
+
+	time_t t = time(NULL);
+	tm* timePtr = localtime(&t);
+	int current_year = (int)timePtr->tm_year + 1900;
+	int current_month = (int) timePtr->tm_mon + 1;
+	int current_day = (int) timePtr->tm_mday;
 
 	std::string outputString = "";
 	std::string adminName = "";
@@ -103,6 +191,11 @@ void Events::createEvent()
 			if (((month == "01") && (day == 1)) || ((month == "07") && (day == 4)) || ((month == "12") && (day == 25))) {
 				dateIsAvailable = false;
 			}
+
+			if ( (year < current_year) || ( year >= current_year && atoi(month.c_str()) < current_month) || ( year >= current_year && atoi(month.c_str()) >= current_month && day < current_day) )
+			{
+				dateIsCorrect = false;
+			}
 		}
 
 		if (!dateIsCorrect) {
@@ -123,7 +216,7 @@ void Events::createEvent()
 
 	int hour = -1;
 	int minute = -1;
-	int index = 0;
+	unsigned int index = 0;
 	bool timeSlotFormatIsCorrect = false;
 	bool timeSlotHourAndMinuteAreCorrect = false;
 	bool timeSlotIsAvailable = true;
@@ -349,13 +442,12 @@ void Events::createEvent()
 		} while (userChoice == 'v');
 	} while (userChoice == 'a');
 
-	outputString += (eventName + "," + date + "," + std::to_string(amountOfSlots) + "," + stringOfTimeSlots + std::to_string(amountOfAtendees) + "," + adminName);
-	std::cout << outputString << std::endl;
+	outputString += (std::to_string(io.size) + "," + eventName + "," + date + "," + std::to_string(amountOfSlots) + "," + stringOfTimeSlots + std::to_string(amountOfAtendees) + "," + adminName);
+	file << outputString << std::endl;
 
-	//Add all string together with comma delimiter, line in event.list format, and then put it in io.new_line
-	//io.new_line = ...
 
-	io.addEntry(outputString);
+	file.close();
+	//io.addEntry(outputString);
 }
 
 
