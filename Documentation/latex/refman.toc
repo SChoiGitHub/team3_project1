@@ -1,0 +1,53 @@
+\contentsline {chapter}{\numberline {1}Class Index}{3}{chapter.1}
+\contentsline {section}{\numberline {1.1}Class List}{3}{section.1.1}
+\contentsline {chapter}{\numberline {2}File Index}{5}{chapter.2}
+\contentsline {section}{\numberline {2.1}File List}{5}{section.2.1}
+\contentsline {chapter}{\numberline {3}Class Documentation}{7}{chapter.3}
+\contentsline {section}{\numberline {3.1}Events Class Reference}{7}{section.3.1}
+\contentsline {subsection}{\numberline {3.1.1}Member Function Documentation}{7}{subsection.3.1.1}
+\contentsline {subsubsection}{\numberline {3.1.1.1}admin\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}Mode()}{7}{subsubsection.3.1.1.1}
+\contentsline {subsubsection}{\numberline {3.1.1.2}user\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}Mode()}{8}{subsubsection.3.1.1.2}
+\contentsline {section}{\numberline {3.2}Interface Class Reference}{8}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}Constructor \& Destructor Documentation}{9}{subsection.3.2.1}
+\contentsline {subsubsection}{\numberline {3.2.1.1}Interface()}{9}{subsubsection.3.2.1.1}
+\contentsline {subsubsection}{\numberline {3.2.1.2}$\sim $\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}Interface()}{9}{subsubsection.3.2.1.2}
+\contentsline {subsection}{\numberline {3.2.2}Member Function Documentation}{9}{subsection.3.2.2}
+\contentsline {subsubsection}{\numberline {3.2.2.1}clear\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}Screen()}{10}{subsubsection.3.2.2.1}
+\contentsline {subsubsection}{\numberline {3.2.2.2}get\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}Input()}{10}{subsubsection.3.2.2.2}
+\contentsline {subsubsection}{\numberline {3.2.2.3}toggle\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}Time\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}Format()}{11}{subsubsection.3.2.2.3}
+\contentsline {subsubsection}{\numberline {3.2.2.4}Wait()}{11}{subsubsection.3.2.2.4}
+\contentsline {section}{\numberline {3.3}IO Class Reference}{12}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Detailed Description}{12}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}Constructor \& Destructor Documentation}{12}{subsection.3.3.2}
+\contentsline {subsubsection}{\numberline {3.3.2.1}I\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}O()}{13}{subsubsection.3.3.2.1}
+\contentsline {subsubsection}{\numberline {3.3.2.2}$\sim $\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}I\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}O()}{13}{subsubsection.3.3.2.2}
+\contentsline {subsection}{\numberline {3.3.3}Member Function Documentation}{13}{subsection.3.3.3}
+\contentsline {subsubsection}{\numberline {3.3.3.1}add\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}Entry()}{13}{subsubsection.3.3.3.1}
+\contentsline {subsubsection}{\numberline {3.3.3.2}display\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}Entries()}{14}{subsubsection.3.3.3.2}
+\contentsline {subsubsection}{\numberline {3.3.3.3}retrieve\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}Element()}{14}{subsubsection.3.3.3.3}
+\contentsline {subsubsection}{\numberline {3.3.3.4}time\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}Formatter()}{15}{subsubsection.3.3.3.4}
+\contentsline {subsubsection}{\numberline {3.3.3.5}update\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}Element()}{15}{subsubsection.3.3.3.5}
+\contentsline {section}{\numberline {3.4}Log Class Reference}{16}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Detailed Description}{16}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Constructor \& Destructor Documentation}{16}{subsection.3.4.2}
+\contentsline {subsubsection}{\numberline {3.4.2.1}Log()}{16}{subsubsection.3.4.2.1}
+\contentsline {subsubsection}{\numberline {3.4.2.2}$\sim $\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}Log()}{17}{subsubsection.3.4.2.2}
+\contentsline {subsection}{\numberline {3.4.3}Member Function Documentation}{17}{subsection.3.4.3}
+\contentsline {subsubsection}{\numberline {3.4.3.1}add\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}Entry()}{17}{subsubsection.3.4.3.1}
+\contentsline {section}{\numberline {3.5}Interface\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}:\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}:Menu Class Reference}{18}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Constructor \& Destructor Documentation}{18}{subsection.3.5.1}
+\contentsline {subsubsection}{\numberline {3.5.1.1}Menu()}{18}{subsubsection.3.5.1.1}
+\contentsline {subsection}{\numberline {3.5.2}Member Function Documentation}{18}{subsection.3.5.2}
+\contentsline {subsubsection}{\numberline {3.5.2.1}Header()}{18}{subsubsection.3.5.2.1}
+\contentsline {subsubsection}{\numberline {3.5.2.2}Loop()}{19}{subsubsection.3.5.2.2}
+\contentsline {chapter}{\numberline {4}File Documentation}{21}{chapter.4}
+\contentsline {section}{\numberline {4.1}events.\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}hpp File Reference}{21}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Detailed Description}{21}{subsection.4.1.1}
+\contentsline {section}{\numberline {4.2}interface.\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}hpp File Reference}{21}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Detailed Description}{21}{subsection.4.2.1}
+\contentsline {section}{\numberline {4.3}io.\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}hpp File Reference}{22}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Detailed Description}{22}{subsection.4.3.1}
+\contentsline {section}{\numberline {4.4}log.\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}hpp File Reference}{22}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Detailed Description}{22}{subsection.4.4.1}
+\contentsline {section}{\numberline {4.5}main.\discretionary {\unhbox \voidb@x \hbox {\relax \fontsize {8}{9.5}\selectfont $\leftarrow \joinrel \rhook $}}{}{}cpp File Reference}{22}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Detailed Description}{23}{subsection.4.5.1}
