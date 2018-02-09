@@ -1,0 +1,162 @@
+\hypertarget{class_i_o}{}\section{IO Class Reference}
+\label{class_i_o}\index{IO@{IO}}
+
+
+A header file for Input/\+Output (\mbox{\hyperlink{class_i_o}{IO}}) class.  
+
+
+
+
+{\ttfamily \#include $<$io.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_i_o_a98e1371822dc63d6b25c4153efd1bbf3}{IO}} (const std\+::string file\+Name)
+\item 
+\mbox{\hyperlink{class_i_o_a44861ff225d351615179f0f24cb8d7f6}{$\sim$\+IO}} ()
+\item 
+void \mbox{\hyperlink{class_i_o_aa3537c0737038acdc6c2963138bfabdf}{add\+Entry}} (std\+::string store)
+\item 
+std\+::string \mbox{\hyperlink{class_i_o_a3829dc8ad91e1f2d560be799b6d9b04d}{retrieve\+Element}} (int ID, std\+::string element\+Name)
+\item 
+void \mbox{\hyperlink{class_i_o_a11fdb7d4afa830fa1441fbf566f73432}{update\+Element}} (int ID, std\+::string element\+Name, void $\ast$value)
+\item 
+void \mbox{\hyperlink{class_i_o_a48e9febfbb2c6c3e01b467fd030c2529}{display\+Entries}} ()
+\item 
+std\+::string \mbox{\hyperlink{class_i_o_ad78c42847c70915fe94bddd25f716859}{time\+Formatter}} (std\+::string slot)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_i_o_a4e344c74454e6609b817e3fdb3fcddf3}\label{class_i_o_a4e344c74454e6609b817e3fdb3fcddf3}} 
+int {\bfseries size}
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_i_o_a04cf024687a6a86007db5ecfcab69e5c}\label{class_i_o_a04cf024687a6a86007db5ecfcab69e5c}} 
+static bool {\bfseries time\+Format} = false
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A header file for Input/\+Output (\mbox{\hyperlink{class_i_o}{IO}}) class. 
+
+\begin{DoxyAuthor}{Author}
+Team 3 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+
+\end{DoxyDate}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_i_o_a98e1371822dc63d6b25c4153efd1bbf3}\label{class_i_o_a98e1371822dc63d6b25c4153efd1bbf3}} 
+\index{IO@{IO}!IO@{IO}}
+\index{IO@{IO}!IO@{IO}}
+\subsubsection{\texorpdfstring{I\+O()}{IO()}}
+{\footnotesize\ttfamily I\+O\+::\+IO (\begin{DoxyParamCaption}\item[{const std\+::string}]{file\+Name }\end{DoxyParamCaption})}
+
+\begin{DoxyPrecond}{Precondition}
+None 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+A file is opened with given name. It is created if it does not exist yet 
+\end{DoxyPostcond}
+\mbox{\Hypertarget{class_i_o_a44861ff225d351615179f0f24cb8d7f6}\label{class_i_o_a44861ff225d351615179f0f24cb8d7f6}} 
+\index{IO@{IO}!````~IO@{$\sim$\+IO}}
+\index{````~IO@{$\sim$\+IO}!IO@{IO}}
+\subsubsection{\texorpdfstring{$\sim$\+I\+O()}{~IO()}}
+{\footnotesize\ttfamily I\+O\+::$\sim$\+IO (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyPrecond}{Precondition}
+None 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+A file is closed with given name 
+\end{DoxyPostcond}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_i_o_aa3537c0737038acdc6c2963138bfabdf}\label{class_i_o_aa3537c0737038acdc6c2963138bfabdf}} 
+\index{IO@{IO}!add\+Entry@{add\+Entry}}
+\index{add\+Entry@{add\+Entry}!IO@{IO}}
+\subsubsection{\texorpdfstring{add\+Entry()}{addEntry()}}
+{\footnotesize\ttfamily void I\+O\+::add\+Entry (\begin{DoxyParamCaption}\item[{std\+::string}]{store }\end{DoxyParamCaption})}
+
+\begin{DoxyPrecond}{Precondition}
+None 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+Adds new event to file 
+\end{DoxyPostcond}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_i_o_a48e9febfbb2c6c3e01b467fd030c2529}\label{class_i_o_a48e9febfbb2c6c3e01b467fd030c2529}} 
+\index{IO@{IO}!display\+Entries@{display\+Entries}}
+\index{display\+Entries@{display\+Entries}!IO@{IO}}
+\subsubsection{\texorpdfstring{display\+Entries()}{displayEntries()}}
+{\footnotesize\ttfamily void I\+O\+::display\+Entries (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+\begin{DoxyPrecond}{Precondition}
+None 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+Displays all elements in file, one at a time 
+\end{DoxyPostcond}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_i_o_a3829dc8ad91e1f2d560be799b6d9b04d}\label{class_i_o_a3829dc8ad91e1f2d560be799b6d9b04d}} 
+\index{IO@{IO}!retrieve\+Element@{retrieve\+Element}}
+\index{retrieve\+Element@{retrieve\+Element}!IO@{IO}}
+\subsubsection{\texorpdfstring{retrieve\+Element()}{retrieveElement()}}
+{\footnotesize\ttfamily std\+::string I\+O\+::retrieve\+Element (\begin{DoxyParamCaption}\item[{int}]{ID,  }\item[{std\+::string}]{element\+Name }\end{DoxyParamCaption})}
+
+\begin{DoxyPrecond}{Precondition}
+ID is the event\textquotesingle{}s unique identifier. element\+Name is the name of the element to retrieve 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+Retrieves some event\textquotesingle{}s specific element value from the events file 
+\end{DoxyPostcond}
+\begin{DoxyReturn}{Returns}
+Returns event\textquotesingle{}s specific element (string or int) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_i_o_ad78c42847c70915fe94bddd25f716859}\label{class_i_o_ad78c42847c70915fe94bddd25f716859}} 
+\index{IO@{IO}!time\+Formatter@{time\+Formatter}}
+\index{time\+Formatter@{time\+Formatter}!IO@{IO}}
+\subsubsection{\texorpdfstring{time\+Formatter()}{timeFormatter()}}
+{\footnotesize\ttfamily std\+::string I\+O\+::time\+Formatter (\begin{DoxyParamCaption}\item[{std\+::string}]{slot }\end{DoxyParamCaption})}
+
+\begin{DoxyPrecond}{Precondition}
+slot has the time value that needs to be formatted 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+Formats time between 12-\/hour format and 24-\/hour format 
+\end{DoxyPostcond}
+\begin{DoxyReturn}{Returns}
+String with slot in new time format 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_i_o_a11fdb7d4afa830fa1441fbf566f73432}\label{class_i_o_a11fdb7d4afa830fa1441fbf566f73432}} 
+\index{IO@{IO}!update\+Element@{update\+Element}}
+\index{update\+Element@{update\+Element}!IO@{IO}}
+\subsubsection{\texorpdfstring{update\+Element()}{updateElement()}}
+{\footnotesize\ttfamily void I\+O\+::update\+Element (\begin{DoxyParamCaption}\item[{int}]{ID,  }\item[{std\+::string}]{element\+Name,  }\item[{void $\ast$}]{value }\end{DoxyParamCaption})}
+
+\begin{DoxyPrecond}{Precondition}
+ID is the event\textquotesingle{}s unique identifier. element\+Name is the name of the element to update, value is the element\textquotesingle{}s new value 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+Updates some event\textquotesingle{}s specific element 
+\end{DoxyPostcond}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+io.\+h\item 
+\mbox{\hyperlink{io_8hpp}{io.\+hpp}}\end{DoxyCompactItemize}
