@@ -1,0 +1,7 @@
+References:
+
+1. Pressman Roger S. (1997). Software engineering: a practitioner's approach.
+
+2. T. (n.d.). SDLC Agile Model. Retrieved February 09, 2018, from https://	www.tutorialspoint.com/sdlc/sdlc_agile_model.htm
+
+3. C Standard Library Reference Tutorial. (n.d.). Retrieved February 09, 	2018, from https://www.tutorialspoint.com/c_standard_library/		index.htm
