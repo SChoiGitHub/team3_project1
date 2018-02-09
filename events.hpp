@@ -112,6 +112,9 @@ void Events::setAvailability()
 
 void Events::createEvent()
 {
+	Interface interface_;
+	Interface::Menu menu({{"", NULL}});
+
 	IO io("event.list");
 	
 	std::fstream file;
@@ -136,6 +139,9 @@ void Events::createEvent()
 	bool isLeapYear = true;
 
 	int amountOfAtendees = 1;
+
+	interface_.clearScreen();
+	menu.Header();
 
 	std::cout << "\nEnter your name: ";
 	std::getline(std::cin, adminName);
@@ -199,11 +205,15 @@ void Events::createEvent()
 		}
 
 		if (!dateIsCorrect) {
-			std::cout << "Wrong input! Please enter a valid date in MM/DD/YYYY format.\n";
+			interface_.clearScreen();
+			menu.Header();
+			std::cout << "\nWrong input! Please enter a valid date in MM/DD/YYYY format.\n";
 		}
 
 		if (!dateIsAvailable) {
-			std::cout << "Sorry, that day is not available for meetings. Please enter a different date.\n";
+			interface_.clearScreen();
+			menu.Header();
+			std::cout << "\nSorry, that day is not available for meetings. Please enter a different date.\n";
 		}
 
 	} while ((!dateIsCorrect) || (!dateIsAvailable));
@@ -273,13 +283,19 @@ void Events::createEvent()
 				try {
 					hour = std::stoi(timeSlot.substr(0,index));
 				} catch(std::invalid_argument& e) {
-					std::cout << "Invalid argument.\n";
+					interface_.clearScreen();
+					menu.Header();
+					std::cout << "\nInvalid argument.\n";
 					continue;
 				} catch(std::out_of_range& e) {
-					std::cout << "Out of range.\n";
+					interface_.clearScreen();
+					menu.Header();
+					std::cout << "\nOut of range.\n";
 					continue;
 				} catch(...) {
-					std::cout << "Other error.\n";
+					interface_.clearScreen();
+					menu.Header();
+					std::cout << "\nOther error.\n";
 					continue;
 				}
 				//std::cout << "hour: " << hour << '\n';
@@ -287,13 +303,19 @@ void Events::createEvent()
 				try {
 					minute = std::stoi(timeSlot.substr(index + 1));
 				} catch(std::invalid_argument& e) {
-					std::cout << "Invalid argument.\n";
+					interface_.clearScreen();
+					menu.Header();
+					std::cout << "\nInvalid argument.\n";
 					continue;
 				} catch(std::out_of_range& e) {
-					std::cout << "Out of range.\n";
+					interface_.clearScreen();
+					menu.Header();
+					std::cout << "\nOut of range.\n";
 					continue;
 				} catch(...) {
-					std::cout << "Other error.\n";
+					interface_.clearScreen();
+					menu.Header();
+					std::cout << "\nOther error.\n";
 					continue;
 				}
 				//std::cout << "minute: " << minute << '\n';
@@ -325,7 +347,9 @@ void Events::createEvent()
 						timeSlotFormatIsCorrect = true;
 					}
 				} else {
-					std::cout << "Format is incorrect.\n";
+					interface_.clearScreen();
+					menu.Header();
+					std::cout << "\nFormat is incorrect.\n";
 					continue;
 				}
 
@@ -341,12 +365,16 @@ void Events::createEvent()
 					//std::cout << "Time in minutes: " << timeInMins << '\n';
 					//No events can be created after 11:40pm (aka 1420)
 					if ((timeInMins >= 1420) || ((timeInMins >= 0) && (timeInMins <= 300))) {
+						interface_.clearScreen();
+						menu.Header();
 						timeSlotIsAvailable = false;
-						std::cout << "Sorry, you cannot create a meeting between 12:00 am and 5:00 am. Please pick a different time.\n";
+						std::cout << "\nSorry, you cannot create a meeting between 12:00 am and 5:00 am. Please pick a different time.\n";
 						continue;
 					} else if ((timeInMins >= 720) && (timeInMins <= 780))  {
+						interface_.clearScreen();
+						menu.Header();
 						timeSlotIsAvailable = false;
-						std::cout << "Sorry, you cannot create a meeting between 12:00 pm and 1:00 pm. Please pick a different time.\n";
+						std::cout << "\nSorry, you cannot create a meeting between 12:00 pm and 1:00 pm. Please pick a different time.\n";
 						continue;
 					}
 
@@ -370,9 +398,11 @@ void Events::createEvent()
 							}
 						} else {
 							if (newSlot.second > itr->first) {
-								//std::cout << newSlot.second << " > " << itr->first << " ";
+								//std::cout << newSlot.second << " > " << itr->first << " ";								
+								interface_.clearScreen();
+								menu.Header();
 								timeSlotIsAvailable = false;
-								std::cout << "Sorry, cannot add slot because there is a scheduling conflict. Please pick a different time.\n";
+								std::cout << "\nSorry, cannot add that slot because there is a scheduling conflict. Please pick a different time.\n";
 								break;
 							} else {
 								successfulAddition = true;
@@ -395,10 +425,14 @@ void Events::createEvent()
 			}
 
 			if (!timeSlotHourAndMinuteAreCorrect) {
-				std::cout << "Hour and/or minutes are off bounds.\n";
+				interface_.clearScreen();
+				menu.Header();
+				std::cout << "\nHour and/or minutes are off bounds.\n";
 			}
 			if (!timeSlotFormatIsCorrect) {
-				std::cout << "Time slot format is not correct. Please enter a time in either 12 hour mode (e.g. 1:15pm) or 24 hour mode (e.g. 13:15).\n";
+				interface_.clearScreen();
+				menu.Header();
+				std::cout << "\nTime slot format is not correct. Please enter a time in either 12 hour mode (e.g. 1:15pm) or 24 hour mode (e.g. 13:15).\n";
 			}
 			if (successfulAddition) {
 				amountOfSlots++;
@@ -447,7 +481,6 @@ void Events::createEvent()
 
 
 	file.close();
-	//io.addEntry(outputString);
 }
 
 

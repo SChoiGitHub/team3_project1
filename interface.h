@@ -63,6 +63,12 @@ public:
          */
         void Loop();
         
+	/** @pre None
+         *   @post Draws a header for a menu
+         *   @return None
+         */
+        void Header();
+
     private:
         
         std::vector<std::pair<std::string, void (*)()>> option_list;    //Vector of pairs
@@ -73,11 +79,6 @@ public:
          */
         void Draw();
         
-        /** @pre None
-         *   @post Draws a header for a menu
-         *   @return None
-         */
-        void Header();
     };
     
     
