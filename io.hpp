@@ -31,7 +31,7 @@ void IO::addEntry(std::string store)
 	size++;
 	file.clear();
 	file.seekg(0,std::fstream::end);
-	file << store;
+	file << store << std::endl;
 }
 
 

@@ -117,8 +117,8 @@ void Events::createEvent()
 
 	IO io("event.list");
 	
-	std::fstream file;
-	file.open("event.list", std::fstream::app);
+	//std::fstream file;
+	//file.open("event.list", std::fstream::app);
 
 	time_t t = time(NULL);
 	tm* timePtr = localtime(&t);
@@ -477,10 +477,11 @@ void Events::createEvent()
 	} while (userChoice == 'a');
 
 	outputString += (std::to_string(io.size) + "," + eventName + "," + date + "," + std::to_string(amountOfSlots) + "," + stringOfTimeSlots + std::to_string(amountOfAtendees) + "," + adminName);
-	file << outputString << std::endl;
+	
+	//file << outputString << std::endl;
 
-
-	file.close();
+	io.addEntry(outputString);
+	//file.close();
 }
 
 
