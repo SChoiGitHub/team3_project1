@@ -1,0 +1,3 @@
+Software Development Approach:
+
+For project 1 we applied aspects of the Agile development model. We believed this was the most flexible and efficient way to get the event planner working and running. For this project, team members participated in pair programming, group meetings, and individual meetings in order to quickly produce working code. Additionally, features that were not central to the customer requirements were temporarirly “abandoned” in support of pushing a stable working project. For instance, the log class exist and is outlined, but has yet to be properly integrated into the overall event planner. Nevertheless, the project is stable and modular enough to make future changes. 
