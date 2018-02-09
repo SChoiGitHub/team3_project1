@@ -34,79 +34,85 @@ void Events::setAvailability()
 	bool new_attendee = false;
 	int dummy_int = 0;
 
-	std::string input = interface_.getInput("Please select an event ID from the list above: ");
-	
-	for(unsigned int i = 0; i < input.size() ; ++i)
-		if( isdigit(input[i]) == 0 )
-			digit_flag = false; 
-
-	if(digit_flag == true)
+	if( io_.size != 0 )
 	{
-		int input_ = atoi(input.c_str());
-
-		if( input_ < 0 || input_ > io_.size - 1)
+		std::string input = interface_.getInput("Please select an event ID from the list above: ");
+		
+		for(unsigned int i = 0; i < input.size() ; ++i)
+			if( isdigit(input[i]) == 0 )
+				digit_flag = false; 
+	
+		if(digit_flag == true)
 		{
-			std::cout << "Invalid event ID." << std::endl;
-			interface_.Wait();
+			int input_ = atoi(input.c_str());
+	
+			if( input_ < 0 || input_ > io_.size - 1)
+			{
+				std::cout << "Invalid event ID." << std::endl;
+				interface_.Wait("");
+			}
+			else
+			{
+				input = io_.retrieveElement(input_,"total_slots");
+				dummy_int = atoi(input.c_str());
+				input = io_.retrieveElement(input_,"slots");
+				
+				std::string slots[dummy_int];
+				std::string dummy_string;
+				std::stringstream ss(input);
+				
+				for(int i = 0; i < dummy_int ; ++i)
+				{
+					//Get slots
+					getline(ss, slots[i], ',');
+					//Just to move the string forward (over the number of people in a slot)
+					getline(ss, input, ',');
+	
+					dummy_string = "slot" + std::to_string(i+1);
+	
+					if(io_.timeFormat == true )
+						std::cout << "Are you available at " << slots[i] << " ? [Y/n]: ";
+					else
+						std::cout << "Are you available at " << io_.timeFormatter(slots[i]) << " ? [Y/n]: ";
+	
+					getline(std::cin, input);
+	
+					if(input == "Yes" || input == "yes" || input == "y" || input == "Y")
+					{
+						io_.updateElement(input_,dummy_string,NULL);
+						new_attendee = true;
+					}
+					else if(input != "No" && input != "no" && input != "n" && input != "N")
+					{
+						std::cout << "Invalid input. Please try again." << std::endl;
+	
+						ss.clear();
+						ss.seekg(0, std::ios::beg);
+	
+						for(int j = 0; j < 2*i ; ++j)
+							getline(ss, input, ',');	
+
+						--i;
+					}
+				}
+				
+				if(new_attendee == true)
+				{
+					std::string name = interface_.getInput("What's your name? ");
+					const char* name_ = name.c_str();
+					io_.updateElement(input_,"total_attendees",NULL);
+					io_.updateElement(input_,"attendees", (char *) name_);
+				}
+			}
 		}
 		else
 		{
-			input = io_.retrieveElement(input_,"total_slots");
-			dummy_int = atoi(input.c_str());
-			input = io_.retrieveElement(input_,"slots");
-			
-			std::string slots[dummy_int];
-			std::string dummy_string;
-			std::stringstream ss(input);
-			
-			for(int i = 0; i < dummy_int ; ++i)
-			{
-				//Get slots
-				getline(ss, slots[i], ',');
-				//Just to move the string forward (over the number of people in a slot)
-				getline(ss, input, ',');
-
-				dummy_string = "slot" + std::to_string(i+1);
-
-				if(io_.timeFormat == true )
-					std::cout << "Are you available at " << slots[i] << " ? [Y/n]: ";
-				else
-					std::cout << "Are you available at " << io_.timeFormatter(slots[i]) << " ? [Y/n]: ";
-
-				getline(std::cin, input);
-
-				if(input == "Yes" || input == "yes" || input == "y" || input == "Y")
-				{
-					io_.updateElement(input_,dummy_string,NULL);
-					new_attendee = true;
-				}
-				else if(input != "No" && input != "no" && input != "n" && input != "N")
-				{
-					std::cout << "Invalid input. Please try again." << std::endl;
-
-					ss.clear();
-					ss.seekg(0, std::ios::beg);
-
-					for(int j = 0; j < 2*i ; ++j)
-						getline(ss, input, ',');	
-
-					--i;
-				}
-			}
-			
-			if(new_attendee == true)
-			{
-				std::string name = interface_.getInput("What's your name? ");
-				const char* name_ = name.c_str();
-				io_.updateElement(input_,"total_attendees",NULL);
-				io_.updateElement(input_,"attendees", (char *) name_);
-			}
+			std::cout << "Invalid event ID." << std::endl;
+			interface_.Wait("");
 		}
-	}
-	else
-	{
-		std::cout << "Invalid event ID." << std::endl;
-		interface_.Wait();
+
+	} else {
+		interface_.Wait("No events available... Sorry!");
 	}
 }
 

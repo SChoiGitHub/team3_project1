@@ -33,9 +33,10 @@ std::string Interface::getInput(const char *message)
 }
 
 
-void Interface::Wait(const char * wait_string)
+void Interface::Wait(std::string wait_string)
 {
-    std::cout << "\n" << wait_string << "\n";
+    std::cout << wait_string;
+    std::cout << "\nPress Enter to continue...\n";
     getchar();
 }
 
@@ -82,7 +83,7 @@ void Interface::Menu::Loop()
             Header();
             
             std::cout << "\nThis option is not valid." << std::endl;
-            Wait();
+            Wait("");
         }
     }
 }

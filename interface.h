@@ -38,7 +38,7 @@ public:
      *   @post Waits for the user to press enter
      *   @return None
      */
-    static void Wait(const char *wait_string = "Press Enter to continue...");
+    static void Wait(std::string wait_string);
     
     /** @pre None
      *   @post Toggles the time format between 12-hour and 24-hour formats
