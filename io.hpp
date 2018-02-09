@@ -11,7 +11,7 @@ IO::IO(const std::string fileName) : fileName_(fileName)
     int n_lines = 0;
     std::string dummy_string;
 
-    file.open(fileName_, std::fstream::in | std::fstream::out | std::fstream::app);
+    file.open(fileName_, std::fstream::in | std::fstream::out);
 
     while(std::getline(file, dummy_string))
         ++n_lines;

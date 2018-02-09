@@ -123,8 +123,6 @@ void Events::createEvent()
 
 	IO io("event.list");
 	
-	//std::fstream file;
-	//file.open("event.list", std::fstream::app);
 
 	time_t t = time(NULL);
 	tm* timePtr = localtime(&t);
@@ -204,7 +202,7 @@ void Events::createEvent()
 				dateIsAvailable = false;
 			}
 
-			if ( (year < current_year) || ( year >= current_year && atoi(month.c_str()) < current_month) || ( year >= current_year && atoi(month.c_str()) >= current_month && day < current_day) )
+			if(current_year > year || ( current_year == year && current_month > atoi(month.c_str()) ) || ( current_year == year && current_month == atoi(month.c_str()) && current_day > day) )
 			{
 				dateIsCorrect = false;
 			}
@@ -249,10 +247,6 @@ void Events::createEvent()
 	slotsList.push_back(std::pair<int,int>(0,300));
 	slotsList.push_back(std::pair<int,int>(720,780));
 
-	/*for (auto itr = slotsList.begin(); itr != slotsList.end(); itr++) {
-		std::cout << "<" << itr->first << ", " << itr->second << "> ";
-	}
-	std::cout << std::endl;*/
 
 	do {
 		do {
@@ -269,21 +263,6 @@ void Events::createEvent()
 
 			index = timeSlot.find(':');
 
-			//DEBUGGING CODE
-			/*std::cout << "index: " << index << '\n';
-			std::cout << "First substring of length " << timeSlot.substr(0,index).length() << ": " << timeSlot.substr(0,index) << '\n';
-			if (timeSlot.substr(0,index).find_first_not_of("0123456789") != std::string::npos) {
-				std::cout << "First not of: " << timeSlot.substr(0,index).find_first_not_of("0123456789") << '\n';
-			} else {
-				std::cout << "First not of: " << "npos\n";
-			}
-			std::cout << "Second substring of length " << timeSlot.substr(index+1).length() << ": " << timeSlot.substr(index+1) << '\n';
-			if (timeSlot.substr(index + 1).find_first_not_of("0123456789") != std::string::npos) {
-				std::cout << "First not of: " << timeSlot.substr(index + 1).find_first_not_of("0123456789") << '\n';
-			} else {
-				std::cout << "First not of: " << "npos\n";
-			}*/
-			//END OF DEBUGGING CODE
 
 			if (index != std::string::npos) {
 				try {
@@ -304,7 +283,7 @@ void Events::createEvent()
 					std::cout << "\nOther error.\n";
 					continue;
 				}
-				//std::cout << "hour: " << hour << '\n';
+
 
 				try {
 					minute = std::stoi(timeSlot.substr(index + 1));
@@ -324,17 +303,16 @@ void Events::createEvent()
 					std::cout << "\nOther error.\n";
 					continue;
 				}
-				//std::cout << "minute: " << minute << '\n';
+			
 
 				if (((timeSlot.substr(0,index)).find_first_not_of("0123456789") == std::string::npos)
 				&& ((timeSlot.substr(index + 1)).find_first_not_of("0123456789") == 2)) {
-					//std::cout << "This is a 12 hour format.\n";
+					
 					//If the length is 6 or 7 and no extra; disallows things like 2:03amp
 					if ((timeSlot.length() == 6) || ((timeSlot.length() == 7) && ((timeSlot.substr(index + 1)).length() == 4))) {
 						int lastIndex = timeSlot.length() - 1;
 						int secondToLastIndex = lastIndex - 1;
-						//std::cout << "At last index: " << timeSlot[lastIndex] << '\n';
-						//std::cout << "At second to last index: " << timeSlot[secondToLastIndex] << '\n';
+					
 						if ((timeSlot[lastIndex] == 'm') && ((timeSlot[secondToLastIndex] == 'a') || (timeSlot[secondToLastIndex] == 'p'))) {
 							timeSlotFormatIsCorrect = true;
 						}
@@ -387,24 +365,23 @@ void Events::createEvent()
 					slotStart = timeInMins;
 					slotEnd = timeInMins + 20;
 					newSlot = {slotStart, slotEnd};
-					//std::cout << "New pair: <" << newSlot.first << ", " << newSlot.second << ">\n";
 
 					for (auto itr = slotsList.begin(); itr != slotsList.end(); itr++) {
 						if (newSlot.first >= itr->second) {
 							itr++;
 							if (itr == slotsList.end()) {
 								successfulAddition = true;
-								//std::cout << "We're at end. Inserting at end...\n";
+								
 								slotsList.push_back(newSlot);
 								break;
 							} else {
 								itr--;
-								//std::cout << newSlot.first << " >= " << itr->second << " continuing..\n";
+								
 								continue;
 							}
 						} else {
 							if (newSlot.second > itr->first) {
-								//std::cout << newSlot.second << " > " << itr->first << " ";								
+								
 								interface_.clearScreen();
 								menu.Header();
 								timeSlotIsAvailable = false;
@@ -412,18 +389,14 @@ void Events::createEvent()
 								break;
 							} else {
 								successfulAddition = true;
-								//std::cout << newSlot.second << " <= " << itr->first << " ";
-								//std::cout << "Adding newSlot in previous position!\n";
+							
 								slotsList.insert(itr, newSlot);
 								break;
 							}
 						}
 					}
 
-					/*for (auto itr = slotsList.begin(); itr != slotsList.end(); itr++) {
-						std::cout << "<" << itr->first << ", " << itr->second << "> ";
-					}
-					std::cout << std::endl;*/
+				
 				}
 			} else {
 				std::cout << "No colon.\n";
@@ -456,7 +429,14 @@ void Events::createEvent()
 				}
 				timeSlotEnd += std::to_string(minuteEndTime);
 
-				std::string timeSlotInterval = timeSlot + " - " + timeSlotEnd;
+				std::string timeSlotInterval;
+
+				if(io.timeFormat == false)
+					timeSlotInterval = timeSlot + " - " + timeSlotEnd;
+				else
+					timeSlotInterval = io.timeFormatter(timeSlot) + " - " + io.timeFormatter(timeSlotEnd);
+
+
 				createdTimeSlots += ("\n\t" + timeSlotInterval);
 				std::cout << "The " << timeSlotInterval << " time slot was successfully added!\n";
 
@@ -484,10 +464,8 @@ void Events::createEvent()
 
 	outputString += (std::to_string(io.size) + "," + eventName + "," + date + "," + std::to_string(amountOfSlots) + "," + stringOfTimeSlots + std::to_string(amountOfAtendees) + "," + adminName);
 	
-	//file << outputString << std::endl;
 
 	io.addEntry(outputString);
-	//file.close();
 }
 
 
