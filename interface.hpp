@@ -7,13 +7,13 @@
 
 Interface::Interface()
 {
-    
+
 }
 
 
 Interface::~Interface()
 {
-    
+
 }
 
 void Interface::clearScreen()
@@ -23,12 +23,12 @@ void Interface::clearScreen()
 
 std::string Interface::getInput(const char *message)
 {
-    
+
     std::string inputString;
-    
+
     std::cout << message;
     getline(std::cin, inputString);
-    
+
     return inputString;
 }
 
@@ -52,21 +52,21 @@ void Interface::Menu::Loop()
     while (true)
     {
         clearScreen();
-        
+
         //Draw the menu
         Draw();
-        
+
         //Get user selection
         auto key = getInput("\nMenu -> ");
-        
+
         unsigned int pos = atoi(key.c_str());
-        
+
         //If input is valid
         if( pos <= option_list.size() && pos > 0)
         {
             //.second is the second element of the pair of the vector element
             auto func_ptr = (option_list[pos-1].second);
-            
+
             //If the func_ptr is a nulllptr then we exit the program (exit option)
             if (func_ptr == nullptr)
             {
@@ -81,7 +81,7 @@ void Interface::Menu::Loop()
         {
             clearScreen();
             Header();
-            
+
             std::cout << "\nThis option is not valid." << std::endl;
             Wait("");
         }
@@ -91,17 +91,17 @@ void Interface::Menu::Loop()
 void Interface::Menu::Draw()
 {
     std::string SOMETHING = "";
-    
+
     Header();
-    
+
     for (size_t i = 0; i < option_list.size(); ++i)
         std::cout << "\n(Press " << i+1 << ")    " << option_list[i].first;
-    
+
 }
 
 void Interface::Menu::Header()
 {
-    
+
     std::cout << "***************************************************************************\n";
     std::cout << " ______               _      _____      _              _       _           \n"
     "|  ____|             | |    / ____|    | |            | |     | |          \n"
@@ -114,22 +114,20 @@ void Interface::Menu::Header()
     std::cout << "***************************************************************************\n";
     std::cout << "        All times displayed are CDT (Central Daylight Time)\n";
     std::cout << "***************************************************************************\n\n";
-    
+
     /*ADD SECTION PRINTING ALL EVENT LIST FILE ENTRIES -> USE IO*/
     IO io("event.list");
     io.displayEntries();
-    
+
     std::cout << "***************************************************************************";
 }
 
 void Interface::toggleTimeFormat()
 {
     IO io("event.list");
-    
+
     if( io.timeFormat == false )
         io.timeFormat = true;
     else
         io.timeFormat = false;
 }
-
-

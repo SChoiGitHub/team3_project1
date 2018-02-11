@@ -1,6 +1,6 @@
 /**
 *	@author Team 3
-*	@date 
+*	@date
 *	@file events.hpp
 */
 
@@ -37,15 +37,15 @@ void Events::setAvailability()
 	if( io_.size != 0 )
 	{
 		std::string input = interface_.getInput("Please select an event ID from the list above: ");
-		
+
 		for(unsigned int i = 0; i < input.size() ; ++i)
 			if( isdigit(input[i]) == 0 )
-				digit_flag = false; 
-	
+				digit_flag = false;
+
 		if(digit_flag == true)
 		{
 			int input_ = atoi(input.c_str());
-	
+
 			if( input_ < 0 || input_ > io_.size - 1)
 			{
 				std::cout << "Invalid event ID." << std::endl;
@@ -56,27 +56,27 @@ void Events::setAvailability()
 				input = io_.retrieveElement(input_,"total_slots");
 				dummy_int = atoi(input.c_str());
 				input = io_.retrieveElement(input_,"slots");
-				
+
 				std::string slots[dummy_int];
 				std::string dummy_string;
 				std::stringstream ss(input);
-				
+
 				for(int i = 0; i < dummy_int ; ++i)
 				{
 					//Get slots
 					getline(ss, slots[i], ',');
 					//Just to move the string forward (over the number of people in a slot)
 					getline(ss, input, ',');
-	
+
 					dummy_string = "slot" + std::to_string(i+1);
-	
+
 					if(io_.timeFormat == true )
 						std::cout << "Are you available at " << slots[i] << " ? [Y/n]: ";
 					else
 						std::cout << "Are you available at " << io_.timeFormatter(slots[i]) << " ? [Y/n]: ";
-	
+
 					getline(std::cin, input);
-	
+
 					if(input == "Yes" || input == "yes" || input == "y" || input == "Y")
 					{
 						io_.updateElement(input_,dummy_string,NULL);
@@ -85,17 +85,17 @@ void Events::setAvailability()
 					else if(input != "No" && input != "no" && input != "n" && input != "N")
 					{
 						std::cout << "Invalid input. Please try again." << std::endl;
-	
+
 						ss.clear();
 						ss.seekg(0, std::ios::beg);
-	
+
 						for(int j = 0; j < 2*i ; ++j)
-							getline(ss, input, ',');	
+							getline(ss, input, ',');
 
 						--i;
 					}
 				}
-				
+
 				if(new_attendee == true)
 				{
 					std::string name = interface_.getInput("What's your name? ");
@@ -122,7 +122,7 @@ void Events::createEvent()
 	Interface::Menu menu({{"", NULL}});
 
 	IO io("event.list");
-	
+
 
 	time_t t = time(NULL);
 	tm* timePtr = localtime(&t);
@@ -303,16 +303,16 @@ void Events::createEvent()
 					std::cout << "\nOther error.\n";
 					continue;
 				}
-			
+
 
 				if (((timeSlot.substr(0,index)).find_first_not_of("0123456789") == std::string::npos)
 				&& ((timeSlot.substr(index + 1)).find_first_not_of("0123456789") == 2)) {
-					
+
 					//If the length is 6 or 7 and no extra; disallows things like 2:03amp
 					if ((timeSlot.length() == 6) || ((timeSlot.length() == 7) && ((timeSlot.substr(index + 1)).length() == 4))) {
 						int lastIndex = timeSlot.length() - 1;
 						int secondToLastIndex = lastIndex - 1;
-					
+
 						if ((timeSlot[lastIndex] == 'm') && ((timeSlot[secondToLastIndex] == 'a') || (timeSlot[secondToLastIndex] == 'p'))) {
 							timeSlotFormatIsCorrect = true;
 						}
@@ -371,17 +371,17 @@ void Events::createEvent()
 							itr++;
 							if (itr == slotsList.end()) {
 								successfulAddition = true;
-								
+
 								slotsList.push_back(newSlot);
 								break;
 							} else {
 								itr--;
-								
+
 								continue;
 							}
 						} else {
 							if (newSlot.second > itr->first) {
-								
+
 								interface_.clearScreen();
 								menu.Header();
 								timeSlotIsAvailable = false;
@@ -389,14 +389,14 @@ void Events::createEvent()
 								break;
 							} else {
 								successfulAddition = true;
-							
+
 								slotsList.insert(itr, newSlot);
 								break;
 							}
 						}
 					}
 
-				
+
 				}
 			} else {
 				std::cout << "No colon.\n";
@@ -463,9 +463,7 @@ void Events::createEvent()
 	} while (userChoice == 'a');
 
 	outputString += (std::to_string(io.size) + "," + eventName + "," + date + "," + std::to_string(amountOfSlots) + "," + stringOfTimeSlots + std::to_string(amountOfAtendees) + "," + adminName);
-	
+
 
 	io.addEntry(outputString);
 }
-
-

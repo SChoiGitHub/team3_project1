@@ -1,6 +1,6 @@
 /**
 *	@author Team 3
-*	@date 
+*	@date
 *	@file log.hpp
 */
 
@@ -9,7 +9,7 @@ Log::Log()
 	logFile.open("error.log", std::ios::out | std::ios::app);
 }
 
-Log::~Log() 
+Log::~Log()
 {
 	logFile.close();
 }
@@ -25,4 +25,3 @@ void Log::addEntry(std::string error_type, std::string function_responsible)
 
 	std::cout << "Error log entry added <- " << error_type << std::endl;
 }
-
