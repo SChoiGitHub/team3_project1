@@ -123,7 +123,6 @@ void Events::createEvent()
 
 	IO io("event.list");
 
-
 	time_t t = time(NULL);
 	tm* timePtr = localtime(&t);
 	int current_year = (int)timePtr->tm_year + 1900;
@@ -505,7 +504,7 @@ void Events::createEvent()
 
 				std::cout << "The " << timeSlotInterval << " time slot was successfully added!\n";
 
-				//Converting from 24-hour mode to 12-hout mode.
+				//Converting from 24-hour mode to 12-hour mode.
 				timeSlot = io.timeFormatter(timeSlot);
 
 				/*This string contains each timeSlot with the amount of people who signed up for that time slot; since the
@@ -531,7 +530,6 @@ void Events::createEvent()
 
 	//This string, containing all the information gathered, will be sent as a parameter to the function addEntry in io.hpp
 	outputString += (std::to_string(io.size) + "," + eventName + "," + date + "," + std::to_string(amountOfSlots) + "," + stringOfTimeSlots + std::to_string(amountOfAtendees) + "," + adminName);
-
 
 	io.addEntry(outputString);
 }
