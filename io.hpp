@@ -306,7 +306,7 @@ void IO::displayEntries()
     //Make sure stream is at beginning of file
     file.clear();    //It is necessary to clear the eof flag
     file.seekg(0, std::ios::beg);
-//? 
+//?
 	file.clear();    //It is necessary to clear the eof flag
     file.seekg(0, std::ios::beg);
 
@@ -373,7 +373,7 @@ std::string IO::timeFormatter(std::string slot)
     int hours = 0;
     std::string meridiem;
     std::string formatted_slot;
-
+    //05:30am   17:30
     //12-hour format -> will have the extra am or pm characters that the 24-hour format does not have
     if(s_size + 1 > 6)
     {
@@ -384,7 +384,7 @@ std::string IO::timeFormatter(std::string slot)
             getline(ss, formatted_slot, ':');
             hours = atoi(formatted_slot.c_str());
             getline(ss, formatted_slot, 'a');
-
+              //12:40am  06:50am 00:30am wrong!!
             if( hours == 12 )
                 formatted_slot = "00:" + formatted_slot;
             else
@@ -394,7 +394,7 @@ std::string IO::timeFormatter(std::string slot)
                     formatted_slot = std::to_string(hours) + ":" + formatted_slot;
         }
         else
-        {
+        {   //05:30pm
             getline(ss, formatted_slot, ':');
             hours = atoi(formatted_slot.c_str());
 
