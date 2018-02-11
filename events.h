@@ -7,9 +7,10 @@
 #include <string>
 #include <cctype>
 #include <stdexcept>
+#include <ctime>
 #include <list>
-#include "interface.h"
 #include "io.h"
+#include "interface.h"
 
 class Events
 {

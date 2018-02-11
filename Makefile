@@ -8,7 +8,8 @@ main: main.o
 	g++ -Wall -std=c++11 main.o -o main
 
 
-main.o: main.cpp io.h log.h events.h interface.h
+	
+main.o: main.cpp log.h events.h io.h interface.h
 	g++ -Wall -std=c++11 -c main.cpp
 
 clean:

@@ -11,7 +11,8 @@ IO::IO(const std::string fileName) : fileName_(fileName)
     int n_lines = 0;
     std::string dummy_string;
 
-    file.open(fileName_, std::fstream::in | std::fstream::out | std::fstream::app);
+    file.open(fileName_,std::ios::in|std::ios::out);
+
 
     while(std::getline(file, dummy_string))
         ++n_lines;
@@ -29,8 +30,9 @@ void IO::addEntry(std::string store)
 {
     //This adds lines to file events.list
 	size++;
-	file.seekg(0,std::ios::end);
-	file <<store;
+	file.clear();
+	file.seekg(0,std::fstream::end);
+	file << store;
 }
 
 

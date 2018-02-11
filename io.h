@@ -18,6 +18,7 @@ class IO
 public:
     
     static bool timeFormat;
+    int size;        //Number of entries in file
     
     /** @pre None
      *   @post A file is opened with given name. It is created if it does not exist yet
@@ -60,10 +61,10 @@ public:
      *   @return String with slot in new time format
      */
     std::string timeFormatter(std::string slot);
+
     
 private:
     
-    int size;        //Number of entries in file
     std::fstream file;        //File stream
     std::string fileName_;        //Name of file
     Log logFile;            //Log object
