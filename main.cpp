@@ -23,30 +23,5 @@ int main(int argc, char **argv)
 	menu.Loop();	
 
 
-	//IO io("event.list");
-
-	//io.updateElement(0,"total_attendees", NULL);
-	//io.updateElement(0,"attendees", (char *) "peter");
-
-	//io.updateElement(1,"total_attendees", NULL);
-	//io.updateElement(1,"attendees", (char *) "peter");
-	//std::cout << io.size << std::endl;
-
-	//std::cout << "Number of lines in events file (number of events): " << io.size << std::endl;
-
-	//std::cout << io.retrieveElement(0,"date") << std::endl;
-
-	/*Log logFile;
-
-	logFile.addEntry("Seg fault", "main");
-
-	logFile.addEntry("Some sort of fault", "main");
-
-	Log fr;
-
-	fr.addEntry("Some sort of fault", "main");
-*/
-	//std::cout << io.size << std::endl;
-
 	return (0);
 }
