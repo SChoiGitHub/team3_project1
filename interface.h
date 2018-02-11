@@ -38,7 +38,7 @@ public:
      *   @post Waits for the user to press enter
      *   @return None
      */
-    static void Wait(const char *wait_string = "Press Enter to continue...");
+    static void Wait(std::string wait_string);
     
     /** @pre None
      *   @post Toggles the time format between 12-hour and 24-hour formats
@@ -63,6 +63,12 @@ public:
          */
         void Loop();
         
+	/** @pre None
+         *   @post Draws a header for a menu
+         *   @return None
+         */
+        void Header();
+
     private:
         
         std::vector<std::pair<std::string, void (*)()>> option_list;    //Vector of pairs
@@ -73,11 +79,6 @@ public:
          */
         void Draw();
         
-        /** @pre None
-         *   @post Draws a header for a menu
-         *   @return None
-         */
-        void Header();
     };
     
     

@@ -32,7 +32,7 @@ void IO::addEntry(std::string store)
 	size++;
 	file.clear();
 	file.seekg(0,std::fstream::end);
-	file << store;
+	file << store << std::endl;
 }
 
 
@@ -306,7 +306,7 @@ void IO::displayEntries()
     //Make sure stream is at beginning of file
     file.clear();    //It is necessary to clear the eof flag
     file.seekg(0, std::ios::beg);
-
+//? 
 	file.clear();    //It is necessary to clear the eof flag
     file.seekg(0, std::ios::beg);
 
