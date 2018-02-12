@@ -177,11 +177,25 @@ void Events::createEvent()
 	interface_.clearScreen();
 	menu.Header();
 
-	std::cout << "\nEnter your name: ";
-	std::getline(std::cin, adminName);
+	std::size_t found;
 
-	std::cout << "\nEnter event name: ";
-	std::getline(std::cin, eventName);
+
+
+	do{
+		found = 0;
+		std::cout << "\nEnter your name (no commas): ";
+		std::getline(std::cin, adminName);
+		found = adminName.find_first_of(",");
+
+	} while( found!=std::string::npos );
+
+
+	do{
+		found = 0;
+		std::cout << "\nEnter event name (no commas): ";
+		std::getline(std::cin, eventName);
+		found = eventName.find_first_of(",");
+	}while(found!=std::string::npos );
 
 	/*----------------------------Date input and verification----------------------------*/
 
