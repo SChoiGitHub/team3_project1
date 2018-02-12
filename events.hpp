@@ -34,6 +34,9 @@ void Events::setAvailability()
 	bool new_attendee = false;
 	int dummy_int = 0;
 
+	std::size_t found;
+
+
 	if( io_.size != 0 )
 	{
 		std::string input = interface_.getInput("Please select an event ID from the list above: ");
@@ -98,7 +101,14 @@ void Events::setAvailability()
 
 				if(new_attendee == true)
 				{
-					std::string name = interface_.getInput("What's your name? ");
+					std::string name;
+					do{
+						found = 0;
+						name = interface_.getInput("What's your name (no commas)? ");
+						found = name.find_first_of(",");
+
+					} while( found!=std::string::npos );
+
 					const char* name_ = name.c_str();
 					io_.updateElement(input_,"total_attendees",NULL);
 					io_.updateElement(input_,"attendees", (char *) name_);
