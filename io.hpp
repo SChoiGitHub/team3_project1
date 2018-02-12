@@ -13,9 +13,6 @@ IO::IO(const std::string fileName) : fileName_(fileName)
 
     file.open(fileName_, std::fstream::app | std::fstream::out | std::fstream::in);
 
-   // if(file.good())
-	//std::cout << "worked" << std::endl;
-
     while(std::getline(file, dummy_string))
         ++n_lines;
 
