@@ -569,12 +569,14 @@ void Events::createEvent()
 }
 std::string Events::requestTasks(){
 	Interface interface_;
-	char userChoice;
-	std::string current = "";
+	std::string userChoice;
+	std::vector<std::string> currentTaskList;
 	bool quit = true;
+	
+	interface_.clearScreen();
+	
 	do{
-		
-		interface_.clearScreen();
+		quit = true;
 		std::cout << "Would you like to create tasks?\n"
 			<< "\tCreate a task: input 'a'.\n"
 			<< "\tView current tasks: input 'v'.\n"
@@ -583,12 +585,31 @@ std::string Events::requestTasks(){
 		std::cin >> userChoice;
 		std::cin.ignore(1, '\n');
 		
-		if(userChoice == 'a'){
-			quit = false;
-		}else if(userChoice == 'v'){
-			quit = false;
-		}
+		//Clear screen.
 		
-	}while(quit);
+		//If any of these happen, we do not exit the loop.
+		if(userChoice.at(0) == 'a'){
+			quit = false;
+			
+			interface_.clearScreen();
+			std::cout << "What is the task?: ";
+			std::getline(std::cin, userChoice);
+			currentTaskList.push_back(userChoice);
+			
+		}else if(userChoice.at(0) == 'v'){
+			quit = false;
+			
+			std::cout << "Your current task list:\n";
+			for(auto&& it = currentTaskList.begin(); it != currentTaskList.end(); it++){
+				std::cout << '\t' << (*it) << '\n';
+			}
+			
+		}
+		std::cout << "\n\n";
+	}while(!quit);
+	
+	
+	int id = IO("event.list").size;
+	
 	return "";
 }
