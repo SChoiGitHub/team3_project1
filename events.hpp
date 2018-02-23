@@ -568,12 +568,27 @@ void Events::createEvent()
 	io.addEntry(outputString);
 }
 std::string Events::requestTasks(){
-	std::string userChoice;
+	Interface interface_;
+	char userChoice;
+	std::string current = "";
+	bool quit = true;
 	do{
+		
+		interface_.clearScreen();
 		std::cout << "Would you like to create tasks?\n"
 			<< "\tCreate a task: input 'a'.\n"
-			<< "\tExit menu: input 'e'.\n"
+			<< "\tView current tasks: input 'v'.\n"
+			<< "\tExit menu: input anything else.\n"
 			<< "Choice: ";
-	}while(userChoice != 'a');
+		std::cin >> userChoice;
+		std::cin.ignore(1, '\n');
+		
+		if(userChoice == 'a'){
+			quit = false;
+		}else if(userChoice == 'v'){
+			quit = false;
+		}
+		
+	}while(quit);
 	return "";
 }
