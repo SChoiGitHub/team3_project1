@@ -591,6 +591,7 @@ std::string Events::requestTasks(){
 		if(userChoice.at(0) == 'a'){
 			quit = false;
 			
+			//Get a task.
 			interface_.clearScreen();
 			std::cout << "What is the task?: ";
 			std::getline(std::cin, userChoice);
@@ -599,6 +600,7 @@ std::string Events::requestTasks(){
 		}else if(userChoice.at(0) == 'v'){
 			quit = false;
 			
+			//Just display the current list.
 			std::cout << "Your current task list:\n";
 			for(auto&& it = currentTaskList.begin(); it != currentTaskList.end(); it++){
 				std::cout << '\t' << (*it) << '\n';
@@ -608,8 +610,21 @@ std::string Events::requestTasks(){
 		std::cout << "\n\n";
 	}while(!quit);
 	
-	
 	int id = IO("event.list").size;
 	
-	return "";
+	std::string taskOutputString;
+	
+	for(auto&& it = currentTaskList.begin(); it != currentTaskList.end(); it++){
+		//event id
+		taskOutputString += std::to_string(id) + " ";
+		//task taken (T/F)
+		taskOutputString += "0 ";
+		//task name
+		taskOutputString += (*it) + " ";
+		//Who is doing it
+		taskOutputString += std::string("Noman") + "\n";
+	}
+	
+	
+	return taskOutputString;
 }
