@@ -41,6 +41,12 @@ class Events
 	*   @return None
 	*/
 	static void createEvent();
+	/** This method deals with the UI regarding the tasks.
+	*   @pre None
+	*   @post None
+	*   @return A string that represents the tasks.
+	*/
+	static void requestTasks();
 };
 
 
