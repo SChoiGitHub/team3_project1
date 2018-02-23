@@ -551,9 +551,29 @@ void Events::createEvent()
 			}
 		} while (userChoice == 'v');
 	} while (userChoice == 'a');
+	
+	
+	//Ask for tasks.
+	std::string taskList = requestTasks();
+	
+	//debug
+	std::cout << taskList;
+	
+	
+	
 
 	//This string, containing all the information gathered, will be sent as a parameter to the function addEntry in io.hpp
 	outputString += (std::to_string(io.size) + "," + eventName + "," + date + "," + std::to_string(amountOfSlots) + "," + stringOfTimeSlots + std::to_string(amountOfAtendees) + "," + adminName);
 
 	io.addEntry(outputString);
+}
+std::string Events::requestTasks(){
+	std::string userChoice;
+	do{
+		std::cout << "Would you like to create tasks?\n"
+			<< "\tCreate a task: input 'a'.\n"
+			<< "\tExit menu: input 'e'.\n"
+			<< "Choice: ";
+	}while(userChoice != 'a');
+	return "";
 }
