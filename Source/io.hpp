@@ -440,8 +440,20 @@ void IO::storeDate(int id, std::string date, std::list<std::string> times){
     std::string line = id + "," + date;
 
     for(auto const& i : data){
-        line += i;
+        line += "," + i;
     }
 
-    eventTimes.add(lie);
+    eventTimes.add(line);
+}
+
+
+//Retrives and Stores Tasks and related information
+void IO::storeTask(int id, std::string name, bool taken, std::string assignee){
+    std::string line = id + "," + name + "," + taken;
+
+    if(taken){
+        line += "," +assignee;
+    }
+
+    tasks.add(line);
 }
