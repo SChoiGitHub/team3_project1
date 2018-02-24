@@ -433,3 +433,15 @@ void IO::storeTask(int id, std::string name, std::string creator){
 
     events.add(line);
 }
+
+
+//Retrives and Stores Dates and times for events
+void IO::storeDate(int id, std::string date, std::list<std::string> times){
+    std::string line = id + "," + date;
+
+    for(auto const& i : data){
+        line += i;
+    }
+
+    eventTimes.add(lie);
+}
