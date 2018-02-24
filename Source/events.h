@@ -41,6 +41,13 @@ class Events
 	*   @return None
 	*/
 	static void createEvent();
+	/**This method deals with the UI regarding the tasks.
+	 * @param current the string to be returned
+	 * @pre None
+	 * @post None
+	 * @return A string that represents the tasks.
+	 */
+	static std::string requestTasks();
 };
 
 

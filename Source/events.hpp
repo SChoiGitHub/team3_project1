@@ -551,9 +551,80 @@ void Events::createEvent()
 			}
 		} while (userChoice == 'v');
 	} while (userChoice == 'a');
+	
+	
+	//Ask for tasks.
+	std::string taskList = requestTasks();
+	
+	//debug
+	std::cout << taskList;
+	
+	
+	
 
 	//This string, containing all the information gathered, will be sent as a parameter to the function addEntry in io.hpp
 	outputString += (std::to_string(io.size) + "," + eventName + "," + date + "," + std::to_string(amountOfSlots) + "," + stringOfTimeSlots + std::to_string(amountOfAtendees) + "," + adminName);
 
 	io.addEntry(outputString);
+}
+std::string Events::requestTasks(){
+	Interface interface_;
+	std::string userChoice;
+	std::vector<std::string> currentTaskList;
+	bool quit = true;
+	
+	interface_.clearScreen();
+	
+	do{
+		quit = true;
+		std::cout << "Would you like to create tasks?\n"
+			<< "\tCreate a task: input 'a'.\n"
+			<< "\tView current tasks: input 'v'.\n"
+			<< "\tExit menu: input anything else.\n"
+			<< "Choice: ";
+		std::cin >> userChoice;
+		std::cin.ignore(1, '\n');
+		
+		//Clear screen.
+		
+		//If any of these happen, we do not exit the loop.
+		if(userChoice.at(0) == 'a'){
+			quit = false;
+			
+			//Get a task.
+			interface_.clearScreen();
+			std::cout << "What is the task?: ";
+			std::getline(std::cin, userChoice);
+			currentTaskList.push_back(userChoice);
+			
+		}else if(userChoice.at(0) == 'v'){
+			quit = false;
+			
+			//Just display the current list.
+			std::cout << "Your current task list:\n";
+			for(auto&& it = currentTaskList.begin(); it != currentTaskList.end(); it++){
+				std::cout << '\t' << (*it) << '\n';
+			}
+			
+		}
+		std::cout << "\n\n";
+	}while(!quit);
+	
+	int id = IO("event.list").size;
+	
+	std::string taskOutputString;
+	
+	for(auto&& it = currentTaskList.begin(); it != currentTaskList.end(); it++){
+		//event id
+		taskOutputString += std::to_string(id) + " ";
+		//task taken (T/F)
+		taskOutputString += "0 ";
+		//task name
+		taskOutputString += (*it) + " ";
+		//Who is doing it
+		taskOutputString += std::string("Noman") + "\n";
+	}
+	
+	
+	return taskOutputString;
 }
