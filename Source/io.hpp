@@ -425,3 +425,11 @@ std::string IO::timeFormatter(std::string slot)
 
     return formatted_slot;
 }
+
+
+//Retrives and Stores General Task information
+void IO::storeTask(int id, std::string name, std::string creator){
+    std::string line = id + "," + name + "," + creator;
+
+    events.add(line);
+}
