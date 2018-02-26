@@ -464,5 +464,11 @@ void IO::storeTask(int id, std::string name, bool taken, std::string assignee){
 
 //Retrieves and Stores Attendees
 void IO::storeAttendees(int id, std::string date, std::string time, std::list<std::string> attendees){
+    std::string line = id + "," + date + "," + time;
 
+    for(auto const& i : atendees){
+        line += "," + i;
+    }
+
+    addEntry(attendenceFile, line);
 }
