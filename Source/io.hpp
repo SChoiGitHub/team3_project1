@@ -31,7 +31,7 @@ IO::~IO()
 }
 
 
-void IO::addEntry(std::fstream file, std::string data){
+void IO::addEntry(std::fstream& file, std::string data){
     file.clear();
 	file.seekg(0,std::fstream::end);
 	file << data << std::endl;
