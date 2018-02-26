@@ -435,6 +435,8 @@ int IO::storeEvent(std::string name, std::string creator){
     addEntry(eventsFile, line);
 
     numEvents += 1;
+
+    return numEvents - 1;
 }
 
 
