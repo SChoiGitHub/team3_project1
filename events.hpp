@@ -208,7 +208,7 @@ void Events::createEvent()
 	} while (found != std::string::npos);
 
 	//Declaring a set of date strings
-	std::set<std::string>* dateArr = new std::set<std::string>;
+	std::unordered_map<std::string,std::string>* dateInfo = new std::unordered_map<std::string,std::string>;
 	bool newDate = false;
 	std::string choose;
 
@@ -329,7 +329,7 @@ void Events::createEvent()
 			{
 				newDate = true;
         continueInput = false;
-				dateArr->insert(date);
+				dateInfo->emplace(date,std::string(""));
 				date = "";
 			}else if(choose == "No" || choose == "no" || choose == "n" || choose == "N"){
         newDate = false;
@@ -339,13 +339,11 @@ void Events::createEvent()
 	} while(newDate);
 
 /*----------------------------Time slot input and verification----------------------------*/
-
-	std::list<std::string>* timeSlots = new std::list<std::string>;
-  auto&& it = dateArr->begin();
+  auto&& it = dateInfo->begin();
 
 	do {
 
-		std::cout << "Please set time slots for " << (*it) << "\n";
+		std::cout << "Please set time slots for " << std::string(it->first) << "\n";
 		do {
 			do {
 				hour = -1;
@@ -595,15 +593,25 @@ void Events::createEvent()
 			} while (userChoice == 'v');
 		} while (userChoice == 'a');
 
-		timeSlots->push_back(stringOfTimeSlots);
-    it++;
-  }while(it != dateArr->end());
+		dateInfo->emplace(it->first,createdTimeSlots);
+    if(it != dateInfo->end()){
+      it++;
+    }
+  }while(it != dateInfo->end());
+  
+  
+  
+  
+ 
+  
+  
+  
+  
 
 	//This string, containing all the information gathered, will be sent as a parameter to the function addEntry in io.hpp
 	outputString += (std::to_string(io.size) + "," + eventName + "," + date + "," + std::to_string(amountOfSlots) + "," + stringOfTimeSlots + std::to_string(amountOfAtendees) + "," + adminName);
     
-  delete dateArr;
-  delete timeSlots;
+  delete dateInfo;
 
 	io.addEntry(outputString);
 }
