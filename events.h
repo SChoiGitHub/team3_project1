@@ -41,13 +41,20 @@ class Events
 	*   @return None
 	*/
 	static void createEvent();
+  
+  /**This method refers to the menu where someone takes a task from an event.
+	 * @pre None
+	 * @post lets an user take a task.
+	 */  
+  static void takeTask();
+  
 	/**This method deals with the UI regarding the tasks.
-	 * @param current the string to be returned
 	 * @pre None
 	 * @post None
 	 * @return A string that represents the tasks.
 	 */
 	static std::string requestTasks();
+
 };
 
 
