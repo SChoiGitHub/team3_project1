@@ -19,13 +19,13 @@ public:
     static bool timeFormat;
     int size;        //Number of entries in file
 
-    /** @pre None
-     *   @post A file is opened with given name. It is created if it does not exist yet
+    /*
+     *   @post Files are opened with the appropriate name
      */
-    IO(const std::string fileName);
+    IO();
 
-    /** @pre None
-     *   @post A file is closed with given name
+    /*
+     *   @post Files are closed
      */
     ~IO();
 
@@ -106,6 +106,7 @@ public:
 
 private:
     Log logFile;            //Log object
+    int numEvents;
 
     const std::string EVENTS_FILE;
     const std::string TASKS_FILE;
