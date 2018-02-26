@@ -31,13 +31,10 @@ IO::~IO()
 }
 
 
-void IO::addEntry(std::string store)
-{
-    //This adds lines to file events.list
-	size++;
-	file.clear();
+void IO::addEntry(std::fstream file, std::string data){
+    file.clear();
 	file.seekg(0,std::fstream::end);
-	file << store << std::endl;
+	file << data << std::endl;
 }
 
 
@@ -437,7 +434,7 @@ std::string IO::timeFormatter(std::string slot)
 void IO::storeEvent(std::string name, std::string creator){
     std::string line = id + "," + name + "," + creator;
 
-    events.add(line);
+    addEntry(eventsFile, line);
 }
 
 
@@ -449,7 +446,7 @@ void IO::storeSchedule(int id, std::string date, std::list<std::string> times){
         line += "," + i;
     }
 
-    eventTimes.add(line);
+    addEntry(schedulesFile, line);
 }
 
 
@@ -461,7 +458,7 @@ void IO::storeTask(int id, std::string name, bool taken, std::string assignee){
         line += "," +assignee;
     }
 
-    tasks.add(line);
+    addEntry(tasksFile, line);
 }
 
 
