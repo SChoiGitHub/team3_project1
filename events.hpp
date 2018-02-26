@@ -319,6 +319,9 @@ void Events::createEvent()
 		} while ((!dateIsCorrect) || (!dateIsAvailable));
 
 		std::cout << "Succesful addition of the date " << date << "!\n";
+    dateInfo->emplace(date,std::string(""));
+    date = "";
+    
     bool continueInput = true;
 		do {
       
@@ -329,8 +332,6 @@ void Events::createEvent()
 			{
 				newDate = true;
         continueInput = false;
-				dateInfo->emplace(date,std::string(""));
-				date = "";
 			}else if(choose == "No" || choose == "no" || choose == "n" || choose == "N"){
         newDate = false;
         continueInput = false;
@@ -354,6 +355,11 @@ void Events::createEvent()
 				timeSlotIsAvailable = true;
 				successfulAddition = false;
 
+        //clear old time slots
+        createdTimeSlots = "";
+        slotsList.clear();
+        
+        
 				std::cout << "\nEnter start time of a 20-minute time slot: ";
 				std::getline(std::cin, timeSlot);
 
@@ -593,16 +599,16 @@ void Events::createEvent()
 			} while (userChoice == 'v');
 		} while (userChoice == 'a');
 
-		dateInfo->emplace(it->first,createdTimeSlots);
+		dateInfo->emplace(it->first,stringOfTimeSlots);
+    
     if(it != dateInfo->end()){
       it++;
     }
   }while(it != dateInfo->end());
   
-  
-  
-  
- 
+  for(auto&& it = dateInfo->begin(); it != dateInfo->end(); it++){
+    std::cout << it->first << " " << it->second << "\n";
+  }
   
   
   
