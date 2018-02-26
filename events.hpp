@@ -217,7 +217,6 @@ void Events::createEvent()
 	/*----------------------------Date input and verification----------------------------*/
 
 	do {
-
 		do {
 			dateIsCorrect = true;
 			dateIsAvailable = true;
@@ -595,8 +594,8 @@ void Events::createEvent()
 		} while (userChoice == 'a');
 
 		timeSlots->push_back(stringOfTimeSlots);
-        it++;
-    } while(it != dateArr->end());
+    it++;
+  }while(it != dateArr->end());
 
 	//This string, containing all the information gathered, will be sent as a parameter to the function addEntry in io.hpp
 	outputString += (std::to_string(io.size) + "," + eventName + "," + date + "," + std::to_string(amountOfSlots) + "," + stringOfTimeSlots + std::to_string(amountOfAtendees) + "," + adminName);
