@@ -1,16 +1,17 @@
-#	Author: Team 3
-#	Date:
+# Originally Built by Team 3
+# Updated by Team 8
+
+src = ./Source/
+
+.PHONY: EventScheduler.app main.o clean
+
+EventScheduler.app: main.o
+	g++ -Wall -std=c++11 main.o -o EventScheduler
 
 
-.PHONY: main main.o clean
 
-main: main.o
-	g++ -Wall -std=c++11 main.o -o main
-
-
-	
 main.o: main.cpp log.h events.h io.h interface.h
-	g++ -Wall -std=c++11 -c main.cpp
+	g++ -Wall -std=c++11 -c $(src)main.cpp
 
 clean:
-	rm *.o main || true
+	rm *.o EventScheduler.app || true

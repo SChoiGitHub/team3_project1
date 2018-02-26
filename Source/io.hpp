@@ -6,38 +6,39 @@
 
 bool IO::timeFormat = false;
 
-IO::IO(const std::string fileName) : fileName_(fileName)
-{
+IO::IO() : EVENTS_FILE("events.csv"), TASKS_FILE("tasks.csv"), SCHEDULES_FILE("schedules.csv"), ATTENDENCE_FILE("attendence.csv"){
     int n_lines = 0;
     std::string dummy_string;
 
-    file.open(fileName_, std::fstream::app | std::fstream::out | std::fstream::in);
+    eventsFile.open(EVENTS_FILE, std::fstream::app | std::fstream::out | std::fstream::in);
+    tasksFile.open(TASKS_FILE, std::fstream::app | std::fstream::out | std::fstream::in);
+    schedulesFile.open(SCHEDULES_FILE, std::fstream::app | std::fstream::out | std::fstream::in);
+    attendenceFile.open(ATTENDENCE_FILE, std::fstream::app | std::fstream::out | std::fstream::in);
 
-    while(std::getline(file, dummy_string))
+    while(std::getline(eventsFile, dummy_string))
         ++n_lines;
 
     size = n_lines;
+    numEvents = n_lines;
 }
 
-IO::~IO()
-{
-    file.close();
+IO::~IO(){
+    eventsFile.close();
+    tasksFile.close();
+    schedulesFile.close();
+    attendenceFile.close();
 }
 
 
-void IO::addEntry(std::string store)
-{
-    //This adds lines to file events.list
-	size++;
-	file.clear();
+void IO::addEntry(std::fstream& file, std::string data){
+    file.clear();
 	file.seekg(0,std::fstream::end);
-	file << store << std::endl;
+	file << data << std::endl;
 }
 
 
-std::string IO::retrieveElement(int ID, std::string elementName)
-{
-    //IDs start at 0
+std::string IO::retrieveElement(int ID, std::string elementName){
+/*    //IDs start at 0
     if( ID >= size )
     {
         std::cout << "The requested event does not exist.\n";
@@ -130,14 +131,13 @@ std::string IO::retrieveElement(int ID, std::string elementName)
         //Get all attendees
         std::getline(ss, element, '\n');
     }
-
-    return element;
+*/
+    return "";
 }
 
 
-void IO::updateElement(int ID, std::string elementName, void* value)
-{
-    std::fstream file_;
+void IO::updateElement(int ID, std::string elementName, void* value){
+/*    std::fstream file_;
 	file_.open("event.list", std::ios::in | std::ios::out);
 
     //IDs start at 0
@@ -295,6 +295,7 @@ void IO::updateElement(int ID, std::string elementName, void* value)
     //Re-write overwritten strings
     for(int i = 0 ; i < strings2save ; ++i)
         file_ << stringSaved[i];
+*/
 }
 
 void IO::displayEntries()
@@ -424,4 +425,52 @@ std::string IO::timeFormatter(std::string slot)
     }
 
     return formatted_slot;
+}
+
+
+//Retrives and Stores General Task information
+int IO::storeEvent(std::string name, std::string creator){
+    std::string line = std::to_string(numEvents) + "," + name + "," + creator;
+
+    addEntry(eventsFile, line);
+
+    numEvents += 1;
+}
+
+
+//Retrives and Stores Dates and times for events
+void IO::storeSchedule(int id, std::string date, std::list<std::string> times){
+    std::string line = id + "," + date;
+
+    for(auto const& i : times){
+        line += "," + i;
+    }
+
+    addEntry(schedulesFile, line);
+}
+
+
+//Retrives and Stores Tasks and related information
+void IO::storeTask(int id, std::string name, bool taken, std::string assignee){
+    std::string line = id + "," + name;
+
+    if(taken){
+        line += "true," +assignee;
+    }else{
+        line +=  ",false";
+    }
+
+    addEntry(tasksFile, line);
+}
+
+
+//Retrieves and Stores Attendees
+void IO::storeAttendees(int id, std::string date, std::string time, std::list<std::string> attendees){
+    std::string line = id + "," + date + "," + time;
+
+    for(auto const& i : attendees){
+        line += "," + i;
+    }
+
+    addEntry(attendenceFile, line);
 }
