@@ -125,7 +125,7 @@ private:
     * @param data - string of csv data to store
     * @post Adds new event to file
     */
-    void addEntry(std::fstream file, std::string data);
+    void addEntry(std::fstream& file, std::string data);
 
 };
 
