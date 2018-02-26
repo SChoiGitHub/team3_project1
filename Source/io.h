@@ -11,6 +11,7 @@
 #include <string>
 #include <sstream>
 #include <fstream>
+#include <list>
 #include "log.h"
 
 class IO{
