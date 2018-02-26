@@ -8,6 +8,7 @@ void Events::userMode()
 {
 	Interface::Menu menu({
 		{"Set Availability", Events::setAvailability},
+    {"Task a Task", Events::takeTask},
 		{"Toggle Time Format 12/24", Interface::toggleTimeFormat},
 		{"Go back", nullptr}
 	});
@@ -574,7 +575,6 @@ std::string Events::requestTasks(){
 	bool quit = true;
 	
 	interface_.clearScreen();
-	
 	do{
 		quit = true;
 		std::cout << "Would you like to create tasks?\n"
@@ -627,4 +627,82 @@ std::string Events::requestTasks(){
 	
 	
 	return taskOutputString;
+}
+void Events::takeTask(){
+  Interface interface_;
+	IO io_("event.list");
+	bool digit_flag = true;
+  bool quit;
+  std::string userChoice;
+
+
+	if( io_.size != 0 )
+	{
+		std::string input = interface_.getInput("Please select an event ID from the list above: ");
+
+		for(unsigned int i = 0; i < input.size() ; ++i)
+			if( isdigit(input[i]) == 0 )
+				digit_flag = false;
+
+		if(digit_flag == true)
+		{
+			int input_ = atoi(input.c_str());
+
+			if( input_ < 0 || input_ > io_.size - 1)
+			{
+				std::cout << "Invalid event ID." << std::endl;
+				interface_.Wait("");
+			}
+			else{
+        //Temporary measure, change later.
+        do{
+          quit = true;
+          std::cout << "Would you like to take tasks?\n"
+            << "\tTake a task: input 't'.\n"
+            << "\tView current tasks and who is doing them: input 'v'.\n"
+            << "\tExit menu: input anything else.\n"
+            << "Choice: ";
+          std::cin >> userChoice;
+          std::cin.ignore(1, '\n');
+          
+          //If any of these happen, we do not exit the loop.
+          if(userChoice.at(0) == 't'){
+            quit = false;
+            
+            std::cout << "What task do you want (type in the task name)?\n"
+              << "Snacks\n"
+              << "Choice: ";
+            std::cin >> userChoice;
+            std::cin.ignore(1, '\n');
+            
+            if(userChoice != "Snacks"){
+              std::cout << "Invalid Choice. You may try again.\n";
+            }else{
+              std::cout << "You are assigned for snacks.\n";
+            }
+            
+          }else if(userChoice.at(0) == 'v'){
+            quit = false;
+            
+            std::cout << "Here is a list of tasks:\n"
+              << "\tBBQ: Barbie\n"
+              << "\tPlates: Dan\n"
+              << "\tGames: Tommy\n"
+              << "\t(Takable) Snacks\n";
+            
+            std::cout << "\n";
+          }
+          std::cout << "\n\n";
+        }while(!quit);
+      }
+    }
+		else
+		{
+			std::cout << "Invalid event ID." << std::endl;
+			interface_.Wait("");
+		}
+
+	} else {
+		interface_.Wait("No events available... Sorry!");
+	}
 }
