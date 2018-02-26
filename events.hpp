@@ -626,14 +626,12 @@ void Events::createEvent()
     }
   }while(it != dateInfo->end());
   
+  
+  //output debug helper;
   for(auto&& it = dateInfo->begin(); it != dateInfo->end(); it++){
     std::cout << it->first << " " << it->second << "\n";
   }
   
-  
-  
-  
-
 	//This string, containing all the information gathered, will be sent as a parameter to the function addEntry in io.hpp
 	outputString += (std::to_string(io.size) + "," + eventName + "," + date + "," + std::to_string(amountOfSlots) + "," + stringOfTimeSlots + std::to_string(amountOfAtendees) + "," + adminName);
     
