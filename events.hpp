@@ -333,6 +333,9 @@ void Events::createEvent()
 				dateArr->insert(date);
 				date = "";
 			}
+            else {
+                newDate = false;
+            }
 		} while ((choose == "Yes" || choose == "yes" || choose == "y" || choose == "Y"));
 
 	} while (newDate == true);
