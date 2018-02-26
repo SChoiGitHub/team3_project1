@@ -429,10 +429,12 @@ std::string IO::timeFormatter(std::string slot)
 
 
 //Retrives and Stores General Task information
-void IO::storeEvent(std::string name, std::string creator){
-    std::string line = id + "," + name + "," + creator;
+int IO::storeEvent(std::string name, std::string creator){
+    std::string line = std::to_string(numEvents) + "," + name + "," + creator;
 
     addEntry(eventsFile, line);
+
+    numEvents += 1;
 }
 
 
@@ -440,7 +442,7 @@ void IO::storeEvent(std::string name, std::string creator){
 void IO::storeSchedule(int id, std::string date, std::list<std::string> times){
     std::string line = id + "," + date;
 
-    for(auto const& i : data){
+    for(auto const& i : times){
         line += "," + i;
     }
 
@@ -455,7 +457,7 @@ void IO::storeTask(int id, std::string name, bool taken, std::string assignee){
     if(taken){
         line += "true," +assignee;
     }else{
-        line +=  ",false"
+        line +=  ",false";
     }
 
     addEntry(tasksFile, line);
