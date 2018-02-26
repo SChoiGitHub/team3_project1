@@ -343,9 +343,9 @@ void Events::createEvent()
   auto&& it = dateInfo->begin();
 
 	do {
-
 		std::cout << "Please set time slots for " << std::string(it->first) << "\n";
 		do {
+      
 			do {
 				hour = -1;
 				minute = -1;
@@ -355,9 +355,7 @@ void Events::createEvent()
 				timeSlotIsAvailable = true;
 				successfulAddition = false;
 
-        //clear old time slots
-        createdTimeSlots = "";
-        slotsList.clear();
+        
         
         
 				std::cout << "\nEnter start time of a 20-minute time slot: ";
@@ -583,7 +581,7 @@ void Events::createEvent()
 					stringOfTimeSlots += timeSlot + ",1,";
 				}
 			} while ((!timeSlotIsAvailable) || (!timeSlotHourAndMinuteAreCorrect) || (!timeSlotFormatIsCorrect));
-
+      
 			do {
 				std::cout << "\nPlease select an option:\n"
 					<< "\tAdd more slots: input 'a'.\n"
@@ -599,7 +597,29 @@ void Events::createEvent()
 			} while (userChoice == 'v');
 		} while (userChoice == 'a');
 
-		dateInfo->emplace(it->first,stringOfTimeSlots);
+		//Add new stuff to timeslots and reset everything.
+    dateInfo->at(it->first) = stringOfTimeSlots;
+
+    //Clear everything for new slot additions at a new date.
+    stringOfTimeSlots = "";
+    timeInMins = 0;
+    slotStart = 0;
+    slotEnd = 0;
+    lastIndex = 0;
+    secondToLastIndex = 0;
+    hourEndTime = 0;
+    minuteEndTime = 0;
+    timeSlotInterval = "";
+
+    newSlot = std::pair<int,int>(0, 0);
+    createdTimeSlots = "";
+
+    slotsList.clear();
+    slotsList.push_back(std::pair<int, int>(0, 300));
+    slotsList.push_back(std::pair<int, int>(720, 780));
+
+    interface_.clearScreen();
+    //Everything is cleared.
     
     if(it != dateInfo->end()){
       it++;
