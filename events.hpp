@@ -603,6 +603,9 @@ void Events::createEvent()
 
 	//This string, containing all the information gathered, will be sent as a parameter to the function addEntry in io.hpp
 	outputString += (std::to_string(io.size) + "," + eventName + "," + date + "," + std::to_string(amountOfSlots) + "," + stringOfTimeSlots + std::to_string(amountOfAtendees) + "," + adminName);
+    
+    delete dateArr;
+    delete timeSlots;
 
 	io.addEntry(outputString);
 }
