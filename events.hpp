@@ -31,11 +31,11 @@ void Events::setAvailability()
 	Interface interface_;
 	IO io_("event.list");
 	bool digit_flag = true;
-	bool new_attendee = false;
+	bool new_attendee = false;  //for any new attendence
 	int dummy_int = 0;
 
 	std::size_t found;
-
+	
 
 	if( io_.size != 0 )
 	{
@@ -136,14 +136,14 @@ void Events::createEvent()
 	time_t t = time(NULL);
 	tm* timePtr = localtime(&t);
 	int current_year = (int)timePtr->tm_year + 1900;
-	int current_month = (int) timePtr->tm_mon + 1;
-	int current_day = (int) timePtr->tm_mday;
+	int current_month = (int)timePtr->tm_mon + 1;
+	int current_day = (int)timePtr->tm_mday;
 
 	std::string outputString = "";
 	std::string adminName = "";
 	std::string eventName = "";
 
-/*----------------------------Declaring variables used for input and verification of dates----------------------------*/
+	/*----------------------------Declaring variables used for input and verification of dates----------------------------*/
 	std::string date = "";
 	std::string month = "";
 	int day = 0;
@@ -154,7 +154,7 @@ void Events::createEvent()
 
 	int amountOfAtendees = 1;
 
-/*----------------------------Declaring variables used for input and verification of time slots----------------------------*/
+	/*----------------------------Declaring variables used for input and verification of time slots----------------------------*/
 	char userChoice = '\0';
 	std::string timeSlot = "";
 	int amountOfSlots = 0;
@@ -177,12 +177,12 @@ void Events::createEvent()
 	int minuteEndTime = 0;
 	std::string timeSlotInterval = "";
 
-	std::pair<int,int> newSlot(0,0);
+	std::pair<int, int> newSlot(0, 0);
 	std::string createdTimeSlots = "";
 
-	std::list<std::pair<int,int>> slotsList;
-	slotsList.push_back(std::pair<int,int>(0,300));
-	slotsList.push_back(std::pair<int,int>(720,780));
+	std::list<std::pair<int, int>> slotsList;
+	slotsList.push_back(std::pair<int, int>(0, 300));
+	slotsList.push_back(std::pair<int, int>(720, 780));
 
 	interface_.clearScreen();
 	menu.Header();
@@ -191,128 +191,151 @@ void Events::createEvent()
 
 
 
-	do{
+	do {
 		found = 0;
 		std::cout << "\nEnter your name (no commas): ";
 		std::getline(std::cin, adminName);
 		found = adminName.find_first_of(",");
 
-	} while( found!=std::string::npos );
+	} while (found != std::string::npos);
 
 
-	do{
+	do {
 		found = 0;
 		std::cout << "\nEnter event name (no commas): ";
 		std::getline(std::cin, eventName);
 		found = eventName.find_first_of(",");
-	}while(found!=std::string::npos );
+	} while (found != std::string::npos);
+
+	//Declaring variable for date number counting
+	int dateCount = 0;
+	//Declaring a set of date strings
+	std::set<std::string>* dateArr = new std::set<std::string>;
+	bool newDate = false;
+	std::string choose;
 
 	/*----------------------------Date input and verification----------------------------*/
 
 	do {
-		dateIsCorrect = true;
-		dateIsAvailable = true;
-		isLeapYear = true;
 
-		std::cout << "\nEnter date in MM/DD/YYYY format: ";
-		std::getline(std::cin, date);
+		do {
+			dateIsCorrect = true;
+			dateIsAvailable = true;
+			isLeapYear = true;
 
-		//The following if-else if-else statement discards most inputs with an incorrect format:
-		//The length of the input must be 10.
-		if (date.length() != 10) {
-			dateIsCorrect = false;
-		}
-		//The first character of the month must be 0 or 1.
-		else if ((date[0] != '0') && (date[0] != '1')) {
-			dateIsCorrect = false;
-		}
-		//If the first character of the month is 0, the second character can be any integer other than 0.
-		else if ((date[0] == '0') && ((date[1] == '0') || (!isdigit(date[1])))) {
-			dateIsCorrect = false;
-		}
-		//If the first character of the month is 1, the second character must be 0, 1, or 2.
-		else if ((date[0] == '1') && (date[1] != '0') && (date[1] != '1') && (date[1] != '2')) {
-			dateIsCorrect = false;
-		}
-		//Making sure the first slash is present and is placed in the right position.
-		else if (date[2] != '/') {
-			dateIsCorrect = false;
-		}
-		//The first character of the day must be 0, 1, 2, or 3.
-		else if ((date[3] != '0') && (date[3] != '1') && (date[3] != '2') && (date[3] != '3')) {
-			dateIsCorrect = false;
-		}
-		//If the first character of the day is 0 the second character can be any integer other than 0.
-		else if ((date[3] == '0') && ((date[4] == '0') || (!isdigit(date[4])))) {
-			dateIsCorrect = false;
-		}
-		//If the first character of the day is 1 or 2,the second character can be any integer.
-		else if (((date[3] == '1') || (date[3] == '2')) && (!isdigit(date[4]))) {
-			dateIsCorrect = false;
-		}
-		//If the first character of the date is 3, the second character must be 0 or 1.
-		else if ((date[3] == '3') && (date[4] != '0') && (date[4] != '1')) {
-			dateIsCorrect = false;
-		}
-		//Making sure the second slash is present and is placed in the right position.
-		else if (date[5] != '/') {
-			dateIsCorrect = false;
-		}
-		//Making sure the characters corresponding to the year are all integers.
-		else if((!isdigit(date[6])) || (!isdigit(date[7])) || (!isdigit(date[8])) || (!isdigit(date[9]))) {
-			dateIsCorrect = false;
-		}
-		//Now we will explicitly separate the string into month, day, and year make some additional checks.
-		else {
-			month = date.substr(0,2);
-			day = std::stoi(date.substr(3,2));
-			year = std::stoi(date.substr(6,4));
+			std::cout << "\nEnter date in MM/DD/YYYY format: ";
+			std::getline(std::cin, date);
 
-			//Determining whether a year is a leap year or not.
-			if ((year%4 != 0) || ((year%100 == 0) && (year%400 != 0))) {
-				isLeapYear = false;
-			}
-
-			//Disallowing days after February 29th on leap years.
-			if ((month == "02") && (isLeapYear) && (day > 29)) {
+			//The following if-else if-else statement discards most inputs with an incorrect format:
+			//The length of the input must be 10.
+			if (date.length() != 10) {
 				dateIsCorrect = false;
 			}
-			//Disallowing days after February 28th on non-leap years.
-			else if ((month == "02") && (!isLeapYear) && (day > 28)) {
+			//The first character of the month must be 0 or 1.
+			else if ((date[0] != '0') && (date[0] != '1')) {
 				dateIsCorrect = false;
 			}
-			//Disallowing a 31st day on months that only contain 30 days.
-			else if (((month == "04") || (month == "06") || (month == "09") || (month == "11")) && (day > 30)) {
+			//If the first character of the month is 0, the second character can be any integer other than 0.
+			else if ((date[0] == '0') && ((date[1] == '0') || (!isdigit(date[1])))) {
 				dateIsCorrect = false;
 			}
+			//If the first character of the month is 1, the second character must be 0, 1, or 2.
+			else if ((date[0] == '1') && (date[1] != '0') && (date[1] != '1') && (date[1] != '2')) {
+				dateIsCorrect = false;
+			}
+			//Making sure the first slash is present and is placed in the right position.
+			else if (date[2] != '/') {
+				dateIsCorrect = false;
+			}
+			//The first character of the day must be 0, 1, 2, or 3.
+			else if ((date[3] != '0') && (date[3] != '1') && (date[3] != '2') && (date[3] != '3')) {
+				dateIsCorrect = false;
+			}
+			//If the first character of the day is 0 the second character can be any integer other than 0.
+			else if ((date[3] == '0') && ((date[4] == '0') || (!isdigit(date[4])))) {
+				dateIsCorrect = false;
+			}
+			//If the first character of the day is 1 or 2,the second character can be any integer.
+			else if (((date[3] == '1') || (date[3] == '2')) && (!isdigit(date[4]))) {
+				dateIsCorrect = false;
+			}
+			//If the first character of the date is 3, the second character must be 0 or 1.
+			else if ((date[3] == '3') && (date[4] != '0') && (date[4] != '1')) {
+				dateIsCorrect = false;
+			}
+			//Making sure the second slash is present and is placed in the right position.
+			else if (date[5] != '/') {
+				dateIsCorrect = false;
+			}
+			//Making sure the characters corresponding to the year are all integers.
+			else if ((!isdigit(date[6])) || (!isdigit(date[7])) || (!isdigit(date[8])) || (!isdigit(date[9]))) {
+				dateIsCorrect = false;
+			}
+			//Now we will explicitly separate the string into month, day, and year make some additional checks.
+			else {
+				month = date.substr(0, 2);
+				day = std::stoi(date.substr(3, 2));
+				year = std::stoi(date.substr(6, 4));
+	
+				//Determining whether a year is a leap year or not.
+				if ((year % 4 != 0) || ((year % 100 == 0) && (year % 400 != 0))) {
+					isLeapYear = false;
+				}
+	
+				//Disallowing days after February 29th on leap years.
+				if ((month == "02") && (isLeapYear) && (day > 29)) {
+					dateIsCorrect = false;
+				}
+				//Disallowing days after February 28th on non-leap years.
+				else if ((month == "02") && (!isLeapYear) && (day > 28)) {
+					dateIsCorrect = false;
+				}
+				//Disallowing a 31st day on months that only contain 30 days.
+				else if (((month == "04") || (month == "06") || (month == "09") || (month == "11")) && (day > 30)) {
+					dateIsCorrect = false;
+				}
 
-			//Disallowing special holidays (New Year, 4th of July, and Christmas).
-			if (((month == "01") && (day == 1)) || ((month == "07") && (day == 4)) || ((month == "12") && (day == 25))) {
-				dateIsAvailable = false;
+				//Disallowing special holidays (New Year, 4th of July, and Christmas).
+				if (((month == "01") && (day == 1)) || ((month == "07") && (day == 4)) || ((month == "12") && (day == 25))) {
+					dateIsAvailable = false;
+				}
+
+				//Disallowing dates before the current date.
+				if (current_year > year || (current_year == year && current_month > atoi(month.c_str())) || (current_year == year && current_month == atoi(month.c_str()) && current_day > day))
+				{
+					dateIsCorrect = false;
+				}
 			}
 
-			//Disallowing dates before the current date.
-			if(current_year > year || ( current_year == year && current_month > atoi(month.c_str()) ) || ( current_year == year && current_month == atoi(month.c_str()) && current_day > day) )
+			if (!dateIsCorrect) {
+				interface_.clearScreen();
+				menu.Header();
+				std::cout << "\nWrong input! Please enter a valid date in MM/DD/YYYY format.\n";
+			}
+
+			if (!dateIsAvailable) {
+				interface_.clearScreen();
+				menu.Header();
+				std::cout << "\nSorry, that day is not available for meetings. Please enter a different date.\n";
+			}
+	
+		} while ((!dateIsCorrect) || (!dateIsAvailable));
+
+		std::cout << "Succesful addition of the date " << date << "!\n";
+
+		do {
+			std::cout << "Do you want to set a new date?(Yes/ No) : ";
+			std::getline(std::cin, choose);
+
+			if (choose == "Yes" || choose == "yes" || choose == "y" || choose == "Y")
 			{
-				dateIsCorrect = false;
+				newDate = true;
+				dateArr.insert(date);
+				date = "";
 			}
-		}
+		} while (!(choose == "Yes" || choose == "yes" || choose == "y" || choose == "Y" || choose == "No" || choose == "no" || choose == "n" || choose == "N"));
 
-		if (!dateIsCorrect) {
-			interface_.clearScreen();
-			menu.Header();
-			std::cout << "\nWrong input! Please enter a valid date in MM/DD/YYYY format.\n";
-		}
-
-		if (!dateIsAvailable) {
-			interface_.clearScreen();
-			menu.Header();
-			std::cout << "\nSorry, that day is not available for meetings. Please enter a different date.\n";
-		}
-
-	} while ((!dateIsCorrect) || (!dateIsAvailable));
-
-	std::cout << "Succesful addition of the date " << date << "!\n";
+	} while (newDate == true);
 
 /*----------------------------Time slot input and verification----------------------------*/
 
