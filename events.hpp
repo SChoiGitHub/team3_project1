@@ -340,8 +340,9 @@ void Events::createEvent()
 /*----------------------------Time slot input and verification----------------------------*/
 
 	std::list<std::string>* timeSlots = new std::list<std::string>;
+    auto& it = dateArr->begin();
 
-	for (auto& it = dateArr->begin(); it != dateArr->end(); it++) {
+	do {
 
 		std::cout << "Please set time slots for " << it << "\n";
 		do {
@@ -594,7 +595,8 @@ void Events::createEvent()
 		} while (userChoice == 'a');
 
 		timeSlots->push_back(stringOfTimeSlots);
-	}
+        it++;
+    } while(it != dateArr->end());
 
 	//This string, containing all the information gathered, will be sent as a parameter to the function addEntry in io.hpp
 	outputString += (std::to_string(io.size) + "," + eventName + "," + date + "," + std::to_string(amountOfSlots) + "," + stringOfTimeSlots + std::to_string(amountOfAtendees) + "," + adminName);
