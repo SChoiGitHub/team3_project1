@@ -207,8 +207,6 @@ void Events::createEvent()
 		found = eventName.find_first_of(",");
 	} while (found != std::string::npos);
 
-	//Declaring variable for date number counting
-	int dateCount = 0;
 	//Declaring a set of date strings
 	std::set<std::string>* dateArr = new std::set<std::string>;
 	bool newDate = false;
