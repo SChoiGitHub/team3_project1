@@ -6,22 +6,28 @@
 
 bool IO::timeFormat = false;
 
-IO::IO(const std::string fileName) : fileName_(fileName)
-{
+IO::IO() : EVENTS_FILE("events.csv"), TASKS_FILE("tasks.csv"), SCHEDULES_FILE("schedules.csv"), ATTENDENCE_FILE("attendence.csv"){
     int n_lines = 0;
     std::string dummy_string;
 
-    file.open(fileName_, std::fstream::app | std::fstream::out | std::fstream::in);
+    eventsFile.open(EVENTS_FILE, std::fstream::app | std::fstream::out | std::fstream::in);
+    tasksFile.open(TASKS_FILE, std::fstream::app | std::fstream::out | std::fstream::in);
+    schedulesFile.open(SCHEDULES_FILE, std::fstream::app | std::fstream::out | std::fstream::in);
+    attendenceFile.open(ATTENDENCE_FILE, std::fstream::app | std::fstream::out | std::fstream::in);
 
-    while(std::getline(file, dummy_string))
+    while(std::getline(eventsFile, dummy_string))
         ++n_lines;
 
     size = n_lines;
+    numEvents = n_lines;
 }
 
 IO::~IO()
 {
-    file.close();
+    eventsFile.close();
+    tasksFile.close();
+    schedulesFile.close();
+    attendenceFile.close();
 }
 
 
@@ -428,7 +434,7 @@ std::string IO::timeFormatter(std::string slot)
 
 
 //Retrives and Stores General Task information
-void IO::storeEvent(int id, std::string name, std::string creator){
+void IO::storeEvent(std::string name, std::string creator){
     std::string line = id + "," + name + "," + creator;
 
     events.add(line);
@@ -436,7 +442,7 @@ void IO::storeEvent(int id, std::string name, std::string creator){
 
 
 //Retrives and Stores Dates and times for events
-void IO::storeDate(int id, std::string date, std::list<std::string> times){
+void IO::storeSchedule(int id, std::string date, std::list<std::string> times){
     std::string line = id + "," + date;
 
     for(auto const& i : data){
@@ -456,4 +462,10 @@ void IO::storeTask(int id, std::string name, bool taken, std::string assignee){
     }
 
     tasks.add(line);
+}
+
+
+//Retrieves and Stores Attendees
+void IO::storeAttendees(int id, std::string date, std::string time, std::list<std::string> attendees){
+
 }
