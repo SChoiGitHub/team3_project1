@@ -452,10 +452,12 @@ void IO::storeSchedule(int id, std::string date, std::list<std::string> times){
 
 //Retrives and Stores Tasks and related information
 void IO::storeTask(int id, std::string name, bool taken, std::string assignee){
-    std::string line = id + "," + name + "," + taken;
+    std::string line = id + "," + name;
 
     if(taken){
-        line += "," +assignee;
+        line += "true," +assignee;
+    }else{
+        line +=  ",false"
     }
 
     addEntry(tasksFile, line);
@@ -466,7 +468,7 @@ void IO::storeTask(int id, std::string name, bool taken, std::string assignee){
 void IO::storeAttendees(int id, std::string date, std::string time, std::list<std::string> attendees){
     std::string line = id + "," + date + "," + time;
 
-    for(auto const& i : atendees){
+    for(auto const& i : attendees){
         line += "," + i;
     }
 
