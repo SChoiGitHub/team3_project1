@@ -22,8 +22,7 @@ IO::IO() : EVENTS_FILE("events.csv"), TASKS_FILE("tasks.csv"), SCHEDULES_FILE("s
     numEvents = n_lines;
 }
 
-IO::~IO()
-{
+IO::~IO(){
     eventsFile.close();
     tasksFile.close();
     schedulesFile.close();
@@ -38,9 +37,8 @@ void IO::addEntry(std::fstream& file, std::string data){
 }
 
 
-std::string IO::retrieveElement(int ID, std::string elementName)
-{
-    //IDs start at 0
+std::string IO::retrieveElement(int ID, std::string elementName){
+/*    //IDs start at 0
     if( ID >= size )
     {
         std::cout << "The requested event does not exist.\n";
@@ -133,14 +131,13 @@ std::string IO::retrieveElement(int ID, std::string elementName)
         //Get all attendees
         std::getline(ss, element, '\n');
     }
-
-    return element;
+*/
+    return "";
 }
 
 
-void IO::updateElement(int ID, std::string elementName, void* value)
-{
-    std::fstream file_;
+void IO::updateElement(int ID, std::string elementName, void* value){
+/*    std::fstream file_;
 	file_.open("event.list", std::ios::in | std::ios::out);
 
     //IDs start at 0
@@ -298,6 +295,7 @@ void IO::updateElement(int ID, std::string elementName, void* value)
     //Re-write overwritten strings
     for(int i = 0 ; i < strings2save ; ++i)
         file_ << stringSaved[i];
+*/
 }
 
 void IO::displayEntries()
