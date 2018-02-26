@@ -9,6 +9,7 @@
 #include <stdexcept>
 #include <ctime>
 #include <list>
+#include <set>
 #include "io.h"
 #include "interface.h"
 
