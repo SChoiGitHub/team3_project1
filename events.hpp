@@ -330,7 +330,7 @@ void Events::createEvent()
 			if (choose == "Yes" || choose == "yes" || choose == "y" || choose == "Y")
 			{
 				newDate = true;
-				dateArr.insert(date);
+				dateArr->insert(date);
 				date = "";
 			}
 		} while (!(choose == "Yes" || choose == "yes" || choose == "y" || choose == "Y" || choose == "No" || choose == "no" || choose == "n" || choose == "N"));
@@ -341,9 +341,9 @@ void Events::createEvent()
 
 	std::list<std::string>* timeSlots = new std::list<std::string>;
 
-	for (auto& it = dateArr->begin(); it != dateArr->end(); it++) {
+	for (auto&& it = dateArr->begin(); it != dateArr->end(); it++) {
 
-		std::cout << "Please set time slots for " << it << "\n";
+		std::cout << "Please set time slots for " << (*it) << "\n";
 		do {
 			do {
 				hour = -1;
