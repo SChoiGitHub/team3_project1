@@ -13,8 +13,7 @@
 #include <fstream>
 #include "log.h"
 
-class IO
-{
+class IO{
 public:
 
     static bool timeFormat;
@@ -30,11 +29,7 @@ public:
      */
     ~IO();
 
-    /** @pre None
-     *   @post Adds new event to file
-     *   @return None
-     */
-    void addEntry(std::string store);
+
 
     /** @pre ID is the event's unique identifier. elementName is the name of the element to retrieve
      *   @post Retrieves some event's specific element value from the events file
@@ -68,11 +63,11 @@ public:
     * @param id - the event id
     * @param name - the event's name
     * @param creator - the name of the events creator
-    * @pre none
+    * @pre this is a new event
     * @post new task is add to the tasks file
-    * @return none
+    * @return event's id
     */
-    void storeEvent(int id, std::string name, std::string creator);
+    int storeEvent(std::string name, std::string creator);
 
 
 
@@ -83,7 +78,7 @@ public:
     * @param times - list of times on the day
     * @post new schedule is added to the schedules file
     */
-    void storeDate(int id, std::string date, std::list<std::string> times);
+    void storeSchedule(int id, std::string date, std::list<std::string> times);
 
 
 
@@ -97,11 +92,38 @@ public:
     */
     void storeTask(int id, std::string name, bool taken, std::string assignee);
 
-private:
 
-    std::fstream file;        //File stream
-    std::string fileName_;        //Name of file
+
+    /*
+    * Adds the attendees for a specific date and time to files
+    * @param id - id of the event to which the schedule belongs
+    * @param date - one date that is part of an event
+    * @param time - one time in the day of the event
+    * @param atendees - list of attendees that are attending at specified times
+    * @post a new list of attendence is added to the files
+    */
+    void storeAttendees(int id, std::string date, std::string time, std::list<std::string> attendees);
+
+private:
     Log logFile;            //Log object
+
+    const std::string EVENTS_FILE;
+    const std::string TASKS_FILE;
+    const std::string SCHEDULES_FILE;
+    const std::string ATTENDENCE_FILE;
+
+    std::fstream eventsFile;
+    std::fstream tasksFile;
+    std::fstream schedulesFile;
+    std::fstream attendenceFile;
+
+    /*
+    * Generic method that addes a line to a file
+    * @param file - file to store data in
+    * @param data - string of csv data to store
+    * @post Adds new event to file
+    */
+    void addEntry(std::fstream file, std::string data);
 
 };
 
