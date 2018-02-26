@@ -321,23 +321,24 @@ void Events::createEvent()
 		} while ((!dateIsCorrect) || (!dateIsAvailable));
 
 		std::cout << "Succesful addition of the date " << date << "!\n";
-
+    bool continueInput = true;
 		do {
+      
 			std::cout << "Do you want to set a new date?(Yes/ No) : ";
 			std::getline(std::cin, choose);
 
 			if (choose == "Yes" || choose == "yes" || choose == "y" || choose == "Y")
 			{
 				newDate = true;
+        continueInput = false;
 				dateArr->insert(date);
 				date = "";
-			}
-            else {
-                newDate = false;
-            }
-		} while ((choose == "Yes" || choose == "yes" || choose == "y" || choose == "Y"));
-
-	} while (newDate == true);
+			}else if(choose == "No" || choose == "no" || choose == "n" || choose == "N"){
+        newDate = false;
+        continueInput = false;
+      }
+		} while(continueInput);
+	} while(newDate);
 
 /*----------------------------Time slot input and verification----------------------------*/
 
@@ -603,8 +604,8 @@ void Events::createEvent()
 	//This string, containing all the information gathered, will be sent as a parameter to the function addEntry in io.hpp
 	outputString += (std::to_string(io.size) + "," + eventName + "," + date + "," + std::to_string(amountOfSlots) + "," + stringOfTimeSlots + std::to_string(amountOfAtendees) + "," + adminName);
     
-    delete dateArr;
-    delete timeSlots;
+  delete dateArr;
+  delete timeSlots;
 
 	io.addEntry(outputString);
 }
