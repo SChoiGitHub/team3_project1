@@ -631,12 +631,21 @@ void Events::createEvent()
   //ADD STUFF
   requestTasks(); //Ask for tasks.
   io.storeEvent(eventName,adminName); //Store the event
+  //Store the schedule
   for(auto&& it = dateInfo->begin(); it != dateInfo->end(); it++){
-    io.storeSchedule(io.size,it->first,std::list<std::string>());
+    std::list<std::string> parsedTimeString;
+    
+    std::stringstream s(dateInfo->at(it->first));
+    std::string hold;
+    
+    while(std::getline(s,hold,',')){
+      parsedTimeString.push_back(hold);
+    }
+    io.storeSchedule(io.size,it->first,parsedTimeString);
   }
   
 	//This string, containing all the information gathered, will be sent as a parameter to the function addEntry in io.hpp
-	outputString += (std::to_string(io.size) + "," + eventName + "," + date + "," + std::to_string(amountOfSlots) + "," + stringOfTimeSlots + std::to_string(amountOfAtendees) + "," + adminName);
+	//outputString += (std::to_string(io.size) + "," + eventName + "," + date + "," + std::to_string(amountOfSlots) + "," + stringOfTimeSlots + std::to_string(amountOfAtendees) + "," + adminName);
     
   delete dateInfo;
 }
