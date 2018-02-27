@@ -628,20 +628,29 @@ void Events::createEvent()
     }
   }while(it != dateInfo->end());
   
+  
+  //Ask for tasks
+  std::list<std::string> tasks = requestTasks(); //Ask for tasks.
+  
   //ADD STUFF
-  requestTasks(); //Ask for tasks.
-  io.storeEvent(eventName,adminName); //Store the event
+  int id = io.storeEvent(eventName,adminName); //Store the event and set id.
+  for(auto&& it = tasks.begin(); it != tasks.end(); it++){
+		io.storeTask(id,(*it),false,"");
+	}
   //Store the schedule
   for(auto&& it = dateInfo->begin(); it != dateInfo->end(); it++){
+    //Pass this in later.
     std::list<std::string> parsedTimeString;
-    
+    //We will parse it.
     std::stringstream s(dateInfo->at(it->first));
     std::string hold;
-    
+    //Read everything in.
     while(std::getline(s,hold,',')){
       parsedTimeString.push_back(hold);
+      std::getline(s,hold,','); //Remove the pointless numOfAttendees...
     }
-    io.storeSchedule(io.size,it->first,parsedTimeString);
+    //Pass in schedule
+    io.storeSchedule(id,it->first,parsedTimeString);
   }
   
 	//This string, containing all the information gathered, will be sent as a parameter to the function addEntry in io.hpp
@@ -649,10 +658,10 @@ void Events::createEvent()
     
   delete dateInfo;
 }
-void Events::requestTasks(){
+std::list<std::string> Events::requestTasks(){
 	Interface interface_;
 	std::string userChoice;
-	std::vector<std::string> currentTaskList;
+	std::list<std::string> currentTaskList;
 	bool quit = true;
 	
 	interface_.clearScreen();
@@ -690,15 +699,8 @@ void Events::requestTasks(){
 		}
 		std::cout << "\n\n";
 	}while(!quit);
-	
   
-  IO io;
-  int id = io.size;
-  
-  
-	for(auto&& it = currentTaskList.begin(); it != currentTaskList.end(); it++){
-		io.storeTask(id,(*it),false,"");
-	}
+	return currentTaskList;
 }
 void Events::takeTask(){
   Interface interface_;

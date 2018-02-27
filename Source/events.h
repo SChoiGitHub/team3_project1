@@ -54,7 +54,7 @@ class Events
 	 * @post None
 	 * @return A string that represents the tasks.
 	 */
-	static void requestTasks();
+	static std::list<std::string> requestTasks();
 
 };
 
