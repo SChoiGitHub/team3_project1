@@ -30,7 +30,7 @@ void Events::adminMode()
 void Events::setAvailability()
 {
 	Interface interface_;
-	IO io_("event.list");
+	IO io_;
 	bool digit_flag = true;
 	bool new_attendee = false;  //for any new attendence
 	int dummy_int = 0;
@@ -132,7 +132,7 @@ void Events::createEvent()
 	Interface interface_;
 	Interface::Menu menu({{"", NULL}});
 
-	IO io("event.list");
+	IO io;
 
 	time_t t = time(NULL);
 	tm* timePtr = localtime(&t);
@@ -628,28 +628,19 @@ void Events::createEvent()
     }
   }while(it != dateInfo->end());
   
-  
-  //output debug helper;
+  //ADD STUFF
+  requestTasks(); //Ask for tasks.
+  io.storeEvent(eventName,adminName); //Store the event
   for(auto&& it = dateInfo->begin(); it != dateInfo->end(); it++){
-    std::cout << it->first << " " << it->second << "\n";
+    io.storeSchedule(io.size,it->first,std::list<std::string>());
   }
   
 	//This string, containing all the information gathered, will be sent as a parameter to the function addEntry in io.hpp
 	outputString += (std::to_string(io.size) + "," + eventName + "," + date + "," + std::to_string(amountOfSlots) + "," + stringOfTimeSlots + std::to_string(amountOfAtendees) + "," + adminName);
     
   delete dateInfo;
-  
-  
-  
-  //Ask for tasks.
-	std::string taskList = requestTasks();
-	
-	//debug
-	std::cout << taskList;
-
-	io.addEntry(outputString);
 }
-std::string Events::requestTasks(){
+void Events::requestTasks(){
 	Interface interface_;
 	std::string userChoice;
 	std::vector<std::string> currentTaskList;
@@ -691,27 +682,18 @@ std::string Events::requestTasks(){
 		std::cout << "\n\n";
 	}while(!quit);
 	
-	int id = IO("event.list").size;
-	
-	std::string taskOutputString;
-	
+  
+  IO io;
+  int id = io.size;
+  
+  
 	for(auto&& it = currentTaskList.begin(); it != currentTaskList.end(); it++){
-		//event id
-		taskOutputString += std::to_string(id) + " ";
-		//task taken (T/F)
-		taskOutputString += "0 ";
-		//task name
-		taskOutputString += (*it) + " ";
-		//Who is doing it
-		taskOutputString += std::string("Noman") + "\n";
+		io.storeTask(id,(*it),false,"");
 	}
-	
-	
-	return taskOutputString;
 }
 void Events::takeTask(){
   Interface interface_;
-	IO io_("event.list");
+	IO io_;
 	bool digit_flag = true;
   bool quit;
   std::string userChoice;

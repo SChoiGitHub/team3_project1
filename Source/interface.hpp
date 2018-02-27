@@ -116,7 +116,7 @@ void Interface::Menu::Header()
     std::cout << "***************************************************************************\n\n";
 
     /*ADD SECTION PRINTING ALL EVENT LIST FILE ENTRIES -> USE IO*/
-    IO io("event.list");
+    IO io;
     io.displayEntries();
 
     std::cout << "***************************************************************************";
@@ -124,7 +124,7 @@ void Interface::Menu::Header()
 
 void Interface::toggleTimeFormat()
 {
-    IO io("event.list");
+    IO io;
 
     if( io.timeFormat == false )
         io.timeFormat = true;
