@@ -352,7 +352,7 @@ void Events::createEvent()
     if(stringOfTimeSlots != ""){
       std::cout << "Would you like to copy over the previous time slots to this new date?\n"
                 << "Your current time slots:"
-                << createdTimeSlots << '\n\n'
+                << createdTimeSlots << "\n\n"
                 << "Yes: Type 'y'.\n"
                 << "No: Type anything else.\n"
                 << "Choose: ";
@@ -393,9 +393,6 @@ void Events::createEvent()
           timeSlotIsAvailable = true;
           successfulAddition = false;
 
-          
-          
-          
           std::cout << "\nEnter start time of a 20-minute time slot: ";
           std::getline(std::cin, timeSlot);
 
@@ -637,7 +634,7 @@ void Events::createEvent()
       } while (userChoice == 'a');
     }
 		//Add new stuff to timeslots and reset everything.
-    dateInfo->at(it->first) = stringOfTimeSlots;    
+    dateInfo->at(it->first) = stringOfTimeSlots;  
     if(it != dateInfo->end()){
       it++;
     }
