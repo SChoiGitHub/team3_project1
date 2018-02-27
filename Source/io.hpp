@@ -303,12 +303,6 @@ void IO::displayEntries()
     std::string element;
     int nelem;
 
-    //Make sure stream is at beginning of file
-    file.clear();    //It is necessary to clear the eof flag
-    file.seekg(0, std::ios::beg);
-//?
-	file.clear();    //It is necessary to clear the eof flag
-    file.seekg(0, std::ios::beg);
 
     for(int i = 0; i < size; ++i)
     {
