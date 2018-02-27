@@ -453,16 +453,17 @@ void IO::storeSchedule(int id, std::string date, std::list<std::string> times){
 
 
 //Retrives and Stores Tasks and related information
-void IO::storeTask(int id, std::string name, bool taken, std::string assignee){
-    std::string line = id + "," + name;
-
-    if(taken){
-        line += "true," +assignee;
-    }else{
-        line +=  ",false";
-    }
+void IO::storeTask(int id, std::string name){
+    std::string line = std::to_string(id) + "," + name + ",false";
 
     addEntry(tasksFile, line);
+}
+
+void IO::storeTaskAssignee(int id, std::string name, std::string assignee){
+    std::string identifier = std::to_string(id) + "," + name;
+    std::string revised = identifier + ",true," + assignee;
+
+    replaceEntry(tasksFile, identifier, revised);
 }
 
 
