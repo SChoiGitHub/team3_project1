@@ -40,6 +40,12 @@ public:
      */
     static void toggleTimeFormat();
 
+    /** @pre message is the input request message string presented to the user
+     *   @post requests user input
+     *   @return Returns the user's given input
+     */
+    static std::string getInput(const char *message); 
+
     /** 
      * Method for extracting a comma-free name from the end-user
      * @pre none
@@ -79,12 +85,6 @@ public:
          *   @return None
          */
         void Draw();
-
-	/** @pre message is the input request message string presented to the user
-	 *   @post requests user input
-	 *   @return Returns the user's given input
-	 */
-	static std::string getInput(const char *message); 
     };
     
     
@@ -92,7 +92,6 @@ public:
 private:
     
     Log logFile;
-    
 };
 
 #include "interface.hpp"
