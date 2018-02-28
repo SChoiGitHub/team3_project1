@@ -12,7 +12,7 @@ int Events::current_year = (int)timePtr->tm_year + 1900;
 int Events::current_month = (int)timePtr->tm_mon + 1;
 int Events::current_day = (int)timePtr->tm_mday;
 Interface Events::interface;
-
+IO Events::io;
 
 
 void Events::userMode()
@@ -136,41 +136,11 @@ void Events::createEvent()
 {
 	Interface::Menu menu({{"", NULL}});
 
-	IO io;
-
 	std::string outputString = "";
 	std::string adminName = "";
 	std::string eventName = "";
 
 	/*----------------------------Declaring variables used for input and verification of time slots----------------------------*/
-	char userChoice = '\0';
-	std::string timeSlot = "";
-	int amountOfSlots = 0;
-
-	int hour = -1;
-	int minute = -1;
-	unsigned int index = 0;
-	bool timeSlotFormatIsCorrect = false;
-	bool timeSlotHourAndMinuteAreCorrect = false;
-	bool timeSlotIsAvailable = true;
-	bool successfulAddition = false;
-
-	std::string stringOfTimeSlots = "";
-	int timeInMins = 0;
-	int slotStart = 0;
-	int slotEnd = 0;
-	int lastIndex = 0;
-	int secondToLastIndex = 0;
-	int hourEndTime = 0;
-	int minuteEndTime = 0;
-	std::string timeSlotInterval = "";
-
-	std::pair<int, int> newSlot(0, 0);
-	std::string createdTimeSlots = "";
-
-	std::list<std::pair<int, int>> slotsList;
-	slotsList.push_back(std::pair<int, int>(0, 300));
-	slotsList.push_back(std::pair<int, int>(720, 780));
 
 	interface.clearScreen();
 	menu.Header();
@@ -203,7 +173,7 @@ void Events::createEvent()
 	/*----------------------------Date input and verification----------------------------*/
 
 	do {
-
+    //Ask for the date.
     std::string date = requestDate();
 		std::cout << "Succesful addition of the date " << date << "!\n";
     dateInfo->emplace(date,std::string(""));
@@ -211,8 +181,8 @@ void Events::createEvent()
     
     bool continueInput = true;
 		do {
-      
-			std::cout << "Do you want to set a new date?(Yes/ No) : ";
+      //Do we want a new date?
+			std::cout << "Do you want to set a new date? (Yes/No) : ";
 			std::getline(std::cin, choose);
 
 			if (choose == "Yes" || choose == "yes" || choose == "y" || choose == "Y")
@@ -223,22 +193,21 @@ void Events::createEvent()
         newDate = false;
         continueInput = false;
       }
-		} while(continueInput);
-	} while(newDate);
+		}while(continueInput);
+	}while(newDate);
 
 /*----------------------------Time slot input and verification----------------------------*/
   auto&& it = dateInfo->begin();
-
+  std::string timeSlots = "";
+  
 	do {
     bool copyNewItems = false;
     
 		std::cout << "Please set time slots for " << std::string(it->first) << "\n\n";
     
     //Copy over new string slots!
-    if(stringOfTimeSlots != ""){
+    if(timeSlots != ""){
       std::cout << "Would you like to copy over the previous time slots to this new date?\n"
-                << "Your current time slots:"
-                << createdTimeSlots << "\n\n"
                 << "Yes: Type 'y'.\n"
                 << "No: Type anything else.\n"
                 << "Choose: ";
@@ -247,280 +216,11 @@ void Events::createEvent()
     }
               
     if(!copyNewItems){
-    
-      //Clear everything for new slot additions at a new date.
-      stringOfTimeSlots = "";
-      timeInMins = 0;
-      slotStart = 0;
-      slotEnd = 0;
-      lastIndex = 0;
-      secondToLastIndex = 0;
-      hourEndTime = 0;
-      minuteEndTime = 0;
-      timeSlotInterval = "";
-
-      newSlot = std::pair<int,int>(0, 0);
-      createdTimeSlots = "";
-
-      slotsList.clear();
-      slotsList.push_back(std::pair<int, int>(0, 300));
-      slotsList.push_back(std::pair<int, int>(720, 780));
-
-      interface.clearScreen();
-      //Everything is cleared.
-      
-      do {
-        do {
-          hour = -1;
-          minute = -1;
-          index = 0;
-          timeSlotFormatIsCorrect = false;
-          timeSlotHourAndMinuteAreCorrect = false;
-          timeSlotIsAvailable = true;
-          successfulAddition = false;
-
-          std::cout << "\nEnter start time of a 20-minute time slot: ";
-          std::getline(std::cin, timeSlot);
-
-          index = timeSlot.find(':');
-
-          //Making sure we find a colon in the input string.
-          if (index != std::string::npos) {
-            //Separating the hour characters and converting them to a single integer; throwing exceptions when necessary.
-            try {
-              hour = std::stoi(timeSlot.substr(0, index));
-            }
-            catch (std::invalid_argument& e) {
-              interface.clearScreen();
-              menu.Header();
-              std::cout << "\nInvalid argument.\n";
-              continue;
-            }
-            catch (std::out_of_range& e) {
-              interface.clearScreen();
-              menu.Header();
-              std::cout << "\nOut of range.\n";
-              continue;
-            }
-            catch (...) {
-              interface.clearScreen();
-              menu.Header();
-              std::cout << "\nOther error.\n";
-              continue;
-            }
-
-            //Separating the minute characters and converting them to a single integer; throwing exceptions when necessary.
-            try {
-              minute = std::stoi(timeSlot.substr(index + 1));
-            }
-            catch (std::invalid_argument& e) {
-              interface.clearScreen();
-              menu.Header();
-              std::cout << "\nInvalid argument.\n";
-              continue;
-            }
-            catch (std::out_of_range& e) {
-              interface.clearScreen();
-              menu.Header();
-              std::cout << "\nOut of range.\n";
-              continue;
-            }
-            catch (...) {
-              interface.clearScreen();
-              menu.Header();
-              std::cout << "\nOther error.\n";
-              continue;
-            }
-
-            /*Checking case in which the substring before the colon only contains numbers and that the substring after
-            the colon only contains non-numeric characters after the first two digits (input is in 12-hour format)*/
-            if (((timeSlot.substr(0, index)).find_first_not_of("0123456789") == std::string::npos)
-              && ((timeSlot.substr(index + 1)).find_first_not_of("0123456789") == 2)) {
-
-              /*Only allowing strings of length 6 (e.g. 1:00am) or length 7 (e.g. 11:00pm) in which there are strictly
-              four characters after the colon.*/
-              if ((timeSlot.length() == 6) || ((timeSlot.length() == 7) && ((timeSlot.substr(index + 1)).length() == 4))) {
-                lastIndex = timeSlot.length() - 1;
-                secondToLastIndex = lastIndex - 1;
-
-                //Making sure the last two characters are "am" or "pm".
-                if ((timeSlot[lastIndex] == 'm') && ((timeSlot[secondToLastIndex] == 'a') || (timeSlot[secondToLastIndex] == 'p'))) {
-                  timeSlotFormatIsCorrect = true;
-                }
-
-                //Converting from 12-hour to 24-hour format.
-                timeSlot = io.timeFormatter(timeSlot);
-
-                index = timeSlot.find(':');
-                hour = std::stoi(timeSlot.substr(0, index));
-                minute = std::stoi(timeSlot.substr(index + 1));
-              }
-              /*Checking case in which both the substring before the colon and the substring after the colon
-              only contain numbers (input is in 24-hour format)*/
-            }
-            else if (((timeSlot.substr(0, index)).find_first_not_of("0123456789") == std::string::npos)
-              && ((timeSlot.substr(index + 1)).find_first_not_of("0123456789") == std::string::npos)) {
-              //Only allowing strings of length 4 (e.g. 1:00) or length 5 (e.g. 23:00).
-              if ((timeSlot.length() == 4) || ((timeSlot.length() == 5))) {
-                timeSlotFormatIsCorrect = true;
-              }
-            }
-            else {
-              interface.clearScreen();
-              menu.Header();
-              std::cout << "\nFormat is incorrect.\n";
-              continue;
-            }
-
-            if ((timeSlotFormatIsCorrect) && ((hour <= 23) && (hour >= 0)) && ((minute <= 59) && (minute >= 0))) {
-              timeSlotHourAndMinuteAreCorrect = true;
-            }
-
-            if ((timeSlotHourAndMinuteAreCorrect) && (timeSlotFormatIsCorrect)) {
-              //Converting time to minutes past midnight to make it easier to manage timer intervals.
-              timeInMins = (hour * 60) + minute;
-              /*Making sure events can be created between 12:00am and 5:00am or after 11:40pm (there would be an overlap
-              into the 12:00am - 5:00am time range).*/
-              if ((timeInMins >= 1420) || ((timeInMins >= 0) && (timeInMins <= 300))) {
-                interface.clearScreen();
-                menu.Header();
-                timeSlotIsAvailable = false;
-                std::cout << "\nSorry, you cannot create a meeting between 12:00am and 5:00am. Please pick a different time.\n";
-                continue;
-                /*Making sure events can be created between 12:00pm and 1:00pm or after 11:40pm (there would be an overlap
-                into the 12:00am - 5:00am time range).*/
-              }
-              else if ((timeInMins >= 720) && (timeInMins <= 780)) {
-                interface.clearScreen();
-                menu.Header();
-                timeSlotIsAvailable = false;
-                std::cout << "\nSorry, you cannot create a meeting between 12:00pm and 1:00pm. Please pick a different time.\n";
-                continue;
-              }
-
-              //Creating a pair of integers that will represent the start and end of the slot (in minutes).
-              slotStart = timeInMins;
-              slotEnd = timeInMins + 20;
-              newSlot = { slotStart, slotEnd };
-
-              /*Iterating through the current pairs in the list and compare the new pair (newSlot) with
-              each pair in order to determine where to place it*/
-              for (auto itr = slotsList.begin(); itr != slotsList.end(); itr++) {
-                /*If the start time of the new slot is >= than the end time of some slot in the list, we
-                go inside this else statement.*/
-                if (newSlot.first >= itr->second) {
-                  itr++;
-                  //If we have reached the end of the list, we simply push our new slot to the end of the list.
-                  if (itr == slotsList.end()) {
-                    successfulAddition = true;
-                    slotsList.push_back(newSlot);
-                    break;
-                    //If we haven't reached the end of the list, we continue iterating through the list.
-                  }
-                  else {
-                    itr--;
-                    continue;
-                  }
-                  /*If the start time of the new slot is < than the end time of some slot in the list, we
-                  go inside this else statement.*/
-                }
-                else {
-                  /*If the end time of the new slot is > the start time of the slot currently on the list,
-                  we have encountered a conflict and we must tell the admin to input a different time.*/
-                  if (newSlot.second > itr->first) {
-                    interface.clearScreen();
-                    menu.Header();
-                    timeSlotIsAvailable = false;
-                    std::cout << "\nSorry, cannot add that slot because there is a scheduling conflict. Please pick a different time.\n";
-                    break;
-                    /*If the end time of the new slot is <= the start time of the slot currently on the list,
-                    we can be confident that the new slot should be inserted there and we proceed to insert it.*/
-                  }
-                  else {
-                    successfulAddition = true;
-                    slotsList.insert(itr, newSlot);
-                    break;
-                  }
-                }
-              }
-
-
-            }
-
-            //If there is no colon in the string, the format is incorrect.
-          }
-          else {
-            timeSlotFormatIsCorrect = false;
-            continue;
-          }
-
-          if (!timeSlotHourAndMinuteAreCorrect) {
-            interface.clearScreen();
-            menu.Header();
-            std::cout << "\nHour and/or minutes are off bounds.\n";
-          }
-
-          if (!timeSlotFormatIsCorrect) {
-            interface.clearScreen();
-            menu.Header();
-            std::cout << "\nTime slot format is not correct. Please enter a time in either 12 hour mode (e.g. 1:15pm) or 24 hour mode (e.g. 13:15).\n";
-          }
-
-          if (successfulAddition) {
-            amountOfSlots++;
-
-            //Converting slot end time from minutes to hours and minutes in 24-hr mode.
-            hourEndTime = slotEnd / 60;
-            minuteEndTime = slotEnd % 60;
-            std::string timeSlotEnd = "";
-            if (hourEndTime < 10) {
-              timeSlotEnd += "0";
-            }
-            timeSlotEnd = (std::to_string(hourEndTime) + ":");
-            if (minuteEndTime < 10) {
-              timeSlotEnd += "0";
-            }
-            timeSlotEnd += std::to_string(minuteEndTime);
-
-            //Creating a string that shows the time interval.
-            if (io.timeFormat == false)
-              timeSlotInterval = timeSlot + " - " + timeSlotEnd;
-            else
-              timeSlotInterval = io.timeFormatter(timeSlot) + " - " + io.timeFormatter(timeSlotEnd);
-
-            /*Adding the timeSlotInterval to this string that will be printed when the user wants to view
-            the slots they have created for far*/
-            createdTimeSlots += ("\n\t" + timeSlotInterval);
-
-            std::cout << "The " << timeSlotInterval << " time slot was successfully added!\n";
-
-
-            //Converting from 24-hour mode to 12-hour mode.
-            timeSlot = io.timeFormatter(timeSlot);
-
-            /*This string contains each timeSlot with the amount of people who signed up for that time slot; since the
-            creator of the time slot is the only one there for now, in this function that amount will always be 1.*/
-            stringOfTimeSlots += timeSlot + ",1,";
-          }
-        } while ((!timeSlotIsAvailable) || (!timeSlotHourAndMinuteAreCorrect) || (!timeSlotFormatIsCorrect));
-        
-        do {
-          std::cout << "\nPlease select an option:\n"
-            << "\tAdd more slots: input 'a'.\n"
-            << "\tView created slots: input 'v'.\n"
-            << "\tExit menu: input any other key.\n"
-            << "Choice: ";
-          std::cin >> userChoice;
-          std::cin.ignore(1, '\n');
-
-          if (userChoice == 'v') {
-            std::cout << "\nTime slots you have created so far: " << createdTimeSlots << '\n';
-          }
-        } while (userChoice == 'v');
-      } while (userChoice == 'a');
+      timeSlots = requestTimeSlots();
     }
+    
 		//Add new stuff to timeslots and reset everything.
-    dateInfo->at(it->first) = stringOfTimeSlots;  
+    dateInfo->at(it->first) = timeSlots;  
     if(it != dateInfo->end()){
       it++;
     }
@@ -551,9 +251,6 @@ void Events::createEvent()
     io.storeSchedule(id,it->first,parsedTimeString);
   }
   
-	//This string, containing all the information gathered, will be sent as a parameter to the function addEntry in io.hpp
-	//outputString += (std::to_string(io.size) + "," + eventName + "," + date + "," + std::to_string(amountOfSlots) + "," + stringOfTimeSlots + std::to_string(amountOfAtendees) + "," + adminName);
-    
   delete dateInfo;
 }
 std::list<std::string> Events::requestTasks(){
@@ -602,13 +299,12 @@ std::list<std::string> Events::requestTasks(){
 }
 void Events::takeTask(){
   Interface interface;
-	IO io_;
 	bool digit_flag = true;
   bool quit;
   std::string userChoice;
 
 
-	if( io_.size != 0 )
+	if( io.size != 0 )
 	{
 		std::string input = interface.getInput("Please select an event ID from the list above: ");
 
@@ -620,7 +316,7 @@ void Events::takeTask(){
 		{
 			int input_ = atoi(input.c_str());
 
-			if( input_ < 0 || input_ > io_.size - 1)
+			if( input_ < 0 || input_ > io.size - 1)
 			{
 				std::cout << "Invalid event ID." << std::endl;
 				interface.Wait("");
@@ -782,14 +478,301 @@ std::string Events::requestDate(){
       menu.Header();
       std::cout << "\nWrong input! Please enter a valid date in MM/DD/YYYY format.\n";
     }
-
     if (!dateIsAvailable) {
       interface.clearScreen();
       menu.Header();
       std::cout << "\nSorry, that day is not available for meetings. Please enter a different date.\n";
     }
-
   } while ((!dateIsCorrect) || (!dateIsAvailable));
   
   return date;
+}
+
+std::string Events::requestTimeSlots(){
+  //variables regarding the time slots
+  Interface::Menu menu({{"", NULL}});
+  
+	char userChoice = '\0';
+	std::string timeSlot = "";
+	int amountOfSlots = 0;
+
+	int hour = -1;
+	int minute = -1;
+	unsigned int index = 0;
+	bool timeSlotFormatIsCorrect = false;
+	bool timeSlotHourAndMinuteAreCorrect = false;
+	bool timeSlotIsAvailable = true;
+	bool successfulAddition = false;
+
+	std::string stringOfTimeSlots = "";
+	int timeInMins = 0;
+	int slotStart = 0;
+	int slotEnd = 0;
+	int lastIndex = 0;
+	int secondToLastIndex = 0;
+	int hourEndTime = 0;
+	int minuteEndTime = 0;
+	std::string timeSlotInterval = "";
+
+	std::pair<int, int> newSlot(0, 0);
+	std::string createdTimeSlots = "";
+
+	std::list<std::pair<int, int>> slotsList;
+	slotsList.push_back(std::pair<int, int>(0, 300));
+	slotsList.push_back(std::pair<int, int>(720, 780));
+
+  interface.clearScreen();
+  //Everything is cleared.
+  
+  do {
+    do {
+      hour = -1;
+      minute = -1;
+      index = 0;
+      timeSlotFormatIsCorrect = false;
+      timeSlotHourAndMinuteAreCorrect = false;
+      timeSlotIsAvailable = true;
+      successfulAddition = false;
+
+      std::cout << "\nEnter start time of a 20-minute time slot: ";
+      std::getline(std::cin, timeSlot);
+
+      index = timeSlot.find(':');
+
+      //Making sure we find a colon in the input string.
+      if (index != std::string::npos) {
+        //Separating the hour characters and converting them to a single integer; throwing exceptions when necessary.
+        try {
+          hour = std::stoi(timeSlot.substr(0, index));
+        }
+        catch (std::invalid_argument& e) {
+          interface.clearScreen();
+          menu.Header();
+          std::cout << "\nInvalid argument.\n";
+          continue;
+        }
+        catch (std::out_of_range& e) {
+          interface.clearScreen();
+          menu.Header();
+          std::cout << "\nOut of range.\n";
+          continue;
+        }
+        catch (...) {
+          interface.clearScreen();
+          menu.Header();
+          std::cout << "\nOther error.\n";
+          continue;
+        }
+
+        //Separating the minute characters and converting them to a single integer; throwing exceptions when necessary.
+        try {
+          minute = std::stoi(timeSlot.substr(index + 1));
+        }
+        catch (std::invalid_argument& e) {
+          interface.clearScreen();
+          menu.Header();
+          std::cout << "\nInvalid argument.\n";
+          continue;
+        }
+        catch (std::out_of_range& e) {
+          interface.clearScreen();
+          menu.Header();
+          std::cout << "\nOut of range.\n";
+          continue;
+        }
+        catch (...) {
+          interface.clearScreen();
+          menu.Header();
+          std::cout << "\nOther error.\n";
+          continue;
+        }
+
+        /*Checking case in which the substring before the colon only contains numbers and that the substring after
+        the colon only contains non-numeric characters after the first two digits (input is in 12-hour format)*/
+        if (((timeSlot.substr(0, index)).find_first_not_of("0123456789") == std::string::npos)
+          && ((timeSlot.substr(index + 1)).find_first_not_of("0123456789") == 2)) {
+
+          /*Only allowing strings of length 6 (e.g. 1:00am) or length 7 (e.g. 11:00pm) in which there are strictly
+          four characters after the colon.*/
+          if ((timeSlot.length() == 6) || ((timeSlot.length() == 7) && ((timeSlot.substr(index + 1)).length() == 4))) {
+            lastIndex = timeSlot.length() - 1;
+            secondToLastIndex = lastIndex - 1;
+
+            //Making sure the last two characters are "am" or "pm".
+            if ((timeSlot[lastIndex] == 'm') && ((timeSlot[secondToLastIndex] == 'a') || (timeSlot[secondToLastIndex] == 'p'))) {
+              timeSlotFormatIsCorrect = true;
+            }
+
+            //Converting from 12-hour to 24-hour format.
+            timeSlot = io.timeFormatter(timeSlot);
+
+            index = timeSlot.find(':');
+            hour = std::stoi(timeSlot.substr(0, index));
+            minute = std::stoi(timeSlot.substr(index + 1));
+          }
+          /*Checking case in which both the substring before the colon and the substring after the colon
+          only contain numbers (input is in 24-hour format)*/
+        }
+        else if (((timeSlot.substr(0, index)).find_first_not_of("0123456789") == std::string::npos)
+          && ((timeSlot.substr(index + 1)).find_first_not_of("0123456789") == std::string::npos)) {
+          //Only allowing strings of length 4 (e.g. 1:00) or length 5 (e.g. 23:00).
+          if ((timeSlot.length() == 4) || ((timeSlot.length() == 5))) {
+            timeSlotFormatIsCorrect = true;
+          }
+        }
+        else {
+          interface.clearScreen();
+          menu.Header();
+          std::cout << "\nFormat is incorrect.\n";
+          continue;
+        }
+
+        if ((timeSlotFormatIsCorrect) && ((hour <= 23) && (hour >= 0)) && ((minute <= 59) && (minute >= 0))) {
+          timeSlotHourAndMinuteAreCorrect = true;
+        }
+
+        if ((timeSlotHourAndMinuteAreCorrect) && (timeSlotFormatIsCorrect)) {
+          //Converting time to minutes past midnight to make it easier to manage timer intervals.
+          timeInMins = (hour * 60) + minute;
+          /*Making sure events can be created between 12:00am and 5:00am or after 11:40pm (there would be an overlap
+          into the 12:00am - 5:00am time range).*/
+          if ((timeInMins >= 1420) || ((timeInMins >= 0) && (timeInMins <= 300))) {
+            interface.clearScreen();
+            menu.Header();
+            timeSlotIsAvailable = false;
+            std::cout << "\nSorry, you cannot create a meeting between 12:00am and 5:00am. Please pick a different time.\n";
+            continue;
+            /*Making sure events can be created between 12:00pm and 1:00pm or after 11:40pm (there would be an overlap
+            into the 12:00am - 5:00am time range).*/
+          }
+          else if ((timeInMins >= 720) && (timeInMins <= 780)) {
+            interface.clearScreen();
+            menu.Header();
+            timeSlotIsAvailable = false;
+            std::cout << "\nSorry, you cannot create a meeting between 12:00pm and 1:00pm. Please pick a different time.\n";
+            continue;
+          }
+
+          //Creating a pair of integers that will represent the start and end of the slot (in minutes).
+          slotStart = timeInMins;
+          slotEnd = timeInMins + 20;
+          newSlot = { slotStart, slotEnd };
+
+          /*Iterating through the current pairs in the list and compare the new pair (newSlot) with
+          each pair in order to determine where to place it*/
+          for (auto itr = slotsList.begin(); itr != slotsList.end(); itr++) {
+            /*If the start time of the new slot is >= than the end time of some slot in the list, we
+            go inside this else statement.*/
+            if (newSlot.first >= itr->second) {
+              itr++;
+              //If we have reached the end of the list, we simply push our new slot to the end of the list.
+              if (itr == slotsList.end()) {
+                successfulAddition = true;
+                slotsList.push_back(newSlot);
+                break;
+                //If we haven't reached the end of the list, we continue iterating through the list.
+              }
+              else {
+                itr--;
+                continue;
+              }
+              /*If the start time of the new slot is < than the end time of some slot in the list, we
+              go inside this else statement.*/
+            }
+            else {
+              /*If the end time of the new slot is > the start time of the slot currently on the list,
+              we have encountered a conflict and we must tell the admin to input a different time.*/
+              if (newSlot.second > itr->first) {
+                interface.clearScreen();
+                menu.Header();
+                timeSlotIsAvailable = false;
+                std::cout << "\nSorry, cannot add that slot because there is a scheduling conflict. Please pick a different time.\n";
+                break;
+                /*If the end time of the new slot is <= the start time of the slot currently on the list,
+                we can be confident that the new slot should be inserted there and we proceed to insert it.*/
+              }
+              else {
+                successfulAddition = true;
+                slotsList.insert(itr, newSlot);
+                break;
+              }
+            }
+          }
+
+
+        }
+
+        //If there is no colon in the string, the format is incorrect.
+      }
+      else {
+        timeSlotFormatIsCorrect = false;
+        continue;
+      }
+
+      if (!timeSlotHourAndMinuteAreCorrect) {
+        interface.clearScreen();
+        menu.Header();
+        std::cout << "\nHour and/or minutes are off bounds.\n";
+      }
+
+      if (!timeSlotFormatIsCorrect) {
+        interface.clearScreen();
+        menu.Header();
+        std::cout << "\nTime slot format is not correct. Please enter a time in either 12 hour mode (e.g. 1:15pm) or 24 hour mode (e.g. 13:15).\n";
+      }
+
+      if (successfulAddition) {
+        amountOfSlots++;
+
+        //Converting slot end time from minutes to hours and minutes in 24-hr mode.
+        hourEndTime = slotEnd / 60;
+        minuteEndTime = slotEnd % 60;
+        std::string timeSlotEnd = "";
+        if (hourEndTime < 10) {
+          timeSlotEnd += "0";
+        }
+        timeSlotEnd = (std::to_string(hourEndTime) + ":");
+        if (minuteEndTime < 10) {
+          timeSlotEnd += "0";
+        }
+        timeSlotEnd += std::to_string(minuteEndTime);
+
+        //Creating a string that shows the time interval.
+        if (io.timeFormat == false)
+          timeSlotInterval = timeSlot + " - " + timeSlotEnd;
+        else
+          timeSlotInterval = io.timeFormatter(timeSlot) + " - " + io.timeFormatter(timeSlotEnd);
+
+        /*Adding the timeSlotInterval to this string that will be printed when the user wants to view
+        the slots they have created for far*/
+        createdTimeSlots += ("\n\t" + timeSlotInterval);
+
+        std::cout << "The " << timeSlotInterval << " time slot was successfully added!\n";
+
+
+        //Converting from 24-hour mode to 12-hour mode.
+        timeSlot = io.timeFormatter(timeSlot);
+
+        /*This string contains each timeSlot with the amount of people who signed up for that time slot; since the
+        creator of the time slot is the only one there for now, in this function that amount will always be 1.*/
+        stringOfTimeSlots += timeSlot + ",1,";
+      }
+    } while ((!timeSlotIsAvailable) || (!timeSlotHourAndMinuteAreCorrect) || (!timeSlotFormatIsCorrect));
+    
+    do {
+      std::cout << "\nPlease select an option:\n"
+        << "\tAdd more slots: input 'a'.\n"
+        << "\tView created slots: input 'v'.\n"
+        << "\tExit menu: input any other key.\n"
+        << "Choice: ";
+      std::cin >> userChoice;
+      std::cin.ignore(1, '\n');
+
+      if (userChoice == 'v') {
+        std::cout << "\nTime slots you have created so far: " << createdTimeSlots << '\n';
+      }
+    } while (userChoice == 'v');
+  } while (userChoice == 'a');
+  
+  return stringOfTimeSlots;
 }
