@@ -14,4 +14,4 @@ main.o: main.cpp log.h events.h io.h interface.h
 	g++ -Wall -std=c++11 -c main.cpp
 
 clean:
-	rm *.o EventScheduler.app || true
+	rm *.o EventScheduler *.csv || true
