@@ -498,3 +498,10 @@ void IO::storeAttendees(int id, std::string date, std::string time, std::list<st
 
     addEntry(attendenceFile, line);
 }
+
+void IO::storeAttendee(int id, std::string date, std::string time, std::string attendee){
+    std::string attendees = retriveAttendees(id, date, time) + "," + attendee;
+    std::string identifier = std::to_string(id) + "," + date + "," + time;
+
+    replaceEntry(attendenceFile, ATTENDENCE_FILE, identifier, identifier + "," + attendees);
+}

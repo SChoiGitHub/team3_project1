@@ -104,6 +104,17 @@ public:
     void storeTaskAssignee(int id, std::string name, std::string assignee);
 
     /*
+    * Adds an attendee to a date and time
+    * @param id - id of the event
+    * @param date - date of the time slot
+    * @param time - time of the time slot
+    * @param attendee - name of the attendee
+    * @pre Assumes a valid date and time
+    * @post attendee is added stored in appropriate file
+    */
+    void storeAttendee(int id, std::string date, std::string time, std::string attendee);
+
+    /*
     * Adds the attendees for a specific date and time to files
     * @param id - id of the event to which the schedule belongs
     * @param date - one date that is part of an event
