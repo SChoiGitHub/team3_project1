@@ -45,9 +45,6 @@ void Events::setAvailability()
 	bool new_attendee = false;  //for any new attendence
 	int dummy_int = 0;
 
-	std::size_t found;
-	
-
 	if( io_.size != 0 )
 	{
 		std::string input = interface.getInput("Please select an event ID from the list above: "); //Storing the event ID in varaible "input"

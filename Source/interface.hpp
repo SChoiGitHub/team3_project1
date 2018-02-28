@@ -135,9 +135,11 @@ void Interface::toggleTimeFormat()
 std::string Interface::getName() 
 {
     std::string name;
+    unsigned int found = 0;
+
     do{ //Sanitization loop; iterates until there are no commas in the "name"
 	    found = 0;
-	    name = interface.getInput("What's your name (no commas)? ");
+	    name = getInput("What's your name (no commas)? ");
 	    found = name.find_first_of(",");
 
     } while( found!=std::string::npos );
