@@ -35,6 +35,7 @@ class Events
     static int current_month; /**The current month of the execution*/
     static int current_day; /**The current day of the execution*/
     static Interface interface; /**The interface, or UI.*/
+    static IO io; /**The file IO object*/
 
 	private:
 
@@ -68,7 +69,12 @@ class Events
      * @return A string representing the date
      */
     static std::string requestDate();
-  
+    /**This method deals with the UI regarding the time slots of a day.
+     * @pre None
+     * @post None
+     * @return A string representing the time slots on a day.
+     */
+    static std::string requestTimeSlots();
   
   
 
