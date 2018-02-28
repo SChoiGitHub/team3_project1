@@ -647,7 +647,7 @@ void Events::createEvent()
   //ADD STUFF
   int id = io.storeEvent(eventName,adminName); //Store the event and set id.
   for(auto&& it = tasks.begin(); it != tasks.end(); it++){
-		io.storeTask(id,(*it),false,"");
+		io.storeTask(id,(*it));
 	}
   //Store the schedule
   for(auto&& it = dateInfo->begin(); it != dateInfo->end(); it++){
