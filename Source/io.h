@@ -91,9 +91,17 @@ public:
     * @param assignee - name of the person responsible for the task
     * @post new task is added to the tasks file
     */
-    void storeTask(int id, std::string name, bool taken, std::string assignee);
+    void storeTask(int id, std::string name);
 
-
+    /*
+    * Sets the person assigned to complete a task.
+    * @param id - the id of the event
+    * @param name - the name of the task
+    * @param assignee - person to be assigned
+    * @pre Task is already stored in the file
+    * @post task has an assignee
+    */
+    void storeTaskAssignee(int id, std::string name, std::string assignee);
 
     /*
     * Adds the attendees for a specific date and time to files
@@ -126,6 +134,14 @@ private:
     * @post Adds new event to file
     */
     void addEntry(std::fstream& file, std::string data);
+
+    /*
+    * Generic method that replaces a line in a file
+    * @param file - file that needs to be modified
+    * @param identifier - a unique string that will identify the entry that needs replaced
+    * @param revised - the new version of the entry
+    */
+    void replaceEntry(std::fstream& file, std::string identifier, std::string, revised);
 
 };
 
