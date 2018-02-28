@@ -141,7 +141,7 @@ private:
     * @param identifier - a unique string that will identify the entry that needs replaced
     * @param revised - the new version of the entry
     */
-    void replaceEntry(std::fstream& file, std::string identifier, std::string, revised);
+    void replaceEntry(std::fstream& file, std::string identifier, std::string revised);
 
 };
 
