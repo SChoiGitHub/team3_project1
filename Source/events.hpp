@@ -4,6 +4,16 @@
 *	@file events.hpp
 */
 
+
+
+time_t Events::t = time(NULL);
+tm* Events::timePtr = localtime(&t);
+int Events::current_year = (int)timePtr->tm_year + 1900;
+int Events::current_month = (int)timePtr->tm_mon + 1;
+int Events::current_day = (int)timePtr->tm_mday;
+
+
+
 void Events::userMode()
 {
 	Interface::Menu menu({
@@ -136,11 +146,7 @@ void Events::createEvent()
 
 	IO io;
 
-	time_t t = time(NULL);
-	tm* timePtr = localtime(&t);
-	int current_year = (int)timePtr->tm_year + 1900;
-	int current_month = (int)timePtr->tm_mon + 1;
-	int current_day = (int)timePtr->tm_mday;
+	
 
 	std::string outputString = "";
 	std::string adminName = "";
@@ -154,9 +160,6 @@ void Events::createEvent()
 	bool dateIsCorrect = true;
 	bool dateIsAvailable = true;
 	bool isLeapYear = true;
-
-	int amountOfAtendees = 1;
-
 	/*----------------------------Declaring variables used for input and verification of time slots----------------------------*/
 	char userChoice = '\0';
 	std::string timeSlot = "";
@@ -653,7 +656,7 @@ void Events::createEvent()
   //ADD STUFF
   int id = io.storeEvent(eventName,adminName); //Store the event and set id.
   for(auto&& it = tasks.begin(); it != tasks.end(); it++){
-		io.storeTask(id,(*it),false,"");
+		io.storeTask(id,(*it));
 	}
   //Store the schedule
   for(auto&& it = dateInfo->begin(); it != dateInfo->end(); it++){

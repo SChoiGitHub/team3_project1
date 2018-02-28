@@ -429,14 +429,14 @@ int IO::storeEvent(std::string name, std::string creator){
     addEntry(eventsFile, line);
 
     numEvents += 1;
-    
-    return numEvents-1;
+
+    return numEvents - 1;
 }
 
 
 //Retrives and Stores Dates and times for events
 void IO::storeSchedule(int id, std::string date, std::list<std::string> times){
-    std::string line = id + "," + date;
+    std::string line = std::to_string(id) + "," + date;
 
     for(auto const& i : times){
         line += "," + i;
@@ -447,22 +447,23 @@ void IO::storeSchedule(int id, std::string date, std::list<std::string> times){
 
 
 //Retrives and Stores Tasks and related information
-void IO::storeTask(int id, std::string name, bool taken, std::string assignee){
-    std::string line = id + "," + name;
-
-    if(taken){
-        line += "true," +assignee;
-    }else{
-        line +=  ",false";
-    }
+void IO::storeTask(int id, std::string name){
+    std::string line = std::to_string(id) + "," + name + ",false";
 
     addEntry(tasksFile, line);
+}
+
+void IO::storeTaskAssignee(int id, std::string name, std::string assignee){
+    std::string identifier = std::to_string(id) + "," + name;
+    std::string revised = identifier + ",true," + assignee;
+
+    //replaceEntry(tasksFile, identifier, revised);//Come back later.
 }
 
 
 //Retrieves and Stores Attendees
 void IO::storeAttendees(int id, std::string date, std::string time, std::list<std::string> attendees){
-    std::string line = id + "," + date + "," + time;
+    std::string line = std::to_string(id) + "," + date + "," + time;
 
     for(auto const& i : attendees){
         line += "," + i;
