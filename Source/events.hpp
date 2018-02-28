@@ -520,9 +520,6 @@ std::string Events::requestTimeSlots(){
 	std::list<std::pair<int, int>> slotsList;
 	slotsList.push_back(std::pair<int, int>(0, 300));
 	slotsList.push_back(std::pair<int, int>(720, 780));
-
-  interface.clearScreen();
-  //Everything is cleared.
   
   do {
     do {
@@ -774,5 +771,6 @@ std::string Events::requestTimeSlots(){
     } while (userChoice == 'v');
   } while (userChoice == 'a');
   
+  interface.clearScreen();
   return stringOfTimeSlots;
 }
