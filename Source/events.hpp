@@ -11,6 +11,7 @@ tm* Events::timePtr = localtime(&t);
 int Events::current_year = (int)timePtr->tm_year + 1900;
 int Events::current_month = (int)timePtr->tm_mon + 1;
 int Events::current_day = (int)timePtr->tm_mday;
+Interface Events::interface;
 
 
 
@@ -39,7 +40,6 @@ void Events::adminMode()
 
 void Events::setAvailability()
 {
-	Interface interface_;
 	IO io_;
 	bool digit_flag = true;
 	bool new_attendee = false;  //for any new attendence
@@ -50,7 +50,7 @@ void Events::setAvailability()
 
 	if( io_.size != 0 )
 	{
-		std::string input = interface_.getInput("Please select an event ID from the list above: "); //Storing the event ID in varaible "input"
+		std::string input = interface.getInput("Please select an event ID from the list above: "); //Storing the event ID in varaible "input"
 
 		for(unsigned int i = 0; i < input.size() ; ++i)
 			if( isdigit(input[i]) == 0 )
@@ -63,7 +63,7 @@ void Events::setAvailability()
 			if( input_ < 0 || input_ > io_.size - 1) //More input sanitization
 			{
 				std::cout << "Invalid event ID." << std::endl;
-				interface_.Wait("");
+				interface.Wait("");
 			}
 			else //"input_" is in the valid range of IDs
 			{
@@ -120,7 +120,7 @@ void Events::setAvailability()
 					std::string name;
 					do{ //Sanitization loop; iterates until there are no commas in the "name"
 						found = 0;
-						name = interface_.getInput("What's your name (no commas)? ");
+						name = interface.getInput("What's your name (no commas)? ");
 						found = name.find_first_of(",");
 
 					} while( found!=std::string::npos );
@@ -134,17 +134,16 @@ void Events::setAvailability()
 		else //If "input" is not a number
 		{
 			std::cout << "Invalid event ID." << std::endl;
-			interface_.Wait("");
+			interface.Wait("");
 		}
 
 	} else { //If there are no events to set availability for
-		interface_.Wait("No events available... Sorry!");
+		interface.Wait("No events available... Sorry!");
 	}
 }
 
 void Events::createEvent()
 {
-	Interface interface_;
 	Interface::Menu menu({{"", NULL}});
 
 	IO io;
@@ -153,14 +152,6 @@ void Events::createEvent()
 	std::string adminName = "";
 	std::string eventName = "";
 
-	/*----------------------------Declaring variables used for input and verification of dates----------------------------*/
-	std::string date = "";
-	std::string month = "";
-	int day = 0;
-	int year = 0;
-	bool dateIsCorrect = true;
-	bool dateIsAvailable = true;
-	bool isLeapYear = true;
 	/*----------------------------Declaring variables used for input and verification of time slots----------------------------*/
 	char userChoice = '\0';
 	std::string timeSlot = "";
@@ -191,7 +182,7 @@ void Events::createEvent()
 	slotsList.push_back(std::pair<int, int>(0, 300));
 	slotsList.push_back(std::pair<int, int>(720, 780));
 
-	interface_.clearScreen();
+	interface.clearScreen();
 	menu.Header();
 
 	std::size_t found;
@@ -222,113 +213,8 @@ void Events::createEvent()
 	/*----------------------------Date input and verification----------------------------*/
 
 	do {
-		do {
-			dateIsCorrect = true;
-			dateIsAvailable = true;
-			isLeapYear = true;
 
-			std::cout << "\nEnter date in MM/DD/YYYY format: ";
-			std::getline(std::cin, date);
-
-			//The following if-else if-else statement discards most inputs with an incorrect format:
-			//The length of the input must be 10.
-			/**************************************************    
-			 * REPLACE THIS SECTION WITH HELPER METHOD
-			 *
-			    if (date.length() != 10) {
-				    dateIsCorrect = false;
-			    }
-			    //The first character of the month must be 0 or 1.
-			    else if ((date[0] != '0') && (date[0] != '1')) {
-				    dateIsCorrect = false;
-			    }
-			    //If the first character of the month is 0, the second character can be any integer other than 0.
-			    else if ((date[0] == '0') && ((date[1] == '0') || (!isdigit(date[1])))) {
-				    dateIsCorrect = false;
-			    }
-			    //If the first character of the month is 1, the second character must be 0, 1, or 2.
-			    else if ((date[0] == '1') && (date[1] != '0') && (date[1] != '1') && (date[1] != '2')) {
-				    dateIsCorrect = false;
-			    }
-			    //Making sure the first slash is present and is placed in the right position.
-			    else if (date[2] != '/') {
-				    dateIsCorrect = false;
-			    }
-			    //The first character of the day must be 0, 1, 2, or 3.
-			    else if ((date[3] != '0') && (date[3] != '1') && (date[3] != '2') && (date[3] != '3')) {
-				    dateIsCorrect = false;
-			    }
-			    //If the first character of the day is 0 the second character can be any integer other than 0.
-			    else if ((date[3] == '0') && ((date[4] == '0') || (!isdigit(date[4])))) {
-				    dateIsCorrect = false;
-			    }
-			    //If the first character of the day is 1 or 2,the second character can be any integer.
-			    else if (((date[3] == '1') || (date[3] == '2')) && (!isdigit(date[4]))) {
-				    dateIsCorrect = false;
-			    }
-			    //If the first character of the date is 3, the second character must be 0 or 1.
-			    else if ((date[3] == '3') && (date[4] != '0') && (date[4] != '1')) {
-				    dateIsCorrect = false;
-			    }
-			    //Making sure the second slash is present and is placed in the right position.
-			    else if (date[5] != '/') {
-				    dateIsCorrect = false;
-			    }
-			    //Making sure the characters corresponding to the year are all integers.
-			    else if ((!isdigit(date[6])) || (!isdigit(date[7])) || (!isdigit(date[8])) || (!isdigit(date[9]))) {
-				    dateIsCorrect = false;
-			    }
-			**************************************************/ 
-			//Now we will explicitly separate the string into month, day, and year make some additional checks.
-			else {
-				month = date.substr(0, 2);
-				day = std::stoi(date.substr(3, 2));
-				year = std::stoi(date.substr(6, 4));
-	
-				//Determining whether a year is a leap year or not.
-				if ((year % 4 != 0) || ((year % 100 == 0) && (year % 400 != 0))) {
-					isLeapYear = false;
-				}
-	
-				//Disallowing days after February 29th on leap years.
-				if ((month == "02") && (isLeapYear) && (day > 29)) {
-					dateIsCorrect = false;
-				}
-				//Disallowing days after February 28th on non-leap years.
-				else if ((month == "02") && (!isLeapYear) && (day > 28)) {
-					dateIsCorrect = false;
-				}
-				//Disallowing a 31st day on months that only contain 30 days.
-				else if (((month == "04") || (month == "06") || (month == "09") || (month == "11")) && (day > 30)) {
-					dateIsCorrect = false;
-				}
-
-				//Disallowing special holidays (New Year, 4th of July, and Christmas).
-				if (((month == "01") && (day == 1)) || ((month == "07") && (day == 4)) || ((month == "12") && (day == 25))) {
-					dateIsAvailable = false;
-				}
-
-				//Disallowing dates before the current date.
-				if (current_year > year || (current_year == year && current_month > atoi(month.c_str())) || (current_year == year && current_month == atoi(month.c_str()) && current_day > day))
-				{
-					dateIsCorrect = false;
-				}
-			}
-
-			if (!dateIsCorrect) {
-				interface_.clearScreen();
-				menu.Header();
-				std::cout << "\nWrong input! Please enter a valid date in MM/DD/YYYY format.\n";
-			}
-
-			if (!dateIsAvailable) {
-				interface_.clearScreen();
-				menu.Header();
-				std::cout << "\nSorry, that day is not available for meetings. Please enter a different date.\n";
-			}
-	
-		} while ((!dateIsCorrect) || (!dateIsAvailable));
-
+    std::string date = requestDate();
 		std::cout << "Succesful addition of the date " << date << "!\n";
     dateInfo->emplace(date,std::string(""));
     date = "";
@@ -390,7 +276,7 @@ void Events::createEvent()
       slotsList.push_back(std::pair<int, int>(0, 300));
       slotsList.push_back(std::pair<int, int>(720, 780));
 
-      interface_.clearScreen();
+      interface.clearScreen();
       //Everything is cleared.
       
       do {
@@ -415,19 +301,19 @@ void Events::createEvent()
               hour = std::stoi(timeSlot.substr(0, index));
             }
             catch (std::invalid_argument& e) {
-              interface_.clearScreen();
+              interface.clearScreen();
               menu.Header();
               std::cout << "\nInvalid argument.\n";
               continue;
             }
             catch (std::out_of_range& e) {
-              interface_.clearScreen();
+              interface.clearScreen();
               menu.Header();
               std::cout << "\nOut of range.\n";
               continue;
             }
             catch (...) {
-              interface_.clearScreen();
+              interface.clearScreen();
               menu.Header();
               std::cout << "\nOther error.\n";
               continue;
@@ -438,19 +324,19 @@ void Events::createEvent()
               minute = std::stoi(timeSlot.substr(index + 1));
             }
             catch (std::invalid_argument& e) {
-              interface_.clearScreen();
+              interface.clearScreen();
               menu.Header();
               std::cout << "\nInvalid argument.\n";
               continue;
             }
             catch (std::out_of_range& e) {
-              interface_.clearScreen();
+              interface.clearScreen();
               menu.Header();
               std::cout << "\nOut of range.\n";
               continue;
             }
             catch (...) {
-              interface_.clearScreen();
+              interface.clearScreen();
               menu.Header();
               std::cout << "\nOther error.\n";
               continue;
@@ -490,7 +376,7 @@ void Events::createEvent()
               }
             }
             else {
-              interface_.clearScreen();
+              interface.clearScreen();
               menu.Header();
               std::cout << "\nFormat is incorrect.\n";
               continue;
@@ -506,7 +392,7 @@ void Events::createEvent()
               /*Making sure events can be created between 12:00am and 5:00am or after 11:40pm (there would be an overlap
               into the 12:00am - 5:00am time range).*/
               if ((timeInMins >= 1420) || ((timeInMins >= 0) && (timeInMins <= 300))) {
-                interface_.clearScreen();
+                interface.clearScreen();
                 menu.Header();
                 timeSlotIsAvailable = false;
                 std::cout << "\nSorry, you cannot create a meeting between 12:00am and 5:00am. Please pick a different time.\n";
@@ -515,7 +401,7 @@ void Events::createEvent()
                 into the 12:00am - 5:00am time range).*/
               }
               else if ((timeInMins >= 720) && (timeInMins <= 780)) {
-                interface_.clearScreen();
+                interface.clearScreen();
                 menu.Header();
                 timeSlotIsAvailable = false;
                 std::cout << "\nSorry, you cannot create a meeting between 12:00pm and 1:00pm. Please pick a different time.\n";
@@ -552,7 +438,7 @@ void Events::createEvent()
                   /*If the end time of the new slot is > the start time of the slot currently on the list,
                   we have encountered a conflict and we must tell the admin to input a different time.*/
                   if (newSlot.second > itr->first) {
-                    interface_.clearScreen();
+                    interface.clearScreen();
                     menu.Header();
                     timeSlotIsAvailable = false;
                     std::cout << "\nSorry, cannot add that slot because there is a scheduling conflict. Please pick a different time.\n";
@@ -579,13 +465,13 @@ void Events::createEvent()
           }
 
           if (!timeSlotHourAndMinuteAreCorrect) {
-            interface_.clearScreen();
+            interface.clearScreen();
             menu.Header();
             std::cout << "\nHour and/or minutes are off bounds.\n";
           }
 
           if (!timeSlotFormatIsCorrect) {
-            interface_.clearScreen();
+            interface.clearScreen();
             menu.Header();
             std::cout << "\nTime slot format is not correct. Please enter a time in either 12 hour mode (e.g. 1:15pm) or 24 hour mode (e.g. 13:15).\n";
           }
@@ -681,12 +567,12 @@ void Events::createEvent()
   delete dateInfo;
 }
 std::list<std::string> Events::requestTasks(){
-	Interface interface_;
+	Interface interface;
 	std::string userChoice;
 	std::list<std::string> currentTaskList;
 	bool quit = true;
 	
-	interface_.clearScreen();
+	interface.clearScreen();
 	do{
 		quit = true;
 		std::cout << "Would you like to create tasks?\n"
@@ -704,7 +590,7 @@ std::list<std::string> Events::requestTasks(){
 			quit = false;
 			
 			//Get a task.
-			interface_.clearScreen();
+			interface.clearScreen();
 			std::cout << "What is the task?: ";
 			std::getline(std::cin, userChoice);
 			currentTaskList.push_back(userChoice);
@@ -725,7 +611,7 @@ std::list<std::string> Events::requestTasks(){
 	return currentTaskList;
 }
 void Events::takeTask(){
-  Interface interface_;
+  Interface interface;
 	IO io_;
 	bool digit_flag = true;
   bool quit;
@@ -734,7 +620,7 @@ void Events::takeTask(){
 
 	if( io_.size != 0 )
 	{
-		std::string input = interface_.getInput("Please select an event ID from the list above: ");
+		std::string input = interface.getInput("Please select an event ID from the list above: ");
 
 		for(unsigned int i = 0; i < input.size() ; ++i)
 			if( isdigit(input[i]) == 0 )
@@ -747,7 +633,7 @@ void Events::takeTask(){
 			if( input_ < 0 || input_ > io_.size - 1)
 			{
 				std::cout << "Invalid event ID." << std::endl;
-				interface_.Wait("");
+				interface.Wait("");
 			}
 			else{
         //Temporary measure, change later.
@@ -795,10 +681,125 @@ void Events::takeTask(){
 		else
 		{
 			std::cout << "Invalid event ID." << std::endl;
-			interface_.Wait("");
+			interface.Wait("");
 		}
 
 	} else {
-		interface_.Wait("No events available... Sorry!");
+		interface.Wait("No events available... Sorry!");
 	}
+}
+
+std::string Events::requestDate(){
+  Interface::Menu menu({{"", NULL}});
+  std::string date = "";
+	std::string month = "";
+	int day = 0;
+	int year = 0;
+	bool dateIsCorrect = true;
+	bool dateIsAvailable = true;
+	bool isLeapYear = true;
+  
+  do {
+    dateIsCorrect = true;
+    dateIsAvailable = true;
+    isLeapYear = true;
+
+    std::cout << "\nEnter date in MM/DD/YYYY format: ";
+    std::getline(std::cin, date);
+
+    //The following if-else if-else statement discards most inputs with an incorrect format:
+    //The length of the input must be 10.
+ 
+    if (date.length() != 10) {
+      dateIsCorrect = false;
+    }
+    //The first character of the month must be 0 or 1.
+    else if ((date[0] != '0') && (date[0] != '1')) {
+      dateIsCorrect = false;
+    }
+    //If the first character of the month is 0, the second character can be any integer other than 0.
+    else if ((date[0] == '0') && ((date[1] == '0') || (!isdigit(date[1])))) {
+      dateIsCorrect = false;
+    }
+    //If the first character of the month is 1, the second character must be 0, 1, or 2.
+    else if ((date[0] == '1') && (date[1] != '0') && (date[1] != '1') && (date[1] != '2')) {
+      dateIsCorrect = false;
+    }
+    //Making sure the first slash is present and is placed in the right position.
+    else if (date[2] != '/') {
+      dateIsCorrect = false;
+    }
+    //The first character of the day must be 0, 1, 2, or 3.
+    else if ((date[3] != '0') && (date[3] != '1') && (date[3] != '2') && (date[3] != '3')) {
+      dateIsCorrect = false;
+    }
+    //If the first character of the day is 0 the second character can be any integer other than 0.
+    else if ((date[3] == '0') && ((date[4] == '0') || (!isdigit(date[4])))) {
+      dateIsCorrect = false;
+    }
+    //If the first character of the day is 1 or 2,the second character can be any integer.
+    else if (((date[3] == '1') || (date[3] == '2')) && (!isdigit(date[4]))) {
+      dateIsCorrect = false;
+    }
+    //If the first character of the date is 3, the second character must be 0 or 1.
+    else if ((date[3] == '3') && (date[4] != '0') && (date[4] != '1')) {
+      dateIsCorrect = false;
+    }
+    //Making sure the second slash is present and is placed in the right position.
+    else if (date[5] != '/') {
+      dateIsCorrect = false;
+    }
+    //Making sure the characters corresponding to the year are all integers.
+    else if ((!isdigit(date[6])) || (!isdigit(date[7])) || (!isdigit(date[8])) || (!isdigit(date[9]))) {
+      dateIsCorrect = false;
+    }
+    //Now we will explicitly separate the string into month, day, and year make some additional checks.
+  
+    month = date.substr(0, 2);
+    day = std::stoi(date.substr(3, 2));
+    year = std::stoi(date.substr(6, 4));
+
+    //Determining whether a year is a leap year or not.
+    if ((year % 4 != 0) || ((year % 100 == 0) && (year % 400 != 0))) {
+      isLeapYear = false;
+    }
+
+    //Disallowing days after February 29th on leap years.
+    if ((month == "02") && (isLeapYear) && (day > 29)) {
+      dateIsCorrect = false;
+    }
+    //Disallowing days after February 28th on non-leap years.
+    else if ((month == "02") && (!isLeapYear) && (day > 28)) {
+      dateIsCorrect = false;
+    }
+    //Disallowing a 31st day on months that only contain 30 days.
+    else if (((month == "04") || (month == "06") || (month == "09") || (month == "11")) && (day > 30)) {
+      dateIsCorrect = false;
+    }
+
+    //Disallowing special holidays (New Year, 4th of July, and Christmas).
+    if (((month == "01") && (day == 1)) || ((month == "07") && (day == 4)) || ((month == "12") && (day == 25))) {
+      dateIsAvailable = false;
+    }
+
+    //Disallowing dates before the current date.
+    if (current_year > year || (current_year == year && current_month > atoi(month.c_str())) || (current_year == year && current_month == atoi(month.c_str()) && current_day > day))
+    {
+      dateIsCorrect = false;
+    }
+    if (!dateIsCorrect) {
+      interface.clearScreen();
+      menu.Header();
+      std::cout << "\nWrong input! Please enter a valid date in MM/DD/YYYY format.\n";
+    }
+
+    if (!dateIsAvailable) {
+      interface.clearScreen();
+      menu.Header();
+      std::cout << "\nSorry, that day is not available for meetings. Please enter a different date.\n";
+    }
+
+  } while ((!dateIsCorrect) || (!dateIsAvailable));
+  
+  return date;
 }
