@@ -98,43 +98,46 @@ void Events::setAvailability()
 						//updateElement() is to be replaced with storeAttendee()
 						new_attendee = true;
 					}
-					else if(input != "No" && input != "no" && input != "n" && input != "N")
+					else if(input != "No" && input != "no" && input != "n" && input != "N") //If user enters some invalid input
 					{
 						std::cout << "Invalid input. Please try again." << std::endl;
 
-						ss.clear();
-						ss.seekg(0, std::ios::beg);
+						ss.clear(); //Clear the fail bit
+						ss.seekg(0, std::ios::beg); //Go back to position 0 in "ss"
 
 						for(int j = 0; j < 2*i ; ++j)
+						    //Here "i" refers to the current slot
+						    //The point of this loop is to reset the position of the stringstream to the current slot
+						    //This is needed if the input was invalid, since whether or not the user was added was indecisive
 							getline(ss, input, ',');
 
-						--i;
+						--i; //Reset the slot position
 					}
 				}
 
-				if(new_attendee == true)
+				if(new_attendee == true) //If the person is a new attendee to the slot
 				{
 					std::string name;
-					do{
+					do{ //Sanitization loop; iterates until there are no commas in the "name"
 						found = 0;
 						name = interface_.getInput("What's your name (no commas)? ");
 						found = name.find_first_of(",");
 
 					} while( found!=std::string::npos );
 
-					const char* name_ = name.c_str();
-					io_.updateElement(input_,"total_attendees",NULL);
-					io_.updateElement(input_,"attendees", (char *) name_);
+					const char* name_ = name.c_str(); //"name_" points to a c string of "name"
+					io_.updateElement(input_,"total_attendees",NULL); //Increment the "total_attendees" element
+					io_.updateElement(input_,"attendees", (char *) name_); //Add "name_" to the "attendees" element
 				}
 			}
 		}
-		else
+		else //If "input" is not a number
 		{
 			std::cout << "Invalid event ID." << std::endl;
 			interface_.Wait("");
 		}
 
-	} else {
+	} else { //If there are no events to set availability for
 		interface_.Wait("No events available... Sorry!");
 	}
 }
