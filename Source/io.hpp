@@ -442,7 +442,7 @@ int IO::storeEvent(std::string name, std::string creator){
 
 //Retrives and Stores Dates and times for events
 void IO::storeSchedule(int id, std::string date, std::list<std::string> times){
-    std::string line = id + "," + date;
+    std::string line = std::to_string(id) + "," + date;
 
     for(auto const& i : times){
         line += "," + i;
@@ -469,7 +469,7 @@ void IO::storeTaskAssignee(int id, std::string name, std::string assignee){
 
 //Retrieves and Stores Attendees
 void IO::storeAttendees(int id, std::string date, std::string time, std::list<std::string> attendees){
-    std::string line = id + "," + date + "," + time;
+    std::string line = std::to_string(id) + "," + date + "," + time;
 
     for(auto const& i : attendees){
         line += "," + i;
