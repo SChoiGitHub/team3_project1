@@ -117,17 +117,10 @@ void Events::setAvailability()
 
 				if(new_attendee == true) //If the person is a new attendee to the slot
 				{
-					std::string name;
-					do{ //Sanitization loop; iterates until there are no commas in the "name"
-						found = 0;
-						name = interface.getInput("What's your name (no commas)? ");
-						found = name.find_first_of(",");
-
-					} while( found!=std::string::npos );
-
-					const char* name_ = name.c_str(); //"name_" points to a c string of "name"
-					io_.updateElement(input_,"total_attendees",NULL); //Increment the "total_attendees" element
-					io_.updateElement(input_,"attendees", (char *) name_); //Add "name_" to the "attendees" element
+				    const char* name_ = (interface.getName()).c_str();
+				    //const char* name_ = name.c_str(); //"name_" points to a c string of "name"
+				    io_.updateElement(input_,"total_attendees",NULL); //Increment the "total_attendees" element
+				    io_.updateElement(input_,"attendees", (char *) name_); //Add "name_" to the "attendees" element
 				}
 			}
 		}
