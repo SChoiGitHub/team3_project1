@@ -144,8 +144,6 @@ void Events::createEvent()
 
 	IO io;
 
-	
-
 	std::string outputString = "";
 	std::string adminName = "";
 	std::string eventName = "";
