@@ -36,6 +36,27 @@ void IO::addEntry(std::fstream& file, std::string data){
 	file << data << std::endl;
 }
 
+void IO::replaceEntry(std::fstream& file, std::string fileName; std::string identifier, std::string revised){
+    std::fstream temp;
+    temp.open("temp.csv", std::fstream::app | std::fstream::out | std::fstream::in);
+
+    //Copy all other lines to a temp file.
+    std::string line;
+    while(std::getline(file, line)){
+        if(line.find(identifier) == std::string::npos){
+            temp << line << std::endl;
+        }
+    }
+
+    temp << revised << std::endl;
+
+    temp.close();
+    file.close();
+
+    remove(fileName);
+    rename("temp.csv", fileName);
+    file.open(fileName, std::fstream::app | std::fstream::out | std::fstream::in)
+}
 
 std::string IO::retrieveElement(int ID, std::string elementName){
 /*    //IDs start at 0
@@ -463,7 +484,7 @@ void IO::storeTaskAssignee(int id, std::string name, std::string assignee){
     std::string identifier = std::to_string(id) + "," + name;
     std::string revised = identifier + ",true," + assignee;
 
-    replaceEntry(tasksFile, identifier, revised);
+    replaceEntry(tasksFile, TASKS_FILE, identifier, revised);
 }
 
 
