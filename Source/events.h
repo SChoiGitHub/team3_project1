@@ -15,8 +15,7 @@
 
 class Events
 {
-	public:
-
+	public:  
 	/** @pre None
 	*   @post Start User Mode
 	*   @return None
@@ -28,6 +27,13 @@ class Events
 	*   @return None
 	*/
 	static void adminMode();
+  
+  
+  static time_t t; /**Time pointer*/
+	static tm* timePtr; /**Time pointer*/
+	static int current_year; /**The current year of the execution*/
+	static int current_month; /**The current month of the execution*/
+	static int current_day; /**The current day of the execution*/
 
 	private:
 
@@ -55,6 +61,10 @@ class Events
 	 * @return A string that represents the tasks.
 	 */
 	static std::list<std::string> requestTasks();
+  
+  
+  
+  
 
 };
 
