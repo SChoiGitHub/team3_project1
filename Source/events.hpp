@@ -8,7 +8,7 @@ void Events::userMode()
 {
 	Interface::Menu menu({
 		{"Set Availability", Events::setAvailability},
-    {"Task a Task", Events::takeTask},
+		{"Task a Task", Events::takeTask},
 		{"Toggle Time Format 12/24", Interface::toggleTimeFormat},
 		{"Go back", nullptr}
 	});
@@ -40,50 +40,52 @@ void Events::setAvailability()
 
 	if( io_.size != 0 )
 	{
-		std::string input = interface_.getInput("Please select an event ID from the list above: ");
+		std::string input = interface_.getInput("Please select an event ID from the list above: "); //Storing the event ID in varaible "input"
 
 		for(unsigned int i = 0; i < input.size() ; ++i)
 			if( isdigit(input[i]) == 0 )
-				digit_flag = false;
+				digit_flag = false; //Checking to see if "input" is a number for sanitization purposes (probably will reduce to helper method)
 
-		if(digit_flag == true)
+		if(digit_flag == true) //If "input" is a number
 		{
-			int input_ = atoi(input.c_str());
+			int input_ = atoi(input.c_str()); //"input_" variable is an integer clone of "input"
 
-			if( input_ < 0 || input_ > io_.size - 1)
+			if( input_ < 0 || input_ > io_.size - 1) //More input sanitization
 			{
 				std::cout << "Invalid event ID." << std::endl;
 				interface_.Wait("");
 			}
-			else
+			else //"input_" is in the valid range of IDs
 			{
-				input = io_.retrieveElement(input_,"total_slots");
-				dummy_int = atoi(input.c_str());
-				input = io_.retrieveElement(input_,"slots");
+				input = io_.retrieveElement(input_,"total_slots"); //"input" now holds a string of the number of time slots
+				dummy_int = atoi(input.c_str()); //"dummy_int" now holds the number of time slots
+				input = io_.retrieveElement(input_,"slots"); //"input" now holds a string of comma-separated slots
 
-				std::string slots[dummy_int];
-				std::string dummy_string;
-				std::stringstream ss(input);
+				std::string slots[dummy_int]; //"slots" is an array of size "dummy_int" (which is the total number of time slots)
+				std::string dummy_string; //"dummy_string"
+				std::stringstream ss(input); //"ss" is a stringstream over "input" (which is a string of all the time slots)
 
-				for(int i = 0; i < dummy_int ; ++i)
+				for(int i = 0; i < dummy_int ; ++i) //Iterate over the number of time slots
 				{
 					//Get slots
-					getline(ss, slots[i], ',');
+					getline(ss, slots[i], ','); //Put the ith slot into the ith entry of "slots"
 					//Just to move the string forward (over the number of people in a slot)
 					getline(ss, input, ',');
 
-					dummy_string = "slot" + std::to_string(i+1);
+					dummy_string = "slot" + std::to_string(i+1); //"dummy_string" holds a string in the form 'slotn' (n is an int)
 
-					if(io_.timeFormat == true )
+					if(io_.timeFormat == true ) //Formatting slot output for 12/24 hours
 						std::cout << "Are you available at " << slots[i] << " ? [Y/n]: ";
 					else
 						std::cout << "Are you available at " << io_.timeFormatter(slots[i]) << " ? [Y/n]: ";
 
-					getline(std::cin, input);
+					getline(std::cin, input); //Get the user's choice
 
-					if(input == "Yes" || input == "yes" || input == "y" || input == "Y")
+					if(input == "Yes" || input == "yes" || input == "y" || input == "Y") //If user is available
 					{
-						io_.updateElement(input_,dummy_string,NULL);
+						io_.updateElement(input_,dummy_string,NULL); //Adding to timeslot 
+						/** NOTE **/
+						//updateElement() is to be replaced with storeAttendee()
 						new_attendee = true;
 					}
 					else if(input != "No" && input != "no" && input != "n" && input != "N")
@@ -226,49 +228,53 @@ void Events::createEvent()
 
 			//The following if-else if-else statement discards most inputs with an incorrect format:
 			//The length of the input must be 10.
-			if (date.length() != 10) {
-				dateIsCorrect = false;
-			}
-			//The first character of the month must be 0 or 1.
-			else if ((date[0] != '0') && (date[0] != '1')) {
-				dateIsCorrect = false;
-			}
-			//If the first character of the month is 0, the second character can be any integer other than 0.
-			else if ((date[0] == '0') && ((date[1] == '0') || (!isdigit(date[1])))) {
-				dateIsCorrect = false;
-			}
-			//If the first character of the month is 1, the second character must be 0, 1, or 2.
-			else if ((date[0] == '1') && (date[1] != '0') && (date[1] != '1') && (date[1] != '2')) {
-				dateIsCorrect = false;
-			}
-			//Making sure the first slash is present and is placed in the right position.
-			else if (date[2] != '/') {
-				dateIsCorrect = false;
-			}
-			//The first character of the day must be 0, 1, 2, or 3.
-			else if ((date[3] != '0') && (date[3] != '1') && (date[3] != '2') && (date[3] != '3')) {
-				dateIsCorrect = false;
-			}
-			//If the first character of the day is 0 the second character can be any integer other than 0.
-			else if ((date[3] == '0') && ((date[4] == '0') || (!isdigit(date[4])))) {
-				dateIsCorrect = false;
-			}
-			//If the first character of the day is 1 or 2,the second character can be any integer.
-			else if (((date[3] == '1') || (date[3] == '2')) && (!isdigit(date[4]))) {
-				dateIsCorrect = false;
-			}
-			//If the first character of the date is 3, the second character must be 0 or 1.
-			else if ((date[3] == '3') && (date[4] != '0') && (date[4] != '1')) {
-				dateIsCorrect = false;
-			}
-			//Making sure the second slash is present and is placed in the right position.
-			else if (date[5] != '/') {
-				dateIsCorrect = false;
-			}
-			//Making sure the characters corresponding to the year are all integers.
-			else if ((!isdigit(date[6])) || (!isdigit(date[7])) || (!isdigit(date[8])) || (!isdigit(date[9]))) {
-				dateIsCorrect = false;
-			}
+			/**************************************************    
+			 * REPLACE THIS SECTION WITH HELPER METHOD
+			 *
+			    if (date.length() != 10) {
+				    dateIsCorrect = false;
+			    }
+			    //The first character of the month must be 0 or 1.
+			    else if ((date[0] != '0') && (date[0] != '1')) {
+				    dateIsCorrect = false;
+			    }
+			    //If the first character of the month is 0, the second character can be any integer other than 0.
+			    else if ((date[0] == '0') && ((date[1] == '0') || (!isdigit(date[1])))) {
+				    dateIsCorrect = false;
+			    }
+			    //If the first character of the month is 1, the second character must be 0, 1, or 2.
+			    else if ((date[0] == '1') && (date[1] != '0') && (date[1] != '1') && (date[1] != '2')) {
+				    dateIsCorrect = false;
+			    }
+			    //Making sure the first slash is present and is placed in the right position.
+			    else if (date[2] != '/') {
+				    dateIsCorrect = false;
+			    }
+			    //The first character of the day must be 0, 1, 2, or 3.
+			    else if ((date[3] != '0') && (date[3] != '1') && (date[3] != '2') && (date[3] != '3')) {
+				    dateIsCorrect = false;
+			    }
+			    //If the first character of the day is 0 the second character can be any integer other than 0.
+			    else if ((date[3] == '0') && ((date[4] == '0') || (!isdigit(date[4])))) {
+				    dateIsCorrect = false;
+			    }
+			    //If the first character of the day is 1 or 2,the second character can be any integer.
+			    else if (((date[3] == '1') || (date[3] == '2')) && (!isdigit(date[4]))) {
+				    dateIsCorrect = false;
+			    }
+			    //If the first character of the date is 3, the second character must be 0 or 1.
+			    else if ((date[3] == '3') && (date[4] != '0') && (date[4] != '1')) {
+				    dateIsCorrect = false;
+			    }
+			    //Making sure the second slash is present and is placed in the right position.
+			    else if (date[5] != '/') {
+				    dateIsCorrect = false;
+			    }
+			    //Making sure the characters corresponding to the year are all integers.
+			    else if ((!isdigit(date[6])) || (!isdigit(date[7])) || (!isdigit(date[8])) || (!isdigit(date[9]))) {
+				    dateIsCorrect = false;
+			    }
+			**************************************************/ 
 			//Now we will explicitly separate the string into month, day, and year make some additional checks.
 			else {
 				month = date.substr(0, 2);
