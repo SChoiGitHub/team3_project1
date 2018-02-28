@@ -11,7 +11,7 @@ EventScheduler.app: main.o
 
 
 main.o: main.cpp log.h events.h io.h interface.h
-	g++ -Wall -std=c++11 -c $(src)main.cpp
+	g++ -Wall -std=c++11 -c main.cpp
 
 clean:
 	rm *.o EventScheduler.app || true
