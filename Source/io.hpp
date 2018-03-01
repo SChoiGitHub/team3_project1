@@ -29,7 +29,7 @@ IO::~IO(){
     attendenceFile.close();
 }
 
-
+//--File Manipulation---------------------------------------------------------//
 void IO::addEntry(std::fstream& file, std::string data){
     file.clear();
 	file.seekg(0,std::fstream::end);
@@ -58,6 +58,7 @@ void IO::replaceEntry(std::fstream& file, std::string fileName; std::string iden
     file.open(fileName, std::fstream::app | std::fstream::out | std::fstream::in)
 }
 
+//--Old Methods---------------------------------------------------------------//
 std::string IO::retrieveElement(int ID, std::string elementName){
 /*    //IDs start at 0
     if( ID >= size )
@@ -319,6 +320,7 @@ void IO::updateElement(int ID, std::string elementName, void* value){
 */
 }
 
+//--UI Item-------------------------------------------------------------------//
 void IO::displayEntries()
 {
     std::string element;
@@ -387,6 +389,7 @@ void IO::displayEntries()
     }
 }
 
+//--Time Conversion-----------------------------------------------------------//
 std::string IO::timeFormatter(std::string slot)
 {
     std::stringstream ss(slot);
@@ -448,8 +451,7 @@ std::string IO::timeFormatter(std::string slot)
     return formatted_slot;
 }
 
-
-//Retrives and Stores General Task information
+//--Event Management----------------------------------------------------------//
 int IO::storeEvent(std::string name, std::string creator){
     std::string line = std::to_string(numEvents) + "," + name + "," + creator;
 
@@ -460,8 +462,7 @@ int IO::storeEvent(std::string name, std::string creator){
     return numEvents - 1;
 }
 
-
-//Retrives and Stores Dates and times for events
+//--Schedule Management-------------------------------------------------------//
 void IO::storeSchedule(int id, std::string date, std::list<std::string> times){
     std::string line = std::to_string(id) + "," + date;
 
@@ -472,8 +473,7 @@ void IO::storeSchedule(int id, std::string date, std::list<std::string> times){
     addEntry(schedulesFile, line);
 }
 
-
-//Retrives and Stores Tasks and related information
+//--Task Management-----------------------------------------------------------//
 void IO::storeTask(int id, std::string name){
     std::string line = std::to_string(id) + "," + name + ",false";
 
@@ -487,8 +487,7 @@ void IO::storeTaskAssignee(int id, std::string name, std::string assignee){
     replaceEntry(tasksFile, TASKS_FILE, identifier, revised);
 }
 
-
-//Retrieves and Stores Attendees
+//--Attendence Management-----------------------------------------------------//
 void IO::storeAttendees(int id, std::string date, std::string time, std::list<std::string> attendees){
     std::string line = std::to_string(id) + "," + date + "," + time;
 
