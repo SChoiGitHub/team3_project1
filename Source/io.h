@@ -74,7 +74,14 @@ public:
     */
     int storeEvent(std::string name, std::string creator);
 
-
+    /**
+    * Gets an event
+    * @param id - id of the event
+    * @pre id coresponds to an event
+    * @return a pair that contains the event's name and creator
+    */
+    std::pair<std::string, std::string> obtainEvent(int id);
+    
 
     /**
     * Adds a date and respective times to the schedules file
