@@ -488,6 +488,35 @@ void IO::storeSchedule(int id, std::string date, std::list<std::string> times){
     addEntry(schedulesFile, line);
 }
 
+std::list<std::pair<std::string, std::list<std::string>>>* IO:obtainSchedules(int id){
+    std::list<std::string>* items = getEntries(std::to_string(id) + ",");
+    if(items == nullptr){
+        return nullptr;
+    }
+
+    std::list<std::pair<std::string, std::list<std::string>>>* schedules = new std::list<std::pair<std::string, std::list<std::string>>>();
+
+    for(auto const& i : items){
+        std::stringstream ss(*i);
+        std::string date;
+        std::string slot;
+        std::list<std::string> slots;
+
+        std::getline(ss, date, ',');
+
+        while(std::getline(ss, slot, ',')){
+            slots.push_back(slot);
+        }
+
+        schedules->push_back(std::make_pair(date, slots));
+    }
+
+    delete items;
+
+    return schedules;
+}
+
+
 //--Task Management-----------------------------------------------------------//
 void IO::storeTask(int id, std::string name){
     std::string line = std::to_string(id) + "," + name + ",false";
