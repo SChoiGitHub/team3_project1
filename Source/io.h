@@ -81,6 +81,15 @@ public:
     */
     void storeSchedule(int id, std::string date, std::list<std::string> times);
 
+    /*
+    * Returns all the schedules
+    * @param id - id of the event for which you are trying to retrieve all the schedules
+    * @pre the id is a valid id that has some schedule
+    * @return a list of schedules which are a date and times for that date
+    * @note an empty list will be returned if there are no stored schedules
+    */
+    std::list<std::pair<std::string, std::list<std::string>>>* obtainSchedules(int id);
+
 
 
     /*
