@@ -173,9 +173,28 @@ private:
     std::fstream attendenceFile;
 
     //--File Manipulation-----------------------------------------------------//
+    /**
+    * Generic method that gets a line from a file.
+    * @note Should be used in situations where the identifier is unique
+    * @note Will not return the identifier with the entry
+    * @param file - file stream to read from
+    * @param identifier - part of an entry that will identify the entry
+    * @return string that is corisponding entry
+    */
+    std::string getEntry(std::fstream& file, std::string identifier);
 
     /**
-    * Generic method that addes a line to a file
+    * Generic method that returns entries from a file
+    * @note Should be used when there are multiple entries with the same identifier
+    * @note Will not return the identifier as part of the entries
+    * @param file - file stream to read from
+    * @param identifier - part of an entry that will identify the entry
+    * @return list of entries
+    */
+    std::list<std::string> getEntries(std::fstream& file, std::string identifier);
+
+    /**
+    * Generic method that adds a line to a file
     * @param file - file to store data in
     * @param data - string of csv data to store
     * @post Adds new event to file
