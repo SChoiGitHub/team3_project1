@@ -94,6 +94,16 @@ public:
     */
     std::list<std::pair<std::string, std::list<std::string>>>* obtainSchedules(int id);
 
+    /**
+    * Returns a schedule
+    * @note an null pointer will be returned if no schedule is found
+    * @param id - id of the event for which the is needed
+    * @param date - the date for which the schedule is needed
+    * @pre the id is a valid id
+    * @return a list of times
+    */
+    std::list<std::string>* obtainSchedule(int id, std::string date);
+
 
 
     /**
