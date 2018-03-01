@@ -32,13 +32,17 @@ public:
 
 
 
-    /** @pre ID is the event's unique identifier. elementName is the name of the element to retrieve
-     *   @post Retrieves some event's specific element value from the events file
-     *   @return Returns event's specific element (string or int)
+    /**
+     * @note this method is depricated and should no longer be used
+     * @pre ID is the event's unique identifier. elementName is the name of the element to retrieve
+     * @post Retrieves some event's specific element value from the events file
+     * @return Returns event's specific element (string or int)
      */
     std::string retrieveElement(int ID, std::string elementName);
 
-    /** @pre ID is the event's unique identifier. elementName is the name of the element to update, value is
+    /**
+     * @note this method is depricated and should no longer be used.
+     *   @pre ID is the event's unique identifier. elementName is the name of the element to update, value is
      *     the element's new value
      *   @post Updates some event's specific element
      *   @return None
@@ -59,7 +63,7 @@ public:
     std::string timeFormatter(std::string slot);
 
 //----------------------------------------------------------------------------//
-    /*
+    /**
     * Adds a task to the tasks file
     * @param id - the event id
     * @param name - the event's name
@@ -72,7 +76,7 @@ public:
 
 
 
-    /*
+    /**
     * Adds a date and respective times to the schedules file
     * @param id - id of the event to which the schedule belongs
     * @param date - a date that is part of the event
@@ -81,18 +85,18 @@ public:
     */
     void storeSchedule(int id, std::string date, std::list<std::string> times);
 
-    /*
+    /**
     * Returns all the schedules
+    * @note an empty list will be returned if there are no stored schedules
     * @param id - id of the event for which you are trying to retrieve all the schedules
     * @pre the id is a valid id that has some schedule
     * @return a list of schedules which are a date and times for that date
-    * @note an empty list will be returned if there are no stored schedules
     */
     std::list<std::pair<std::string, std::list<std::string>>>* obtainSchedules(int id);
 
 
 
-    /*
+    /**
     * Adds a task to the tasks file
     * @param id - id of the event to which the task belongs
     * @param name - name/description of the task
@@ -102,7 +106,7 @@ public:
     */
     void storeTask(int id, std::string name);
 
-    /*
+    /**
     * Sets the person assigned to complete a task.
     * @param id - the id of the event
     * @param name - the name of the task
@@ -112,7 +116,7 @@ public:
     */
     void storeTaskAssignee(int id, std::string name, std::string assignee);
 
-    /*
+    /**
     * Adds an attendee to a date and time
     * @param id - id of the event
     * @param date - date of the time slot
@@ -123,7 +127,7 @@ public:
     */
     void storeAttendee(int id, std::string date, std::string time, std::string attendee);
 
-    /*
+    /**
     * Adds the attendees for a specific date and time to files
     * @param id - id of the event to which the schedule belongs
     * @param date - one date that is part of an event
@@ -147,7 +151,7 @@ private:
     std::fstream schedulesFile;
     std::fstream attendenceFile;
 
-    /*
+    /**
     * Generic method that addes a line to a file
     * @param file - file to store data in
     * @param data - string of csv data to store
@@ -155,12 +159,14 @@ private:
     */
     void addEntry(std::fstream& file, std::string data);
 
-    /*
+    /**
     * Generic method that replaces a line in a file
     * @param file - file that needs to be modified
     * @param fileName - the name of the file that is part of the file stream
     * @param identifier - a unique string that will identify the entry that needs replaced
     * @param revised - the new version of the entry
+    * @pre line is in the file
+    * @post line in a file is replaced with a new value
     */
     void replaceEntry(std::fstream& file, std::string fileName, std::string identifier, std::string, revised);
 
