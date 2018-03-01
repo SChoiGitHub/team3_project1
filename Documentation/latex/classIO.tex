@@ -1,0 +1,137 @@
+\hypertarget{classIO}{\section{I\-O Class Reference}
+\label{classIO}\index{I\-O@{I\-O}}
+}
+
+
+A header file for Input/\-Output (\hyperlink{classIO}{I\-O}) class.  
+
+
+
+
+{\ttfamily \#include $<$io.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\-::string \hyperlink{classIO_a3829dc8ad91e1f2d560be799b6d9b04d}{retrieve\-Element} (int I\-D, std\-::string element\-Name)
+\item 
+void \hyperlink{classIO_a11fdb7d4afa830fa1441fbf566f73432}{update\-Element} (int I\-D, std\-::string element\-Name, void $\ast$value)
+\item 
+void \hyperlink{classIO_a48e9febfbb2c6c3e01b467fd030c2529}{display\-Entries} ()
+\item 
+std\-::string \hyperlink{classIO_ad78c42847c70915fe94bddd25f716859}{time\-Formatter} (std\-::string slot)
+\item 
+\hypertarget{classIO_ac9a8c18ea44f8ced444effc51633e4d7}{int {\bfseries store\-Event} (std\-::string name, std\-::string creator)}\label{classIO_ac9a8c18ea44f8ced444effc51633e4d7}
+
+\item 
+\hypertarget{classIO_a9030b5cd77c0b621f8ecd36d1bc6b36d}{void {\bfseries store\-Schedule} (int id, std\-::string date, std\-::list$<$ std\-::string $>$ times)}\label{classIO_a9030b5cd77c0b621f8ecd36d1bc6b36d}
+
+\item 
+\hypertarget{classIO_ad3e9360377df2dfaa223e36aa4a8edde}{void {\bfseries store\-Task} (int id, std\-::string name)}\label{classIO_ad3e9360377df2dfaa223e36aa4a8edde}
+
+\item 
+\hypertarget{classIO_a3b1673598595b2140f5f893d023813be}{void {\bfseries store\-Task\-Assignee} (int id, std\-::string name, std\-::string assignee)}\label{classIO_a3b1673598595b2140f5f893d023813be}
+
+\item 
+\hypertarget{classIO_ae1b8fcfab070b9af2dcd910c1cc7eb4e}{void {\bfseries store\-Attendees} (int id, std\-::string date, std\-::string time, std\-::list$<$ std\-::string $>$ attendees)}\label{classIO_ae1b8fcfab070b9af2dcd910c1cc7eb4e}
+
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classIO_a4e344c74454e6609b817e3fdb3fcddf3}{int {\bfseries size}}\label{classIO_a4e344c74454e6609b817e3fdb3fcddf3}
+
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classIO_a04cf024687a6a86007db5ecfcab69e5c}{static bool {\bfseries time\-Format} = false}\label{classIO_a04cf024687a6a86007db5ecfcab69e5c}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+A header file for Input/\-Output (\hyperlink{classIO}{I\-O}) class. 
+
+\begin{DoxyAuthor}{Author}
+Team 3 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+
+\end{DoxyDate}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classIO_a48e9febfbb2c6c3e01b467fd030c2529}{\index{I\-O@{I\-O}!display\-Entries@{display\-Entries}}
+\index{display\-Entries@{display\-Entries}!IO@{I\-O}}
+\subsubsection[{display\-Entries}]{\setlength{\rightskip}{0pt plus 5cm}void I\-O\-::display\-Entries (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classIO_a48e9febfbb2c6c3e01b467fd030c2529}
+\begin{DoxyPrecond}{Precondition}
+None 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+Displays all elements in file, one at a time 
+\end{DoxyPostcond}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\hypertarget{classIO_a3829dc8ad91e1f2d560be799b6d9b04d}{\index{I\-O@{I\-O}!retrieve\-Element@{retrieve\-Element}}
+\index{retrieve\-Element@{retrieve\-Element}!IO@{I\-O}}
+\subsubsection[{retrieve\-Element}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string I\-O\-::retrieve\-Element (
+\begin{DoxyParamCaption}
+\item[{int}]{I\-D, }
+\item[{std\-::string}]{element\-Name}
+\end{DoxyParamCaption}
+)}}\label{classIO_a3829dc8ad91e1f2d560be799b6d9b04d}
+\begin{DoxyPrecond}{Precondition}
+I\-D is the event's unique identifier. element\-Name is the name of the element to retrieve 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+Retrieves some event's specific element value from the events file 
+\end{DoxyPostcond}
+\begin{DoxyReturn}{Returns}
+Returns event's specific element (string or int) 
+\end{DoxyReturn}
+\hypertarget{classIO_ad78c42847c70915fe94bddd25f716859}{\index{I\-O@{I\-O}!time\-Formatter@{time\-Formatter}}
+\index{time\-Formatter@{time\-Formatter}!IO@{I\-O}}
+\subsubsection[{time\-Formatter}]{\setlength{\rightskip}{0pt plus 5cm}std\-::string I\-O\-::time\-Formatter (
+\begin{DoxyParamCaption}
+\item[{std\-::string}]{slot}
+\end{DoxyParamCaption}
+)}}\label{classIO_ad78c42847c70915fe94bddd25f716859}
+\begin{DoxyPrecond}{Precondition}
+slot has the time value that needs to be formatted 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+Formats time between 12-\/hour format and 24-\/hour format 
+\end{DoxyPostcond}
+\begin{DoxyReturn}{Returns}
+String with slot in new time format 
+\end{DoxyReturn}
+\hypertarget{classIO_a11fdb7d4afa830fa1441fbf566f73432}{\index{I\-O@{I\-O}!update\-Element@{update\-Element}}
+\index{update\-Element@{update\-Element}!IO@{I\-O}}
+\subsubsection[{update\-Element}]{\setlength{\rightskip}{0pt plus 5cm}void I\-O\-::update\-Element (
+\begin{DoxyParamCaption}
+\item[{int}]{I\-D, }
+\item[{std\-::string}]{element\-Name, }
+\item[{void $\ast$}]{value}
+\end{DoxyParamCaption}
+)}}\label{classIO_a11fdb7d4afa830fa1441fbf566f73432}
+\begin{DoxyPrecond}{Precondition}
+I\-D is the event's unique identifier. element\-Name is the name of the element to update, value is the element's new value 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+Updates some event's specific element 
+\end{DoxyPostcond}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+/home/w751g500/eecs448/team3\-\_\-project1/\-Source/io.\-h\item 
+/home/w751g500/eecs448/team3\-\_\-project1/\-Source/\hyperlink{io_8hpp}{io.\-hpp}\end{DoxyCompactItemize}
