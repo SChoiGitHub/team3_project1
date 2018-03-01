@@ -462,6 +462,21 @@ int IO::storeEvent(std::string name, std::string creator){
     return numEvents - 1;
 }
 
+std::pair<std::string, std::string> IO::obtainEvent(int id){
+    std::string event = getEntry(std::to_string(id) + ",");
+    std::pair<std::string, std:string> info;
+
+    //Split String
+    std::stringstream ss(event);
+    std::getline(ss, std::string s, ',');
+    std::getline(ss, info.first, ',');
+    std::getline(ss, info.last);
+
+    return info;
+}
+
+
+
 //--Schedule Management-------------------------------------------------------//
 void IO::storeSchedule(int id, std::string date, std::list<std::string> times){
     std::string line = std::to_string(id) + "," + date;
