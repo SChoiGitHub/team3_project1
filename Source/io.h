@@ -62,7 +62,8 @@ public:
      */
     std::string timeFormatter(std::string slot);
 
-//----------------------------------------------------------------------------//
+    //--Event-----------------------------------------------------------------//
+
     /**
     * Adds a task to the tasks file
     * @param id - the event id
@@ -81,7 +82,8 @@ public:
     * @return a pair that contains the event's name and creator
     */
     std::pair<std::string, std::string> obtainEvent(int id);
-    
+
+    //--Schedules-------------------------------------------------------------//
 
     /**
     * Adds a date and respective times to the schedules file
@@ -111,7 +113,7 @@ public:
     */
     std::list<std::string>* obtainSchedule(int id, std::string date);
 
-
+    //--TASK------------------------------------------------------------------//
 
     /**
     * Adds a task to the tasks file
@@ -132,6 +134,8 @@ public:
     * @post task has an assignee
     */
     void storeTaskAssignee(int id, std::string name, std::string assignee);
+
+    //--Attendence------------------------------------------------------------//
 
     /**
     * Adds an attendee to a date and time
@@ -167,6 +171,8 @@ private:
     std::fstream tasksFile;
     std::fstream schedulesFile;
     std::fstream attendenceFile;
+
+    //--File Manipulation-----------------------------------------------------//
 
     /**
     * Generic method that addes a line to a file
