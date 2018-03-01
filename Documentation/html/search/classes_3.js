@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['menu',['Menu',['../class_interface_1_1_menu.html',1,'Interface']]]
+  ['menu',['Menu',['../classInterface_1_1Menu.html',1,'Interface']]]
 ];
