@@ -97,7 +97,7 @@ public:
 
     /**
     * Returns all the schedules
-    * @note an empty list will be returned if there are no stored schedules
+    * @note a null pointer will be return if no schedules are found
     * @param id - id of the event for which you are trying to retrieve all the schedules
     * @pre the id is a valid id that has some schedule
     * @return a list of schedules which are a date and times for that date
@@ -106,7 +106,7 @@ public:
 
     /**
     * Returns a schedule
-    * @note an null pointer will be returned if no schedule is found
+    * @note a null pointer will be returned if no schedule is found
     * @param id - id of the event for which the is needed
     * @param date - the date for which the schedule is needed
     * @pre the id is a valid id
