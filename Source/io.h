@@ -158,6 +158,16 @@ public:
     */
     void storeAttendees(int id, std::string date, std::string time, std::list<std::string> attendees);
 
+    /**
+    * Gets the attendees for a specific date.
+    * @note Will return a null pointer if a list of attendees can not be found
+    * @param id - id of the event for which the attendees are needed
+    * @param date - the day for which the attendees are needed
+    * @param time - the time for which attendees are needed
+    * @return list of attendees
+    */
+    std::list<std::string>* obtainAttendees(int id, std::string date, std::string time);
+
 private:
     Log logFile;            //Log object
     int numEvents;
