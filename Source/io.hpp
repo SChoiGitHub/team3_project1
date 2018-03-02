@@ -542,8 +542,14 @@ void IO::storeAttendees(int id, std::string date, std::string time, std::list<st
 }
 
 void IO::storeAttendee(int id, std::string date, std::string time, std::string attendee){
-    std::string attendees = retriveAttendees(id, date, time) + "," + attendee;
+    std::string attendees = attendee;
     std::string identifier = std::to_string(id) + "," + date + "," + time;
+
+    std::list<std::string>* attendence = obtainAttendees(id, date, time);
+    for(auto const& i : *attendence){
+        attendees += "," + i;
+    }
+    delete attendence;
 
     replaceEntry(attendenceFile, ATTENDENCE_FILE, identifier, identifier + "," + attendees);
 }
