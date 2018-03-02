@@ -324,62 +324,23 @@ void IO::updateElement(int ID, std::string elementName, void* value){
 //--UI Item-------------------------------------------------------------------//
 void IO::displayEntries()
 {
-    std::string element;
-    int nelem;
-
     for(int i = 0; i < size; ++i)
     {
         //Display ID, name, date and number of attendees
-        std::cout << "-- Event " << i+1 << " --" << std::endl;
-        std::cout << "ID: " << retrieveElement(i,"ID") << "\n";
-        std::cout << "Name: " << retrieveElement(i,"name") << "\n";
-        std::cout << "Date: " << retrieveElement(i,"date") << "\n";
-        std::cout << "Total Attendees: " << retrieveElement(i,"total_attendees") << "\n";
-
-        std::cout << "Attendees: ";
-        element = retrieveElement(i,"total_attendees");
-
-        //Convert number of attendees to int
-        nelem = atoi(element.c_str());
-        //Get string of attendees' names
-        element = retrieveElement(i,"attendees");
-        std::string attendee[nelem];
-        std::stringstream sa(element);
-
-        for(int j = 0 ; j < nelem ; ++j)
-            std::getline(sa,attendee[j],',');
-
-        //Print attendees' names
-        for(int j = 0 ; j < nelem ; ++j)
-        {
-            std::cout << attendee[j];
-            if( j == 0)
-                std::cout << " (creator)";
-            std::cout << "; ";
-
+        std::cout << "-- " << obtainEvent(i).first  << " --" << std::endl;
+        std::cout << "ID: " << i << "\n";
+        std::cout << "Creator: " << obtainEvent(i).second << "\n";
+        std::cout << "Dates: ";
+        
+        std::list<std::pair<std::string, std::list<std::string>>>* schedules = obtainSchedules(i);
+        
+        for(auto&& it : (*schedules)){
+          std::cout << it.first << " ";
         }
-        std::cout << "\n";
 
-        std::cout << "Slots Available: ";
-        element = retrieveElement(i,"total_slots");
-        nelem = atoi(element.c_str());
-        element = retrieveElement(i,"slots");
-        std::string slot[2*nelem];
-        std::stringstream ss(element);
-
-        for(int j = 0 ; j < 2*nelem ; ++j)
-            std::getline(ss,slot[j],',');
-
-        //Print slots available
-        for(int j = 0 ; j < 2*nelem ; j += 2)
-        {
-            if( timeFormat == true )
-                std::cout << slot[j] << " - " << slot[j+1] << " attendee(s); ";
-            else
-                std::cout << timeFormatter(slot[j]) << " - " << slot[j+1] << " attendee(s); ";
-        }
         std::cout << "\n\n";
-
+        
+        delete schedules;
     }
 }
 
