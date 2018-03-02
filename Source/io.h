@@ -61,7 +61,7 @@ public:
      *   @post Formats time between 12-hour format and 24-hour format
      *   @return String with slot in new time format
      */
-    std::string timeFormatter(std::string slot);
+    static std::string timeFormatter(std::string slot);
 
 //--EVENT---------------------------------------------------------------------//
 
