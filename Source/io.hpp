@@ -483,7 +483,7 @@ void IO::storeSchedule(int id, std::string date, std::list<std::string> times){
 }
 
 std::list<std::pair<std::string, std::list<std::string>>>* IO::obtainSchedules(int id){
-    std::list<std::string>* items = getEntries(std::to_string(id) + ",");
+    std::list<std::string>* items = getEntries(schedulesFile,std::to_string(id) + ",");
 
     if(items == nullptr){
         return nullptr;
