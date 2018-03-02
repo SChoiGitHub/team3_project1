@@ -109,8 +109,7 @@ void Events::setAvailability()
   }
 }
 
-void Events::createEvent()
-{
+void Events::createEvent(){
 	Interface::Menu menu({{"", NULL}});
 
 	std::string outputString = "";
@@ -394,9 +393,13 @@ std::string Events::requestDate(){
     }
     //Now we will explicitly separate the string into month, day, and year make some additional checks.
   
-    month = date.substr(0, 2);
-    day = std::stoi(date.substr(3, 2));
-    year = std::stoi(date.substr(6, 4));
+    try{
+      month = date.substr(0, 2);
+      day = std::stoi(date.substr(3, 2));
+      year = std::stoi(date.substr(6, 4));
+    }catch(...){
+      dateIsCorrect = false;
+    }
 
     //Determining whether a year is a leap year or not.
     if ((year % 4 != 0) || ((year % 100 == 0) && (year % 400 != 0))) {
