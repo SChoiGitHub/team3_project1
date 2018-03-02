@@ -10,6 +10,7 @@
 #include <ctime>
 #include <list>
 #include <unordered_map> 
+#include <algorithm>
 #include "io.h"
 #include "interface.h"
 
