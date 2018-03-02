@@ -36,7 +36,7 @@ void IO::addEntry(std::fstream& file, std::string data){
 	file << data << std::endl;
 }
 
-void IO::replaceEntry(std::fstream& file, std::string fileName; std::string identifier, std::string revised){
+void IO::replaceEntry(std::fstream& file, std::string fileName, std::string identifier, std::string revised){
     std::fstream temp;
     temp.open("temp.csv", std::fstream::app | std::fstream::out | std::fstream::in);
 
@@ -53,9 +53,9 @@ void IO::replaceEntry(std::fstream& file, std::string fileName; std::string iden
     temp.close();
     file.close();
 
-    remove(fileName);
-    rename("temp.csv", fileName);
-    file.open(fileName, std::fstream::app | std::fstream::out | std::fstream::in)
+    remove(fileName.c_str());
+    rename("temp.csv", fileName.c_str());
+    file.open(fileName, std::fstream::app | std::fstream::out | std::fstream::in);
 }
 
 //--Old Methods---------------------------------------------------------------//
@@ -326,13 +326,13 @@ void IO::displayEntries()
     std::string element;
     int nelem;
 
-    //Make sure stream is at beginning of file
+/*    //Make sure stream is at beginning of file
     file.clear();    //It is necessary to clear the eof flag
     file.seekg(0, std::ios::beg);
 //?
 	file.clear();    //It is necessary to clear the eof flag
     file.seekg(0, std::ios::beg);
-
+*/
     for(int i = 0; i < size; ++i)
     {
         //Display ID, name, date and number of attendees
@@ -463,8 +463,8 @@ int IO::storeEvent(std::string name, std::string creator){
 }
 
 std::pair<std::string, std::string> IO::obtainEvent(int id){
-    std::string event = getEntry(std::to_string(id) + ",");
-    std::pair<std::string, std:string> info;
+    std::string event = getEntry(eventsFile, std::to_string(id) + ",");
+    std::pair<std::string, std::string> info;
 
     //Split String
     std::stringstream ss(event);
@@ -487,16 +487,16 @@ void IO::storeSchedule(int id, std::string date, std::list<std::string> times){
     addEntry(schedulesFile, line);
 }
 
-std::list<std::pair<std::string, std::list<std::string>>>* IO:obtainSchedules(int id){
-    std::list<std::string>* items = getEntries(std::to_string(id) + ",");
+std::list<std::pair<std::string, std::list<std::string>>>* IO::obtainSchedules(int id){
+    std::list<std::string>* items = getEntries(schedulesFile, std::to_string(id) + ",");
     if(items == nullptr){
         return nullptr;
     }
 
     std::list<std::pair<std::string, std::list<std::string>>>* schedules = new std::list<std::pair<std::string, std::list<std::string>>>();
 
-    for(auto const& i : items){
-        std::stringstream ss(*i);
+    for(auto const& i : *items){
+        std::stringstream ss(i);
         std::string date;
         std::string slot;
         std::list<std::string> slots;
@@ -542,8 +542,14 @@ void IO::storeAttendees(int id, std::string date, std::string time, std::list<st
 }
 
 void IO::storeAttendee(int id, std::string date, std::string time, std::string attendee){
-    std::string attendees = retriveAttendees(id, date, time) + "," + attendee;
+    std::string attendees = attendee;
     std::string identifier = std::to_string(id) + "," + date + "," + time;
+
+    std::list<std::string>* attendence = obtainAttendees(id, date, time);
+    for(auto const& i : *attendence){
+        attendees += "," + i;
+    }
+    delete attendence;
 
     replaceEntry(attendenceFile, ATTENDENCE_FILE, identifier, identifier + "," + attendees);
 }

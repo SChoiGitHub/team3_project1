@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['timeformatter',['timeFormatter',['../classIO.html#ad78c42847c70915fe94bddd25f716859',1,'IO']]],
-  ['toggletimeformat',['toggleTimeFormat',['../classInterface.html#a2e002e61dc11cf4a1bd9c039704194df',1,'Interface']]]
+  ['retrieveelement',['retrieveElement',['../classIO.html#a3829dc8ad91e1f2d560be799b6d9b04d',1,'IO']]]
 ];
