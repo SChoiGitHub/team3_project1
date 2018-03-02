@@ -191,7 +191,7 @@ private:
     * @param identifier - part of an entry that will identify the entry
     * @return list of entries
     */
-    std::list<std::string> getEntries(std::fstream& file, std::string identifier);
+    std::list<std::string>* getEntries(std::fstream& file, std::string identifier);
 
     /**
     * Generic method that adds a line to a file
@@ -210,7 +210,7 @@ private:
     * @pre line is in the file
     * @post line in a file is replaced with a new value
     */
-    void replaceEntry(std::fstream& file, std::string fileName, std::string identifier, std::string, revised);
+    void replaceEntry(std::fstream& file, std::string fileName, std::string identifier, std::string revised);
 
 };
 
