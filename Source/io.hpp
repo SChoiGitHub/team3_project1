@@ -29,14 +29,36 @@ IO::~IO(){
     attendenceFile.close();
 }
 
-
+//--File Manipulation---------------------------------------------------------//
 void IO::addEntry(std::fstream& file, std::string data){
     file.clear();
 	file.seekg(0,std::fstream::end);
 	file << data << std::endl;
 }
 
+void IO::replaceEntry(std::fstream& file, std::string fileName, std::string identifier, std::string revised){
+    std::fstream temp;
+    temp.open("temp.csv", std::fstream::app | std::fstream::out | std::fstream::in);
 
+    //Copy all other lines to a temp file.
+    std::string line;
+    while(std::getline(file, line)){
+        if(line.find(identifier) == std::string::npos){
+            temp << line << std::endl;
+        }
+    }
+
+    temp << revised << std::endl;
+
+    temp.close();
+    file.close();
+
+    remove(fileName);
+    rename("temp.csv", fileName);
+    file.open(fileName, std::fstream::app | std::fstream::out | std::fstream::in);
+}
+
+//--Old Methods---------------------------------------------------------------//
 std::string IO::retrieveElement(int ID, std::string elementName){
 /*    //IDs start at 0
     if( ID >= size )
@@ -298,6 +320,7 @@ void IO::updateElement(int ID, std::string elementName, void* value){
 */
 }
 
+//--UI Item-------------------------------------------------------------------//
 void IO::displayEntries()
 {
     std::string element;
@@ -360,6 +383,7 @@ void IO::displayEntries()
     }
 }
 
+//--Time Conversion-----------------------------------------------------------//
 std::string IO::timeFormatter(std::string slot)
 {
     std::stringstream ss(slot);
@@ -421,8 +445,7 @@ std::string IO::timeFormatter(std::string slot)
     return formatted_slot;
 }
 
-
-//Retrives and Stores General Task information
+//--Event Management----------------------------------------------------------//
 int IO::storeEvent(std::string name, std::string creator){
     std::string line = std::to_string(numEvents) + "," + name + "," + creator;
 
@@ -433,8 +456,24 @@ int IO::storeEvent(std::string name, std::string creator){
     return numEvents - 1;
 }
 
+std::pair<std::string, std::string> IO::obtainEvent(int id){
+    std::string event = getEntry(std::to_string(id) + ",");
+    std::pair<std::string, std::string> info;
+    std::string s;
 
-//Retrives and Stores Dates and times for events
+
+    //Split String
+    std::stringstream ss(event);
+    std::getline(ss, s, ',');
+    std::getline(ss, info.first, ',');
+    std::getline(ss, info.second);
+
+    return info;
+}
+
+
+
+//--Schedule Management-------------------------------------------------------//
 void IO::storeSchedule(int id, std::string date, std::list<std::string> times){
     std::string line = std::to_string(id) + "," + date;
 
@@ -445,8 +484,36 @@ void IO::storeSchedule(int id, std::string date, std::list<std::string> times){
     addEntry(schedulesFile, line);
 }
 
+std::list<std::pair<std::string, std::list<std::string>>>* IO::obtainSchedules(int id){
+    std::list<std::string>* items = new std::list<std::string>(getEntries(std::to_string(id) + ","));
+    if(items == nullptr){
+        return nullptr;
+    }
 
-//Retrives and Stores Tasks and related information
+    std::list<std::pair<std::string, std::list<std::string>>>* schedules = new std::list<std::pair<std::string, std::list<std::string>>>();
+
+    for(auto&& i : *items){
+        std::stringstream ss(i);
+        std::string date;
+        std::string slot;
+        std::list<std::string> slots;
+
+        std::getline(ss, date, ',');
+
+        while(std::getline(ss, slot, ',')){
+            slots.push_back(slot);
+        }
+
+        schedules->push_back(std::make_pair(date, slots));
+    }
+
+    delete items;
+
+    return schedules;
+}
+
+
+//--Task Management-----------------------------------------------------------//
 void IO::storeTask(int id, std::string name){
     std::string line = std::to_string(id) + "," + name + ",false";
 
@@ -457,11 +524,10 @@ void IO::storeTaskAssignee(int id, std::string name, std::string assignee){
     std::string identifier = std::to_string(id) + "," + name;
     std::string revised = identifier + ",true," + assignee;
 
-    //replaceEntry(tasksFile, identifier, revised);//Come back later.
+    replaceEntry(tasksFile, TASKS_FILE, identifier, revised);
 }
 
-
-//Retrieves and Stores Attendees
+//--Attendence Management-----------------------------------------------------//
 void IO::storeAttendees(int id, std::string date, std::string time, std::list<std::string> attendees){
     std::string line = std::to_string(id) + "," + date + "," + time;
 
@@ -470,4 +536,11 @@ void IO::storeAttendees(int id, std::string date, std::string time, std::list<st
     }
 
     addEntry(attendenceFile, line);
+}
+
+void IO::storeAttendee(int id, std::string date, std::string time, std::string attendee){
+    std::string attendees = retriveAttendees(id, date, time) + "," + attendee;
+    std::string identifier = std::to_string(id) + "," + date + "," + time;
+
+    replaceEntry(attendenceFile, ATTENDENCE_FILE, identifier, identifier + "," + attendees);
 }
