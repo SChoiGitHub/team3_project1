@@ -10,7 +10,7 @@ EventScheduler.app: main.o
 
 
 
-main.o: main.cpp log.h events.h io.h interface.h
+main.o: $(src)main.cpp $(src)log.h $(src)events.h $(src)io.h $(src)interface.h
 	g++ -Wall -std=c++11 -c $(src)main.cpp
 
 clean:
