@@ -2,6 +2,7 @@
  *    @author    Team 3
  *    @date
  *    @brief A header file for Input/Output (IO) class
+ *    @note It is assumed that times will be transferred in the twenty-four hour format
  */
 
 #ifndef IO_H
@@ -62,7 +63,7 @@ public:
      */
     std::string timeFormatter(std::string slot);
 
-    //--Event-----------------------------------------------------------------//
+//--EVENT---------------------------------------------------------------------//
 
     /**
     * Adds a task to the tasks file
@@ -83,7 +84,7 @@ public:
     */
     std::pair<std::string, std::string> obtainEvent(int id);
 
-    //--Schedules-------------------------------------------------------------//
+//--SCHEDULE------------------------------------------------------------------//
 
     /**
     * Adds a date and respective times to the schedules file
@@ -113,7 +114,7 @@ public:
     */
     std::list<std::string>* obtainSchedule(int id, std::string date);
 
-    //--TASK------------------------------------------------------------------//
+//--TASK----------------------------------------------------------------------//
 
     /**
     * Adds a task to the tasks file
@@ -135,7 +136,7 @@ public:
     */
     void storeTaskAssignee(int id, std::string name, std::string assignee);
 
-    //--Attendence------------------------------------------------------------//
+//--ATTENDENCE----------------------------------------------------------------//
 
     /**
     * Adds an attendee to a date and time
@@ -182,7 +183,7 @@ private:
     std::fstream schedulesFile;
     std::fstream attendenceFile;
 
-    //--File Manipulation-----------------------------------------------------//
+//--FILE MANIPULATION---------------------------------------------------------//
     /**
     * Generic method that gets a line from a file.
     * @note Should be used in situations where the identifier is unique
