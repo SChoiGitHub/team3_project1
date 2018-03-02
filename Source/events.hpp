@@ -40,96 +40,73 @@ void Events::adminMode()
 
 void Events::setAvailability()
 {
-	IO io_;
-	bool digit_flag = true;
 	bool new_attendee = false;  //for any new attendence
 	int dummy_int = 0;
 
-	if( io_.size != 0 )
-	{
-		std::string input = interface.getInput("Please select an event ID from the list above: "); //Storing the event ID in varaible "input"
+  std::string input = ""; //Dummy variable to stop compiler from complaining for now.
 
-		for(unsigned int i = 0; i < input.size() ; ++i)
-			if( isdigit(input[i]) == 0 )
-				digit_flag = false; //Checking to see if "input" is a number for sanitization purposes (probably will reduce to helper method)
 
-		if(digit_flag == true) //If "input" is a number
-		{
-			int input_ = atoi(input.c_str()); //"input_" variable is an integer clone of "input"
+  int id = requestID();
 
-			if( input_ < 0 || input_ > io_.size - 1) //More input sanitization
-			{
-				std::cout << "Invalid event ID." << std::endl;
-				interface.Wait("");
-			}
-			else //"input_" is in the valid range of IDs
-			{
-				input = io_.retrieveElement(input_,"total_slots"); //"input" now holds a string of the number of time slots
-				dummy_int = atoi(input.c_str()); //"dummy_int" now holds the number of time slots
-				input = io_.retrieveElement(input_,"slots"); //"input" now holds a string of comma-separated slots
+  if(id != -1){ //Event exists.
+    input = io.retrieveElement(id,"total_slots"); //"input" now holds a string of the number of time slots
+    dummy_int = atoi(input.c_str()); //"dummy_int" now holds the number of time slots
+    input = io.retrieveElement(id,"slots"); //"input" now holds a string of comma-separated slots
 
-				std::string slots[dummy_int]; //"slots" is an array of size "dummy_int" (which is the total number of time slots)
-				std::string dummy_string; //"dummy_string"
-				std::stringstream ss(input); //"ss" is a stringstream over "input" (which is a string of all the time slots)
+    std::string slots[dummy_int]; //"slots" is an array of size "dummy_int" (which is the total number of time slots)
+    std::string dummy_string; //"dummy_string"
+    std::stringstream ss(input); //"ss" is a stringstream over "input" (which is a string of all the time slots)
 
-				for(int i = 0; i < dummy_int ; ++i) //Iterate over the number of time slots
-				{
-					//Get slots
-					getline(ss, slots[i], ','); //Put the ith slot into the ith entry of "slots"
-					//Just to move the string forward (over the number of people in a slot)
-					getline(ss, input, ',');
+    for(int i = 0; i < dummy_int ; ++i) //Iterate over the number of time slots
+    {
+      //Get slots
+      getline(ss, slots[i], ','); //Put the ith slot into the ith entry of "slots"
+      //Just to move the string forward (over the number of people in a slot)
+      getline(ss, input, ',');
 
-					dummy_string = "slot" + std::to_string(i+1); //"dummy_string" holds a string in the form 'slotn' (n is an int)
+      dummy_string = "slot" + std::to_string(i+1); //"dummy_string" holds a string in the form 'slotn' (n is an int)
 
-					if(io_.timeFormat == true ) //Formatting slot output for 12/24 hours
-						std::cout << "Are you available at " << slots[i] << " ? [Y/n]: ";
-					else
-						std::cout << "Are you available at " << io_.timeFormatter(slots[i]) << " ? [Y/n]: ";
+      if(io.timeFormat == true ) //Formatting slot output for 12/24 hours
+        std::cout << "Are you available at " << slots[i] << " ? [Y/n]: ";
+      else
+        std::cout << "Are you available at " << io.timeFormatter(slots[i]) << " ? [Y/n]: ";
 
-					getline(std::cin, input); //Get the user's choice
+      getline(std::cin, input); //Get the user's choice
 
-					if(input == "Yes" || input == "yes" || input == "y" || input == "Y") //If user is available
-					{
-						io_.updateElement(input_,dummy_string,NULL); //Adding to timeslot 
-						/** NOTE **/
-						//updateElement() is to be replaced with storeAttendee()
-						new_attendee = true;
-					}
-					else if(input != "No" && input != "no" && input != "n" && input != "N") //If user enters some invalid input
-					{
-						std::cout << "Invalid input. Please try again." << std::endl;
+      if(input == "Yes" || input == "yes" || input == "y" || input == "Y") //If user is available
+      {
+        io.updateElement(id,dummy_string,NULL); //Adding to timeslot 
+        /** NOTE **/
+        //updateElement() is to be replaced with storeAttendee()
+        new_attendee = true;
+      }
+      else if(input != "No" && input != "no" && input != "n" && input != "N") //If user enters some invalid input
+      {
+        std::cout << "Invalid input. Please try again." << std::endl;
 
-						ss.clear(); //Clear the fail bit
-						ss.seekg(0, std::ios::beg); //Go back to position 0 in "ss"
+        ss.clear(); //Clear the fail bit
+        ss.seekg(0, std::ios::beg); //Go back to position 0 in "ss"
 
-						for(int j = 0; j < 2*i ; ++j)
-						    //Here "i" refers to the current slot
-						    //The point of this loop is to reset the position of the stringstream to the current slot
-						    //This is needed if the input was invalid, since whether or not the user was added was indecisive
-							getline(ss, input, ',');
+        for(int j = 0; j < 2*i ; ++j)
+            //Here "i" refers to the current slot
+            //The point of this loop is to reset the position of the stringstream to the current slot
+            //This is needed if the input was invalid, since whether or not the user was added was indecisive
+          getline(ss, input, ',');
 
-						--i; //Reset the slot position
-					}
-				}
+        --i; //Reset the slot position
+      }
+    }
 
-				if(new_attendee == true) //If the person is a new attendee to the slot
-				{
-				    const char* name_ = (interface.getName()).c_str();
-				    //const char* name_ = name.c_str(); //"name_" points to a c string of "name"
-				    io_.updateElement(input_,"total_attendees",NULL); //Increment the "total_attendees" element
-				    io_.updateElement(input_,"attendees", (char *) name_); //Add "name_" to the "attendees" element
-				}
-			}
-		}
-		else //If "input" is not a number
-		{
-			std::cout << "Invalid event ID." << std::endl;
-			interface.Wait("");
-		}
-
-	} else { //If there are no events to set availability for
-		interface.Wait("No events available... Sorry!");
-	}
+    if(new_attendee == true) //If the person is a new attendee to the slot
+    {
+        const char* name_ = (interface.getName()).c_str();
+        //const char* name_ = name.c_str(); //"name_" points to a c string of "name"
+        io.updateElement(id,"total_attendees",NULL); //Increment the "total_attendees" element
+        io.updateElement(id,"attendees", (char *) name_); //Add "name_" to the "attendees" element
+    }
+  }else{
+    //Do nothing
+  }
 }
 
 void Events::createEvent()
@@ -299,80 +276,56 @@ std::list<std::string> Events::requestTasks(){
 }
 void Events::takeTask(){
   Interface interface;
-	bool digit_flag = true;
   bool quit;
   std::string userChoice;
 
 
-	if( io.size != 0 )
-	{
-		std::string input = interface.getInput("Please select an event ID from the list above: ");
-
-		for(unsigned int i = 0; i < input.size() ; ++i)
-			if( isdigit(input[i]) == 0 )
-				digit_flag = false;
-
-		if(digit_flag == true)
-		{
-			int input_ = atoi(input.c_str());
-
-			if( input_ < 0 || input_ > io.size - 1)
-			{
-				std::cout << "Invalid event ID." << std::endl;
-				interface.Wait("");
-			}
-			else{
-        //Temporary measure, change later.
-        do{
-          quit = true;
-          std::cout << "Would you like to take tasks?\n"
-            << "\tTake a task: input 't'.\n"
-            << "\tView current tasks and who is doing them: input 'v'.\n"
-            << "\tExit menu: input anything else.\n"
+  int id = requestID();
+  
+  if(id != -1){
+      //Temporary measure, change later.
+      do{
+        quit = true;
+        std::cout << "Would you like to take tasks?\n"
+          << "\tTake a task: input 't'.\n"
+          << "\tView current tasks and who is doing them: input 'v'.\n"
+          << "\tExit menu: input anything else.\n"
+          << "Choice: ";
+        std::cin >> userChoice;
+        std::cin.ignore(1, '\n');
+        
+        //If any of these happen, we do not exit the loop.
+        if(userChoice.at(0) == 't'){
+          quit = false;
+          
+          std::cout << "What task do you want (type in the task name)?\n"
+            << "Snacks\n"
             << "Choice: ";
           std::cin >> userChoice;
           std::cin.ignore(1, '\n');
           
-          //If any of these happen, we do not exit the loop.
-          if(userChoice.at(0) == 't'){
-            quit = false;
-            
-            std::cout << "What task do you want (type in the task name)?\n"
-              << "Snacks\n"
-              << "Choice: ";
-            std::cin >> userChoice;
-            std::cin.ignore(1, '\n');
-            
-            if(userChoice != "Snacks"){
-              std::cout << "Invalid Choice. You may try again.\n";
-            }else{
-              std::cout << "You are assigned for snacks.\n";
-            }
-            
-          }else if(userChoice.at(0) == 'v'){
-            quit = false;
-            
-            std::cout << "Here is a list of tasks:\n"
-              << "\tBBQ: Barbie\n"
-              << "\tPlates: Dan\n"
-              << "\tGames: Tommy\n"
-              << "\t(Takable) Snacks\n";
-            
-            std::cout << "\n";
+          if(userChoice != "Snacks"){
+            std::cout << "Invalid Choice. You may try again.\n";
+          }else{
+            std::cout << "You are assigned for snacks.\n";
           }
-          std::cout << "\n\n";
-        }while(!quit);
-      }
+          
+        }else if(userChoice.at(0) == 'v'){
+          quit = false;
+          
+          std::cout << "Here is a list of tasks:\n"
+            << "\tBBQ: Barbie\n"
+            << "\tPlates: Dan\n"
+            << "\tGames: Tommy\n"
+            << "\t(Takable) Snacks\n";
+          
+          std::cout << "\n";
+        }
+        std::cout << "\n\n";
+      }while(!quit);
+    }else{
+      //Do nothing, the event is invalid.
     }
-		else
-		{
-			std::cout << "Invalid event ID." << std::endl;
-			interface.Wait("");
-		}
-
-	} else {
-		interface.Wait("No events available... Sorry!");
-	}
 }
 
 std::string Events::requestDate(){
@@ -773,4 +726,40 @@ std::string Events::requestTimeSlots(){
   
   interface.clearScreen();
   return stringOfTimeSlots;
+}
+
+int Events::requestID(){
+	bool digit_flag = true;
+  
+  if( io.size != 0 )
+	{
+		std::string input = interface.getInput("Please select an event ID from the list above: ");
+
+		for(unsigned int i = 0; i < input.size() ; ++i)
+			if( isdigit(input[i]) == 0 )
+				digit_flag = false;
+
+		if(digit_flag == true)
+		{
+			int input_ = atoi(input.c_str());
+
+			if( input_ < 0 || input_ > io.size - 1)
+			{
+				std::cout << "Invalid event ID." << std::endl;
+				interface.Wait("");
+			}
+			else{
+        return input_;
+      }
+    }
+		else
+		{
+			std::cout << "Invalid event ID." << std::endl;
+			interface.Wait("");
+		}
+
+	} else {
+		interface.Wait("No events available... Sorry!");
+	}
+  return -1;
 }

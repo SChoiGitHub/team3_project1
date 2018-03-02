@@ -75,8 +75,12 @@ class Events
      * @return A string representing the time slots on a day.
      */
     static std::string requestTimeSlots();
-  
-  
+    /**This method deals with the UI regarding the request of an event ID.
+     * @pre None
+     * @post None
+     * @return An int that is the event id of an event if it exists, otherwise it returns -1.
+     */
+    static int requestID();
 
 };
 
