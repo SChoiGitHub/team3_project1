@@ -468,9 +468,8 @@ std::pair<std::string, std::string> IO::obtainEvent(int id){
 
     //Split String
     std::stringstream ss(event);
-    std::getline(ss, std::string s, ',');
     std::getline(ss, info.first, ',');
-    std::getline(ss, info.last);
+    std::getline(ss, info.second);
 
     return info;
 }
