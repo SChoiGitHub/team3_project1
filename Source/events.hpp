@@ -220,6 +220,7 @@ void Events::createEvent(){
     std::string hold;
     //Read everything in.
     while(std::getline(s,hold,',')){
+      hold = IO::timeFormatter(hold);
       parsedTimeString.push_back(hold);
       std::getline(s,hold,','); //Remove the pointless numOfAttendees...
     }
@@ -258,6 +259,13 @@ std::list<std::string> Events::requestTasks(){
 			std::getline(std::cin, userChoice);
 			currentTaskList.push_back(userChoice);
 			
+      //Tasks are unique, NO DUPLICATES.
+      if(currentTaskList.end() != std::find(currentTaskList.begin(),currentTaskList.end(),userChoice)){
+        std::cout << "That event already exists. The duplicate will be ignored.\n";
+        currentTaskList.sort();
+        currentTaskList.unique();
+      }
+      
 		}else if(userChoice.at(0) == 'v'){
 			quit = false;
 			
@@ -730,7 +738,6 @@ std::string Events::requestTimeSlots(){
   interface.clearScreen();
   return stringOfTimeSlots;
 }
-
 int Events::requestID(){
 	bool digit_flag = true;
   
