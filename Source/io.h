@@ -2,6 +2,7 @@
  *    @author    Team 3
  *    @date
  *    @brief A header file for Input/Output (IO) class
+ *    @note It is assumed that times will be transferred in the twenty-four hour format
  */
 
 #ifndef IO_H
@@ -60,9 +61,9 @@ public:
      *   @post Formats time between 12-hour format and 24-hour format
      *   @return String with slot in new time format
      */
-    std::string timeFormatter(std::string slot);
+    static std::string timeFormatter(std::string slot);
 
-    //--Event-----------------------------------------------------------------//
+//--EVENT---------------------------------------------------------------------//
 
     /**
     * Adds a task to the tasks file
@@ -83,7 +84,7 @@ public:
     */
     std::pair<std::string, std::string> obtainEvent(int id);
 
-    //--Schedules-------------------------------------------------------------//
+//--SCHEDULE------------------------------------------------------------------//
 
     /**
     * Adds a date and respective times to the schedules file
@@ -96,7 +97,7 @@ public:
 
     /**
     * Returns all the schedules
-    * @note an empty list will be returned if there are no stored schedules
+    * @note a null pointer will be return if no schedules are found
     * @param id - id of the event for which you are trying to retrieve all the schedules
     * @pre the id is a valid id that has some schedule
     * @return a list of schedules which are a date and times for that date
@@ -105,7 +106,7 @@ public:
 
     /**
     * Returns a schedule
-    * @note an null pointer will be returned if no schedule is found
+    * @note a null pointer will be returned if no schedule is found
     * @param id - id of the event for which the is needed
     * @param date - the date for which the schedule is needed
     * @pre the id is a valid id
@@ -113,7 +114,7 @@ public:
     */
     std::list<std::string>* obtainSchedule(int id, std::string date);
 
-    //--TASK------------------------------------------------------------------//
+//--TASK----------------------------------------------------------------------//
 
     /**
     * Adds a task to the tasks file
@@ -135,7 +136,7 @@ public:
     */
     void storeTaskAssignee(int id, std::string name, std::string assignee);
 
-    //--Attendence------------------------------------------------------------//
+//--ATTENDENCE----------------------------------------------------------------//
 
     /**
     * Adds an attendee to a date and time
@@ -158,6 +159,16 @@ public:
     */
     void storeAttendees(int id, std::string date, std::string time, std::list<std::string> attendees);
 
+    /**
+    * Gets the attendees for a specific date.
+    * @note Will return a null pointer if a list of attendees can not be found
+    * @param id - id of the event for which the attendees are needed
+    * @param date - the day for which the attendees are needed
+    * @param time - the time for which attendees are needed
+    * @return list of attendees
+    */
+    std::list<std::string>* obtainAttendees(int id, std::string date, std::string time);
+
 private:
     Log logFile;            //Log object
     int numEvents;
@@ -172,7 +183,7 @@ private:
     std::fstream schedulesFile;
     std::fstream attendenceFile;
 
-    //--File Manipulation-----------------------------------------------------//
+//--FILE MANIPULATION---------------------------------------------------------//
     /**
     * Generic method that gets a line from a file.
     * @note Should be used in situations where the identifier is unique
@@ -191,7 +202,7 @@ private:
     * @param identifier - part of an entry that will identify the entry
     * @return list of entries
     */
-    std::list<std::string> getEntries(std::fstream& file, std::string identifier);
+    std::list<std::string>* getEntries(std::fstream& file, std::string identifier);
 
     /**
     * Generic method that adds a line to a file
