@@ -87,7 +87,11 @@ class Events
      * @post None
      */
     static void inspectEvent();
-
+    /**
+     * This method is a helper method to check user input
+     * @return boolean of if user input is yes or no
+     */
+    static bool yesOrNo();
 };
 
 
