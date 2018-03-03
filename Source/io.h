@@ -55,7 +55,13 @@ public:
      *   @return None
      */
     void displayEntries();
-
+    /**  A method that displays more information on a single event.
+     *   @pre None
+     *   @post Displays all information on one event
+     *   @param id The id of the specific event to display
+     *   @return None
+     */
+    void displayEntry(int id);
 
     /** @pre slot has the time value that needs to be formatted
      *   @post Formats time between 12-hour format and 24-hour format
