@@ -69,23 +69,8 @@ void Events::createEvent(){
 	interface.clearScreen();
 	menu.Header();
 
-	std::size_t found;
-
-	do {
-		found = 0;
-		std::cout << "\nEnter your name (no commas): ";
-		std::getline(std::cin, adminName);
-		found = adminName.find_first_of(",");
-
-	} while (found != std::string::npos);
-
-
-	do {
-		found = 0;
-		std::cout << "\nEnter event name (no commas): ";
-		std::getline(std::cin, eventName);
-		found = eventName.find_first_of(",");
-	} while (found != std::string::npos);
+  adminName = sanitizeInput("\nEnter your name (no commas): ",",");
+  eventName = sanitizeInput("\nEnter event name (no commas): ",",");
 
 	//Declaring a set of date strings
 	std::unordered_map<std::string,std::string>* dateInfo = new std::unordered_map<std::string,std::string>;
@@ -732,4 +717,19 @@ bool Events::yesOrNo()
         std::cout << "Please type in 'y' or 'n' to say \"yes\" or \"no\" respectively\n";
       }
   }while(true);
+}
+std::string Events::sanitizeInput(std::string message, std::string disallowed){
+  std::size_t found = 0;
+  std::string input;
+  std::cout << message;
+  
+  do {
+		std::getline(std::cin, input);
+		found = input.find_first_of(disallowed);
+    if(found != std::string::npos){
+      std::cout << disallowed << " cannot be in the input!\n" << message;
+    }
+	} while (found != std::string::npos);
+  
+  return message;
 }

@@ -92,6 +92,12 @@ class Events
      * @return boolean of if user input is yes or no
      */
     static bool yesOrNo();
+    /**
+     * This method is a helper method to sanitize user input.
+     * @param disallowed the item that should not be in the input.
+     * @return An input that is guaranteed to not have the disallowedChar
+     */
+    static std::string sanitizeInput(std::string message, std::string disallowed);
 };
 
 
