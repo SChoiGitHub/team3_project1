@@ -18,6 +18,7 @@ IO Events::io;
 void Events::userMode()
 {
 	Interface::Menu menu({
+    {"Inspect an Event", Events::inspectEvent},
 		{"Set Availability", Events::setAvailability},
 		{"Task a Task", Events::takeTask},
 		{"Toggle Time Format 12/24", Interface::toggleTimeFormat},
@@ -30,6 +31,7 @@ void Events::userMode()
 void Events::adminMode()
 {
 	Interface::Menu menu({
+    {"Inspect an Event", Events::inspectEvent},
 		{"Add Event", Events::createEvent},
 		{"Toggle Time Format 12/24", Interface::toggleTimeFormat},
 		{"Go back", nullptr}
@@ -108,7 +110,6 @@ void Events::setAvailability()
     //Do nothing
   }
 }
-
 void Events::createEvent(){
 	Interface::Menu menu({{"", NULL}});
 
@@ -334,7 +335,6 @@ void Events::takeTask(){
       //Do nothing, the event is invalid.
     }
 }
-
 std::string Events::requestDate(){
   Interface::Menu menu({{"", NULL}});
   std::string date = "";
@@ -451,7 +451,6 @@ std::string Events::requestDate(){
   
   return date;
 }
-
 std::string Events::requestTimeSlots(){
   //variables regarding the time slots
   Interface::Menu menu({{"", NULL}});
@@ -772,4 +771,7 @@ int Events::requestID(){
 		interface.Wait("No events available... Sorry!");
 	}
   return -1;
+}
+void Events::inspectEvent(){
+  
 }

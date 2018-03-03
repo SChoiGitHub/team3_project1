@@ -82,6 +82,11 @@ class Events
      * @return An int that is the event id of an event if it exists, otherwise it returns -1.
      */
     static int requestID();
+    /**This method deals with the UI regarding the inspection of an event.
+     * @pre None
+     * @post None
+     */
+    static void inspectEvent();
 
 };
 
