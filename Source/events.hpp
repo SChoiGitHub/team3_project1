@@ -46,66 +46,13 @@ void Events::setAvailability()
 	int dummy_int = 0;
 
   std::string input = ""; //Dummy variable to stop compiler from complaining for now.
-
+  std::string name = "";
 
   int id = requestID();
 
   if(id != -1){ //Event exists.
-    input = io.retrieveElement(id,"total_slots"); //"input" now holds a string of the number of time slots
-    dummy_int = atoi(input.c_str()); //"dummy_int" now holds the number of time slots
-    input = io.retrieveElement(id,"slots"); //"input" now holds a string of comma-separated slots
+    name = interface.getInput("What's your name? ");//Get name
 
-    std::string slots[dummy_int]; //"slots" is an array of size "dummy_int" (which is the total number of time slots)
-    std::string dummy_string; //"dummy_string"
-    std::stringstream ss(input); //"ss" is a stringstream over "input" (which is a string of all the time slots)
-
-    for(int i = 0; i < dummy_int ; ++i) //Iterate over the number of time slots
-    {
-      //Get slots
-      getline(ss, slots[i], ','); //Put the ith slot into the ith entry of "slots"
-      //Just to move the string forward (over the number of people in a slot)
-      getline(ss, input, ',');
-
-      dummy_string = "slot" + std::to_string(i+1); //"dummy_string" holds a string in the form 'slotn' (n is an int)
-
-      if(io.timeFormat == true ) //Formatting slot output for 12/24 hours
-        std::cout << "Are you available at " << slots[i] << " ? [Y/n]: ";
-      else
-        std::cout << "Are you available at " << io.timeFormatter(slots[i]) << " ? [Y/n]: ";
-
-      getline(std::cin, input); //Get the user's choice
-
-      if(input == "Yes" || input == "yes" || input == "y" || input == "Y") //If user is available
-      {
-        io.updateElement(id,dummy_string,NULL); //Adding to timeslot 
-        /** NOTE **/
-        //updateElement() is to be replaced with storeAttendee()
-        new_attendee = true;
-      }
-      else if(input != "No" && input != "no" && input != "n" && input != "N") //If user enters some invalid input
-      {
-        std::cout << "Invalid input. Please try again." << std::endl;
-
-        ss.clear(); //Clear the fail bit
-        ss.seekg(0, std::ios::beg); //Go back to position 0 in "ss"
-
-        for(int j = 0; j < 2*i ; ++j)
-            //Here "i" refers to the current slot
-            //The point of this loop is to reset the position of the stringstream to the current slot
-            //This is needed if the input was invalid, since whether or not the user was added was indecisive
-          getline(ss, input, ',');
-
-        --i; //Reset the slot position
-      }
-    }
-
-    if(new_attendee == true) //If the person is a new attendee to the slot
-    {
-        const char* name_ = (interface.getName()).c_str();
-        //const char* name_ = name.c_str(); //"name_" points to a c string of "name"
-        io.updateElement(id,"total_attendees",NULL); //Increment the "total_attendees" element
-        io.updateElement(id,"attendees", (char *) name_); //Add "name_" to the "attendees" element
-    }
   }else{
     //Do nothing
   }
@@ -123,8 +70,6 @@ void Events::createEvent(){
 	menu.Header();
 
 	std::size_t found;
-
-
 
 	do {
 		found = 0;
@@ -160,13 +105,11 @@ void Events::createEvent(){
 		do {
       //Do we want a new date?
 			std::cout << "Do you want to set a new date? (Yes/No) : ";
-			std::getline(std::cin, choose);
 
-			if (choose == "Yes" || choose == "yes" || choose == "y" || choose == "Y")
-			{
+			if(yesOrNo()){
 				newDate = true;
         continueInput = false;
-			}else if(choose == "No" || choose == "no" || choose == "n" || choose == "N"){
+			}else{
         newDate = false;
         continueInput = false;
       }
@@ -184,12 +127,11 @@ void Events::createEvent(){
     
     //Copy over new string slots!
     if(timeSlots != ""){
-      std::cout << "Would you like to copy over the previous time slots to this new date?\n"
+      std::cout << "Would you like to copy over the previous time slots to this new date? (Yes/No)\n"
                 << "Yes: Type 'y'.\n"
                 << "No: Type anything else.\n"
                 << "Choose: ";
-      std::getline(std::cin, choose);
-      copyNewItems = (choose == "y");
+      copyNewItems = yesOrNo();
     }
               
     if(!copyNewItems){
@@ -774,4 +716,20 @@ int Events::requestID(){
 }
 void Events::inspectEvent(){
   
+}
+bool Events::yesOrNo()
+{
+  //Get into the loop and keep on getting input until you are done.
+  std::string input;
+  do{
+      std::getline(std::cin, input);
+      if((input == "Y" || input == "y" || input == "Yes" || input == "yes")){
+        return true;
+      }
+      else if((input == "N" || input == "n" || input == "No" || input == "no")){
+        return false;
+      }else{
+        std::cout << "Please type in 'y' or 'n' to say \"yes\" or \"no\" respectively\n";
+      }
+  }while(true);
 }
