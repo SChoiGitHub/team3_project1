@@ -30,21 +30,149 @@ void Events::adminMode()
 void Events::setAvailability()
 {
 	Interface interface_;
-	IO io_("event.list");
+	IO io_();
 	bool digit_flag = true;
 	bool new_attendee = false;  //for any new attendence
 	int dummy_int = 0;
 
 	std::size_t found;
+    
+    std::list<std::pair<std::string, std::list<std::string>>>* scheList = new std::list<std::pair<std::string, std::list<std::string>>>;
+    std::list<std::string> dateList;
+    std::list<std::string> timeList;
+    std::list<std::string> attendList;
+    std::string input = "";
+    std::string name = "";
+    int int_input = 0;
+    
+    if( io_.size != 0 )
+    {
+        name = interface_.getInput("What's your name? ");
+        
+        input = interface_.getInput("Please select an event ID from the list above: ");
+        
+        for(unsigned int i = 0; i < input.size() ; ++i)
+        {
+            if( isdigit(input[i]) == 0 )
+            {
+                digit_flag = false;
+            }
+            else
+            {
+                int_input = atoi(input.c_str());
+            }
+        }
+        
+        if (digit_flag == false || int_input < 0 || int_input >= io_.size)
+        {
+            std::cout << "Invalid event ID." << std::endl;
+            interface_.Wait("");
+        }
+        else
+        {
+            scheList = io_.obtainSchedules(int_input);
+            if(scheList->size() == 1)
+            {
+                dateList.push_back(scheList->begin().first);
+            }
+            else
+            {
+                for(auto it = scheList->begin(); !(it == scheList->end()); it++)
+                {
+                    dateList.push_back(it.first);
+                }
+            }
+            
+            for(int i = 0; i < dateList.size(); i++)
+            {
+                auto it_2 = dateList.begin();
+                std::cout << "Are you available on " << *it_2 << "? [Y/N]";
+                std::getline(std::cin, input);
+                if(!yesOrNoV(input))
+                {
+                    std::cout << "Invalid Input.\n";
+                }
+                else if(yesOrNo(input))
+                {
+                    if(scheList->size() == 1)
+                    {
+                        timeList= (scheList->begin()).second;
+                    }
+                    else
+                    {
+                        for(auto it_3 = scheList->begin(); !(it_3 == scheList->end()); it_3++)
+                        {
+                            if(*it_2 == it_3.first)
+                            {
+                                timeList = it_3.second;
+                            }
+                        }
+                    }
+                    
+                    if(timeList.size() == 1)
+                    {
+                        if(io_.timeFormat == true)
+                        {
+                            std::cout << "Are you available at " << *(timelist.begin()) << "? [Y/N]";
+                        }
+                        else
+                        {
+                            std::cout << "Are you available at " << io_.timeFormatter(*(timeList.begin())) << "? [Y/N]";
+                        }
+                        std::getline(std::cin, input);
+                        if(!yesOrNoV(input)))
+                        {
+                            std::cout<<"Invalid input./n";
+                        }
+                        else if(yesOrNo(input))
+                        {
+                            attendList.push_back(*(timeList.begin()));
+                            io_.storeAttendee(int_input, *it_2, *(timeList.begin()), name);
+                        }
+                        
+                    }
+                    else
+                    {
+                        for(auto it_4 = timeList.begin(); !(it_4 == timeList.end()); it_4++)
+                        {
+                            if(io_.timeFormat == true)
+                            {
+                                std::cout << "Are you available at " << *(timeList.begin()) << "? [Y/N]";
+                            }
+                            else
+                            {
+                                std::cout << "Are you available at " << io_.timeFormatter(*(timeList->begin())) << "? [Y/N]";
+                            }
+                            std::getline(std::cin, input);
+                            if(!yesOrNoV(input)))
+                            {
+                                std::cout<<"Invalid input./n";
+                                it_4--;
+                            }
+                            else if(yesOrNo(input))
+                            {
+                                attendList.push(*it_4);
+                                io_.storeAttendee(int_input, *it_2, *(timeList.begin()), name);
+                            }
+                        }
+                    }
+                    
+                    
+                }
+            }
+            
+        }
+        
+    }
+    else
+    {
+        interface_.Wait("No events available... Sorry!");
+    }
+    
+    
 	
-
-	if( io_.size != 0 )
-	{
-		std::string input = interface_.getInput("Please select an event ID from the list above: ");
-
-		for(unsigned int i = 0; i < input.size() ; ++i)
-			if( isdigit(input[i]) == 0 )
-				digit_flag = false;
+/*
+	
 
 		if(digit_flag == true)
 		{
@@ -118,13 +246,45 @@ void Events::setAvailability()
 		}
 		else
 		{
-			std::cout << "Invalid event ID." << std::endl;
-			interface_.Wait("");
+ 
 		}
 
 	} else {
-		interface_.Wait("No events available... Sorry!");
+ 
 	}
+ 
+ */
+}
+
+bool Events::yesOrNoV(std::string input)
+{
+    bool valid = false;
+    if(!(input == "Y" || input == "N" || input == "y" || input == "n" || input == "Yes" || input == "yes" || input == "No" || input == "no"))
+    {
+        valid = false;
+    }
+    else
+    {
+        valid = true;
+    }
+    
+    return valid;
+}
+
+bool Events::yesOrNo(std::string input)
+{
+    if(input == "Y" || input == "y" || input == "Yes" || input == "yes")
+    {
+        return true;
+    }
+    else if(!yesOrNoV(input))
+    {
+        return false;
+    }
+    else
+    {
+        return  false;
+    }
 }
 
 void Events::createEvent()

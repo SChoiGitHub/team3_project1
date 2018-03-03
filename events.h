@@ -55,6 +55,18 @@ class Events
 	 * @return A string that represents the tasks.
 	 */
 	static std::string requestTasks();
+    
+    /**
+     * This method is a helper method to check user input
+     * @return boolean of if user input is valid
+     */
+    static bool yesOrNoV(std::string input);
+    
+    /**
+     * This method is a helper method to check user input
+     * @return boolean of if user input is yes or no
+     */
+    static bool yesOrNo(std::string input);
 
 };
 
