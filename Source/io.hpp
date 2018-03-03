@@ -343,6 +343,38 @@ void IO::displayEntries()
         delete schedules;
     }
 }
+void IO::displayEntry(int id)
+{
+  //Display ID, name, date and number of attendees
+  std::cout << "-- " << obtainEvent(id).first  << " --" << std::endl;
+  std::cout << "ID: " << id << "\n";
+  std::cout << "Creator: " << obtainEvent(id).second << "\n\n";
+  
+  std::list<std::pair<std::string, std::list<std::string>>>* schedules = obtainSchedules(id);
+  
+  std::cout << "----\n";
+  for(auto&& it : (*schedules)){
+    std::cout << "Date: " << it.first << "\n";
+    for(auto&& it2 : (it.second)){
+      std::cout << "\tTime: " << it2 << '\n';
+      std::cout << "\tAttendees Below:\n";
+      std::list<std::string>* attendeesAtThisTime = obtainAttendees(id,it,it2);
+      for(auto&& it3 : attendeesAtThisTime){
+        std::cout << "\t\t" << it3 << '\n';
+      }
+    }
+    std::cout << "----\n";
+  }
+  std::cout << '\n';
+  
+  std::cout << "Tasks Below:";
+  
+  
+  
+  std::cout << "\n\n";
+  
+  delete schedules;
+}
 
 //--Time Conversion-----------------------------------------------------------//
 std::string IO::timeFormatter(std::string slot)

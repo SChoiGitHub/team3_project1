@@ -700,7 +700,13 @@ int Events::requestID(){
   return -1;
 }
 void Events::inspectEvent(){
+  int id = requestID();
   
+  if(id != -1){
+    io.displayEntry(id);
+  }else{
+    //Do nothing;
+  }
 }
 bool Events::yesOrNo()
 {
