@@ -187,8 +187,6 @@ std::string IO::retrieveElement(int ID, std::string elementName){
 */
     return "";
 }
-
-
 void IO::updateElement(int ID, std::string elementName, void* value){
 /*    std::fstream file_;
 	file_.open("event.list", std::ios::in | std::ios::out);
@@ -364,12 +362,12 @@ void IO::displayEntries()
         
         std::list<std::pair<std::string, std::list<std::string>>>* schedules = obtainSchedules(i);
         
-        for(auto&& it : (*schedules)){
-          std::cout << it.first << " ";
+        if(schedules != nullptr){
+          for(auto&& it : (*schedules)){
+            std::cout << it.first << " ";
+          }
+          std::cout << "\n\n";
         }
-
-        std::cout << "\n\n";
-        
         delete schedules;
     }
 }
@@ -383,27 +381,44 @@ void IO::displayEntry(int id)
   std::list<std::pair<std::string, std::list<std::string>>>* schedules = obtainSchedules(id);
   
   std::cout << "----\n";
-  for(auto&& it : (*schedules)){
-    std::cout << "Date: " << it.first << "\n";
-    for(auto&& it2 : (it.second)){
-      std::cout << "\tTime: " << it2 << '\n';
-      std::cout << "\tAttendees Below:\n";
-      std::list<std::string>* attendeesAtThisTime = obtainAttendees(id,it,it2);
-      for(auto&& it3 : attendeesAtThisTime){
-        std::cout << "\t\t" << it3 << '\n';
+  if(schedules != nullptr){
+    for(auto&& it : (*schedules)){
+      std::cout << "Date: " << it.first << "\n";
+      for(auto&& it2 : (it.second)){
+        std::list<std::string>* attendeesAtThisTime = obtainAttendees(id,it.first,it2);
+        if(attendeesAtThisTime != nullptr){
+          std::cout << "\tTime: " << it2 << '\n';
+          std::cout << "\tAttendees Below:\n";
+          
+          for(auto&& it3 : (*attendeesAtThisTime)){
+            std::cout << "\t\t" << it3 << '\n';
+          }
+          delete attendeesAtThisTime;
+        }
       }
+      std::cout << "----\n";
     }
-    std::cout << "----\n";
+    delete schedules;
   }
   std::cout << '\n';
   
-  std::cout << "Tasks Below:";
-  
+  std::list<std::pair<std::string, std::string>>* tasks =  obtainTasks(id);
+  if(tasks != nullptr){
+    std::cout << "Tasks Below:\n";
+    for(auto&& it = tasks->begin(); it != tasks->end(); it++){
+      if(it->second != ""){
+        std::cout << "\t" << it->first << " (UNTAKEN)\n";
+      }else{
+        std::cout << "\t" << it->first << " is being done by " << it->second << "\n";
+      }
+    }
+    delete tasks;
+  }
   
   
   std::cout << "\n\n";
   
-  delete schedules;
+  
 }
 
 //--Time Conversion-----------------------------------------------------------//
@@ -475,6 +490,7 @@ int IO::storeEvent(std::string name, std::string creator){
     addEntry(eventsFile, line);
 
     numEvents += 1;
+    size += 1;
 
     return numEvents - 1;
 }
