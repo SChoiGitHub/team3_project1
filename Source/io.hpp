@@ -497,13 +497,13 @@ int IO::storeEvent(std::string name, std::string creator){
 
 std::pair<std::string, std::string> IO::obtainEvent(int id){
 
-    std::string event = getEntry(eventsFile, std::to_string(id) + ",");
+    std::string event = getEntry(eventsFile, (std::to_string(id) + ","));
     std::pair<std::string, std::string> info;
 
     //Split String
     std::stringstream ss(event);
     std::getline(ss, info.first, ',');
-    std::getline(ss, info.second);
+    std::getline(ss, info.second, ',');
 
     return info;
 }
@@ -611,16 +611,10 @@ void IO::storeAttendees(int id, std::string date, std::string time, std::list<st
 }
 
 void IO::storeAttendee(int id, std::string date, std::string time, std::string attendee){
-    std::string attendees = attendee;
-    std::string identifier = std::to_string(id) + "," + date + "," + time;
+    std::string identifier = std::to_string(id) + "," + date + "," + time + ",";
+    std::string attendees = getEntry(attendenceFile, identifier)+ "," + attendee;
 
-    std::list<std::string>* attendence = obtainAttendees(id, date, time);
-    for(auto const& i : *attendence){
-        attendees += "," + i;
-    }
-    delete attendence;
-
-    replaceEntry(attendenceFile, ATTENDENCE_FILE, identifier, identifier + "," + attendees);
+    replaceEntry(attendenceFile, ATTENDENCE_FILE, identifier, (identifier + attendees));
 }
 
 std::list<std::string>* IO::obtainAttendees(int id, std::string date, std::string time){
