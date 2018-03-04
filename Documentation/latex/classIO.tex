@@ -18,6 +18,8 @@ void \hyperlink{classIO_a11fdb7d4afa830fa1441fbf566f73432}{update\+Element} (int
 \item 
 void \hyperlink{classIO_a48e9febfbb2c6c3e01b467fd030c2529}{display\+Entries} ()
 \item 
+void \hyperlink{classIO_ad7d41c6f82af93956476883f9291a444}{display\+Entry} (int id)
+\item 
 int \hyperlink{classIO_ac9a8c18ea44f8ced444effc51633e4d7}{store\+Event} (std\+::string name, std\+::string creator)
 \item 
 std\+::pair$<$ std\+::string, std\+::string $>$ \hyperlink{classIO_a1a083567d802a67de01512353a64882f}{obtain\+Event} (int id)
@@ -32,11 +34,13 @@ void \hyperlink{classIO_ad3e9360377df2dfaa223e36aa4a8edde}{store\+Task} (int id,
 \item 
 void \hyperlink{classIO_a3b1673598595b2140f5f893d023813be}{store\+Task\+Assignee} (int id, std\+::string name, std\+::string assignee)
 \item 
+std\+::list$<$ std\+::pair$<$ std\+::string, std\+::string $>$ $>$ $\ast$ \hyperlink{classIO_af2c5dffa84ae0741d41b0a3ccf5990ae}{obtain\+Tasks} (int id)
+\item 
 void \hyperlink{classIO_ae80862e6964e82c2f2e6d7f3b931f347}{store\+Attendee} (int id, std\+::string date, std\+::string time, std\+::string attendee)
 \item 
 void \hyperlink{classIO_ae1b8fcfab070b9af2dcd910c1cc7eb4e}{store\+Attendees} (int id, std\+::string date, std\+::string time, std\+::list$<$ std\+::string $>$ attendees)
 \item 
-std\+::list$<$ std\+::string $>$ $\ast$ \hyperlink{classIO_ab9ac9f637e042cd7711cfdbc4dcbe540}{obtain\+Attendees} (int id, std\+::string date, std\+::string time)
+std\+::list$<$ std\+::string $>$ $\ast$ \hyperlink{classIO_a6e49698e267ae002df56bde7875107b0}{obtain\+Attendees} (int id, std\+::string date, std\+::string time)
 \end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
@@ -46,14 +50,14 @@ static std\+::string \hyperlink{classIO_ad78c42847c70915fe94bddd25f716859}{time\
 \subsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-int {\bfseries size}\hypertarget{classIO_a4e344c74454e6609b817e3fdb3fcddf3}{}\label{classIO_a4e344c74454e6609b817e3fdb3fcddf3}
-
+\mbox{\Hypertarget{classIO_a4e344c74454e6609b817e3fdb3fcddf3}\label{classIO_a4e344c74454e6609b817e3fdb3fcddf3}} 
+int {\bfseries size}
 \end{DoxyCompactItemize}
 \subsection*{Static Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-static bool {\bfseries time\+Format} = false\hypertarget{classIO_a04cf024687a6a86007db5ecfcab69e5c}{}\label{classIO_a04cf024687a6a86007db5ecfcab69e5c}
-
+\mbox{\Hypertarget{classIO_a04cf024687a6a86007db5ecfcab69e5c}\label{classIO_a04cf024687a6a86007db5ecfcab69e5c}} 
+static bool {\bfseries time\+Format} = false
 \end{DoxyCompactItemize}
 
 
@@ -72,13 +76,12 @@ It is assumed that times will be transferred in the twenty-\/four hour format
 
 
 \subsection{Member Function Documentation}
+\mbox{\Hypertarget{classIO_a48e9febfbb2c6c3e01b467fd030c2529}\label{classIO_a48e9febfbb2c6c3e01b467fd030c2529}} 
 \index{IO@{IO}!display\+Entries@{display\+Entries}}
 \index{display\+Entries@{display\+Entries}!IO@{IO}}
-\subsubsection[{\texorpdfstring{display\+Entries()}{displayEntries()}}]{\setlength{\rightskip}{0pt plus 5cm}void I\+O\+::display\+Entries (
-\begin{DoxyParamCaption}
-{}
-\end{DoxyParamCaption}
-)}\hypertarget{classIO_a48e9febfbb2c6c3e01b467fd030c2529}{}\label{classIO_a48e9febfbb2c6c3e01b467fd030c2529}
+\subsubsection{\texorpdfstring{display\+Entries()}{displayEntries()}}
+{\footnotesize\ttfamily void I\+O\+::display\+Entries (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
 \begin{DoxyPrecond}{Precondition}
 None 
 \end{DoxyPrecond}
@@ -88,15 +91,32 @@ Displays all elements in file, one at a time
 \begin{DoxyReturn}{Returns}
 None 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classIO_ad7d41c6f82af93956476883f9291a444}\label{classIO_ad7d41c6f82af93956476883f9291a444}} 
+\index{IO@{IO}!display\+Entry@{display\+Entry}}
+\index{display\+Entry@{display\+Entry}!IO@{IO}}
+\subsubsection{\texorpdfstring{display\+Entry()}{displayEntry()}}
+{\footnotesize\ttfamily void I\+O\+::display\+Entry (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+A method that displays more information on a single event. \begin{DoxyPrecond}{Precondition}
+None 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+Displays all information on one event 
+\end{DoxyPostcond}
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The id of the specific event to display \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classIO_a6e49698e267ae002df56bde7875107b0}\label{classIO_a6e49698e267ae002df56bde7875107b0}} 
 \index{IO@{IO}!obtain\+Attendees@{obtain\+Attendees}}
 \index{obtain\+Attendees@{obtain\+Attendees}!IO@{IO}}
-\subsubsection[{\texorpdfstring{obtain\+Attendees(int id, std\+::string date, std\+::string time)}{obtainAttendees(int id, std::string date, std::string time)}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::list$<$std\+::string$>$$\ast$ I\+O\+::obtain\+Attendees (
-\begin{DoxyParamCaption}
-\item[{int}]{id, }
-\item[{std\+::string}]{date, }
-\item[{std\+::string}]{time}
-\end{DoxyParamCaption}
-)}\hypertarget{classIO_ab9ac9f637e042cd7711cfdbc4dcbe540}{}\label{classIO_ab9ac9f637e042cd7711cfdbc4dcbe540}
+\subsubsection{\texorpdfstring{obtain\+Attendees()}{obtainAttendees()}}
+{\footnotesize\ttfamily std\+::list$<$ std\+::string $>$ $\ast$ I\+O\+::obtain\+Attendees (\begin{DoxyParamCaption}\item[{int}]{id,  }\item[{std\+::string}]{date,  }\item[{std\+::string}]{time }\end{DoxyParamCaption})}
+
 Gets the attendees for a specific date. \begin{DoxyNote}{Note}
 Will return a null pointer if a list of attendees can not be found 
 \end{DoxyNote}
@@ -112,13 +132,12 @@ Will return a null pointer if a list of attendees can not be found
 \begin{DoxyReturn}{Returns}
 list of attendees 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classIO_a1a083567d802a67de01512353a64882f}\label{classIO_a1a083567d802a67de01512353a64882f}} 
 \index{IO@{IO}!obtain\+Event@{obtain\+Event}}
 \index{obtain\+Event@{obtain\+Event}!IO@{IO}}
-\subsubsection[{\texorpdfstring{obtain\+Event(int id)}{obtainEvent(int id)}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::pair$<$ std\+::string, std\+::string $>$ I\+O\+::obtain\+Event (
-\begin{DoxyParamCaption}
-\item[{int}]{id}
-\end{DoxyParamCaption}
-)}\hypertarget{classIO_a1a083567d802a67de01512353a64882f}{}\label{classIO_a1a083567d802a67de01512353a64882f}
+\subsubsection{\texorpdfstring{obtain\+Event()}{obtainEvent()}}
+{\footnotesize\ttfamily std\+::pair$<$ std\+::string, std\+::string $>$ I\+O\+::obtain\+Event (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
 Gets an event 
 \begin{DoxyParams}{Parameters}
 {\em id} & -\/ id of the event \\
@@ -130,14 +149,12 @@ id coresponds to an event
 \begin{DoxyReturn}{Returns}
 a pair that contains the event\textquotesingle{}s name and creator 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classIO_a2d8629709827d3797b4f26b9ef108f03}\label{classIO_a2d8629709827d3797b4f26b9ef108f03}} 
 \index{IO@{IO}!obtain\+Schedule@{obtain\+Schedule}}
 \index{obtain\+Schedule@{obtain\+Schedule}!IO@{IO}}
-\subsubsection[{\texorpdfstring{obtain\+Schedule(int id, std\+::string date)}{obtainSchedule(int id, std::string date)}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::list$<$std\+::string$>$$\ast$ I\+O\+::obtain\+Schedule (
-\begin{DoxyParamCaption}
-\item[{int}]{id, }
-\item[{std\+::string}]{date}
-\end{DoxyParamCaption}
-)}\hypertarget{classIO_a2d8629709827d3797b4f26b9ef108f03}{}\label{classIO_a2d8629709827d3797b4f26b9ef108f03}
+\subsubsection{\texorpdfstring{obtain\+Schedule()}{obtainSchedule()}}
+{\footnotesize\ttfamily std\+::list$<$std\+::string$>$$\ast$ I\+O\+::obtain\+Schedule (\begin{DoxyParamCaption}\item[{int}]{id,  }\item[{std\+::string}]{date }\end{DoxyParamCaption})}
+
 Returns a schedule \begin{DoxyNote}{Note}
 a null pointer will be returned if no schedule is found 
 \end{DoxyNote}
@@ -154,13 +171,12 @@ the id is a valid id
 \begin{DoxyReturn}{Returns}
 a list of times 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classIO_ae36363fbeda79e6e3f962d9e985eb23b}\label{classIO_ae36363fbeda79e6e3f962d9e985eb23b}} 
 \index{IO@{IO}!obtain\+Schedules@{obtain\+Schedules}}
 \index{obtain\+Schedules@{obtain\+Schedules}!IO@{IO}}
-\subsubsection[{\texorpdfstring{obtain\+Schedules(int id)}{obtainSchedules(int id)}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::list$<$ std\+::pair$<$ std\+::string, std\+::list$<$ std\+::string $>$ $>$ $>$ $\ast$ I\+O\+::obtain\+Schedules (
-\begin{DoxyParamCaption}
-\item[{int}]{id}
-\end{DoxyParamCaption}
-)}\hypertarget{classIO_ae36363fbeda79e6e3f962d9e985eb23b}{}\label{classIO_ae36363fbeda79e6e3f962d9e985eb23b}
+\subsubsection{\texorpdfstring{obtain\+Schedules()}{obtainSchedules()}}
+{\footnotesize\ttfamily std\+::list$<$ std\+::pair$<$ std\+::string, std\+::list$<$ std\+::string $>$ $>$ $>$ $\ast$ I\+O\+::obtain\+Schedules (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
 Returns all the schedules \begin{DoxyNote}{Note}
 a null pointer will be return if no schedules are found 
 \end{DoxyNote}
@@ -175,14 +191,31 @@ the id is a valid id that has some schedule
 \begin{DoxyReturn}{Returns}
 a list of schedules which are a date and times for that date 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classIO_af2c5dffa84ae0741d41b0a3ccf5990ae}\label{classIO_af2c5dffa84ae0741d41b0a3ccf5990ae}} 
+\index{IO@{IO}!obtain\+Tasks@{obtain\+Tasks}}
+\index{obtain\+Tasks@{obtain\+Tasks}!IO@{IO}}
+\subsubsection{\texorpdfstring{obtain\+Tasks()}{obtainTasks()}}
+{\footnotesize\ttfamily std\+::list$<$ std\+::pair$<$ std\+::string, std\+::string $>$ $>$ $\ast$ I\+O\+::obtain\+Tasks (\begin{DoxyParamCaption}\item[{int}]{id }\end{DoxyParamCaption})}
+
+Gets the tasks for a specific event \begin{DoxyNote}{Note}
+Will return a nullptr if no tasks are found 
+
+if a task does not have an assignee, the assignee will be an empty string 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em id} & -\/ id of the event for which tasks are wanted \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+list of tasks and their repective assignee 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classIO_a3829dc8ad91e1f2d560be799b6d9b04d}\label{classIO_a3829dc8ad91e1f2d560be799b6d9b04d}} 
 \index{IO@{IO}!retrieve\+Element@{retrieve\+Element}}
 \index{retrieve\+Element@{retrieve\+Element}!IO@{IO}}
-\subsubsection[{\texorpdfstring{retrieve\+Element(int I\+D, std\+::string element\+Name)}{retrieveElement(int ID, std::string elementName)}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string I\+O\+::retrieve\+Element (
-\begin{DoxyParamCaption}
-\item[{int}]{ID, }
-\item[{std\+::string}]{element\+Name}
-\end{DoxyParamCaption}
-)}\hypertarget{classIO_a3829dc8ad91e1f2d560be799b6d9b04d}{}\label{classIO_a3829dc8ad91e1f2d560be799b6d9b04d}
+\subsubsection{\texorpdfstring{retrieve\+Element()}{retrieveElement()}}
+{\footnotesize\ttfamily std\+::string I\+O\+::retrieve\+Element (\begin{DoxyParamCaption}\item[{int}]{ID,  }\item[{std\+::string}]{element\+Name }\end{DoxyParamCaption})}
+
 \begin{DoxyNote}{Note}
 this method is depricated and should no longer be used 
 \end{DoxyNote}
@@ -195,16 +228,12 @@ Retrieves some event\textquotesingle{}s specific element value from the events f
 \begin{DoxyReturn}{Returns}
 Returns event\textquotesingle{}s specific element (string or int) 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classIO_ae80862e6964e82c2f2e6d7f3b931f347}\label{classIO_ae80862e6964e82c2f2e6d7f3b931f347}} 
 \index{IO@{IO}!store\+Attendee@{store\+Attendee}}
 \index{store\+Attendee@{store\+Attendee}!IO@{IO}}
-\subsubsection[{\texorpdfstring{store\+Attendee(int id, std\+::string date, std\+::string time, std\+::string attendee)}{storeAttendee(int id, std::string date, std::string time, std::string attendee)}}]{\setlength{\rightskip}{0pt plus 5cm}void I\+O\+::store\+Attendee (
-\begin{DoxyParamCaption}
-\item[{int}]{id, }
-\item[{std\+::string}]{date, }
-\item[{std\+::string}]{time, }
-\item[{std\+::string}]{attendee}
-\end{DoxyParamCaption}
-)}\hypertarget{classIO_ae80862e6964e82c2f2e6d7f3b931f347}{}\label{classIO_ae80862e6964e82c2f2e6d7f3b931f347}
+\subsubsection{\texorpdfstring{store\+Attendee()}{storeAttendee()}}
+{\footnotesize\ttfamily void I\+O\+::store\+Attendee (\begin{DoxyParamCaption}\item[{int}]{id,  }\item[{std\+::string}]{date,  }\item[{std\+::string}]{time,  }\item[{std\+::string}]{attendee }\end{DoxyParamCaption})}
+
 Adds an attendee to a date and time 
 \begin{DoxyParams}{Parameters}
 {\em id} & -\/ id of the event \\
@@ -222,16 +251,12 @@ Assumes a valid date and time
 \begin{DoxyPostcond}{Postcondition}
 attendee is added stored in appropriate file 
 \end{DoxyPostcond}
+\mbox{\Hypertarget{classIO_ae1b8fcfab070b9af2dcd910c1cc7eb4e}\label{classIO_ae1b8fcfab070b9af2dcd910c1cc7eb4e}} 
 \index{IO@{IO}!store\+Attendees@{store\+Attendees}}
 \index{store\+Attendees@{store\+Attendees}!IO@{IO}}
-\subsubsection[{\texorpdfstring{store\+Attendees(int id, std\+::string date, std\+::string time, std\+::list$<$ std\+::string $>$ attendees)}{storeAttendees(int id, std::string date, std::string time, std::list< std::string > attendees)}}]{\setlength{\rightskip}{0pt plus 5cm}void I\+O\+::store\+Attendees (
-\begin{DoxyParamCaption}
-\item[{int}]{id, }
-\item[{std\+::string}]{date, }
-\item[{std\+::string}]{time, }
-\item[{std\+::list$<$ std\+::string $>$}]{attendees}
-\end{DoxyParamCaption}
-)}\hypertarget{classIO_ae1b8fcfab070b9af2dcd910c1cc7eb4e}{}\label{classIO_ae1b8fcfab070b9af2dcd910c1cc7eb4e}
+\subsubsection{\texorpdfstring{store\+Attendees()}{storeAttendees()}}
+{\footnotesize\ttfamily void I\+O\+::store\+Attendees (\begin{DoxyParamCaption}\item[{int}]{id,  }\item[{std\+::string}]{date,  }\item[{std\+::string}]{time,  }\item[{std\+::list$<$ std\+::string $>$}]{attendees }\end{DoxyParamCaption})}
+
 Adds the attendees for a specific date and time to files 
 \begin{DoxyParams}{Parameters}
 {\em id} & -\/ id of the event to which the schedule belongs \\
@@ -246,14 +271,12 @@ Adds the attendees for a specific date and time to files
 \begin{DoxyPostcond}{Postcondition}
 a new list of attendence is added to the files 
 \end{DoxyPostcond}
+\mbox{\Hypertarget{classIO_ac9a8c18ea44f8ced444effc51633e4d7}\label{classIO_ac9a8c18ea44f8ced444effc51633e4d7}} 
 \index{IO@{IO}!store\+Event@{store\+Event}}
 \index{store\+Event@{store\+Event}!IO@{IO}}
-\subsubsection[{\texorpdfstring{store\+Event(std\+::string name, std\+::string creator)}{storeEvent(std::string name, std::string creator)}}]{\setlength{\rightskip}{0pt plus 5cm}int I\+O\+::store\+Event (
-\begin{DoxyParamCaption}
-\item[{std\+::string}]{name, }
-\item[{std\+::string}]{creator}
-\end{DoxyParamCaption}
-)}\hypertarget{classIO_ac9a8c18ea44f8ced444effc51633e4d7}{}\label{classIO_ac9a8c18ea44f8ced444effc51633e4d7}
+\subsubsection{\texorpdfstring{store\+Event()}{storeEvent()}}
+{\footnotesize\ttfamily int I\+O\+::store\+Event (\begin{DoxyParamCaption}\item[{std\+::string}]{name,  }\item[{std\+::string}]{creator }\end{DoxyParamCaption})}
+
 Adds a task to the tasks file 
 \begin{DoxyParams}{Parameters}
 {\em id} & -\/ the event id \\
@@ -272,15 +295,12 @@ new task is add to the tasks file
 \begin{DoxyReturn}{Returns}
 event\textquotesingle{}s id 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classIO_a9030b5cd77c0b621f8ecd36d1bc6b36d}\label{classIO_a9030b5cd77c0b621f8ecd36d1bc6b36d}} 
 \index{IO@{IO}!store\+Schedule@{store\+Schedule}}
 \index{store\+Schedule@{store\+Schedule}!IO@{IO}}
-\subsubsection[{\texorpdfstring{store\+Schedule(int id, std\+::string date, std\+::list$<$ std\+::string $>$ times)}{storeSchedule(int id, std::string date, std::list< std::string > times)}}]{\setlength{\rightskip}{0pt plus 5cm}void I\+O\+::store\+Schedule (
-\begin{DoxyParamCaption}
-\item[{int}]{id, }
-\item[{std\+::string}]{date, }
-\item[{std\+::list$<$ std\+::string $>$}]{times}
-\end{DoxyParamCaption}
-)}\hypertarget{classIO_a9030b5cd77c0b621f8ecd36d1bc6b36d}{}\label{classIO_a9030b5cd77c0b621f8ecd36d1bc6b36d}
+\subsubsection{\texorpdfstring{store\+Schedule()}{storeSchedule()}}
+{\footnotesize\ttfamily void I\+O\+::store\+Schedule (\begin{DoxyParamCaption}\item[{int}]{id,  }\item[{std\+::string}]{date,  }\item[{std\+::list$<$ std\+::string $>$}]{times }\end{DoxyParamCaption})}
+
 Adds a date and respective times to the schedules file 
 \begin{DoxyParams}{Parameters}
 {\em id} & -\/ id of the event to which the schedule belongs \\
@@ -293,14 +313,12 @@ Adds a date and respective times to the schedules file
 \begin{DoxyPostcond}{Postcondition}
 new schedule is added to the schedules file 
 \end{DoxyPostcond}
+\mbox{\Hypertarget{classIO_ad3e9360377df2dfaa223e36aa4a8edde}\label{classIO_ad3e9360377df2dfaa223e36aa4a8edde}} 
 \index{IO@{IO}!store\+Task@{store\+Task}}
 \index{store\+Task@{store\+Task}!IO@{IO}}
-\subsubsection[{\texorpdfstring{store\+Task(int id, std\+::string name)}{storeTask(int id, std::string name)}}]{\setlength{\rightskip}{0pt plus 5cm}void I\+O\+::store\+Task (
-\begin{DoxyParamCaption}
-\item[{int}]{id, }
-\item[{std\+::string}]{name}
-\end{DoxyParamCaption}
-)}\hypertarget{classIO_ad3e9360377df2dfaa223e36aa4a8edde}{}\label{classIO_ad3e9360377df2dfaa223e36aa4a8edde}
+\subsubsection{\texorpdfstring{store\+Task()}{storeTask()}}
+{\footnotesize\ttfamily void I\+O\+::store\+Task (\begin{DoxyParamCaption}\item[{int}]{id,  }\item[{std\+::string}]{name }\end{DoxyParamCaption})}
+
 Adds a task to the tasks file 
 \begin{DoxyParams}{Parameters}
 {\em id} & -\/ id of the event to which the task belongs \\
@@ -315,15 +333,12 @@ Adds a task to the tasks file
 \begin{DoxyPostcond}{Postcondition}
 new task is added to the tasks file 
 \end{DoxyPostcond}
+\mbox{\Hypertarget{classIO_a3b1673598595b2140f5f893d023813be}\label{classIO_a3b1673598595b2140f5f893d023813be}} 
 \index{IO@{IO}!store\+Task\+Assignee@{store\+Task\+Assignee}}
 \index{store\+Task\+Assignee@{store\+Task\+Assignee}!IO@{IO}}
-\subsubsection[{\texorpdfstring{store\+Task\+Assignee(int id, std\+::string name, std\+::string assignee)}{storeTaskAssignee(int id, std::string name, std::string assignee)}}]{\setlength{\rightskip}{0pt plus 5cm}void I\+O\+::store\+Task\+Assignee (
-\begin{DoxyParamCaption}
-\item[{int}]{id, }
-\item[{std\+::string}]{name, }
-\item[{std\+::string}]{assignee}
-\end{DoxyParamCaption}
-)}\hypertarget{classIO_a3b1673598595b2140f5f893d023813be}{}\label{classIO_a3b1673598595b2140f5f893d023813be}
+\subsubsection{\texorpdfstring{store\+Task\+Assignee()}{storeTaskAssignee()}}
+{\footnotesize\ttfamily void I\+O\+::store\+Task\+Assignee (\begin{DoxyParamCaption}\item[{int}]{id,  }\item[{std\+::string}]{name,  }\item[{std\+::string}]{assignee }\end{DoxyParamCaption})}
+
 Sets the person assigned to complete a task. 
 \begin{DoxyParams}{Parameters}
 {\em id} & -\/ the id of the event \\
@@ -339,13 +354,12 @@ Task is already stored in the file
 \begin{DoxyPostcond}{Postcondition}
 task has an assignee 
 \end{DoxyPostcond}
+\mbox{\Hypertarget{classIO_ad78c42847c70915fe94bddd25f716859}\label{classIO_ad78c42847c70915fe94bddd25f716859}} 
 \index{IO@{IO}!time\+Formatter@{time\+Formatter}}
 \index{time\+Formatter@{time\+Formatter}!IO@{IO}}
-\subsubsection[{\texorpdfstring{time\+Formatter(std\+::string slot)}{timeFormatter(std::string slot)}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string I\+O\+::time\+Formatter (
-\begin{DoxyParamCaption}
-\item[{std\+::string}]{slot}
-\end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classIO_ad78c42847c70915fe94bddd25f716859}{}\label{classIO_ad78c42847c70915fe94bddd25f716859}
+\subsubsection{\texorpdfstring{time\+Formatter()}{timeFormatter()}}
+{\footnotesize\ttfamily std\+::string I\+O\+::time\+Formatter (\begin{DoxyParamCaption}\item[{std\+::string}]{slot }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
 \begin{DoxyPrecond}{Precondition}
 slot has the time value that needs to be formatted 
 \end{DoxyPrecond}
@@ -355,15 +369,12 @@ Formats time between 12-\/hour format and 24-\/hour format
 \begin{DoxyReturn}{Returns}
 String with slot in new time format 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classIO_a11fdb7d4afa830fa1441fbf566f73432}\label{classIO_a11fdb7d4afa830fa1441fbf566f73432}} 
 \index{IO@{IO}!update\+Element@{update\+Element}}
 \index{update\+Element@{update\+Element}!IO@{IO}}
-\subsubsection[{\texorpdfstring{update\+Element(int I\+D, std\+::string element\+Name, void $\ast$value)}{updateElement(int ID, std::string elementName, void *value)}}]{\setlength{\rightskip}{0pt plus 5cm}void I\+O\+::update\+Element (
-\begin{DoxyParamCaption}
-\item[{int}]{ID, }
-\item[{std\+::string}]{element\+Name, }
-\item[{void $\ast$}]{value}
-\end{DoxyParamCaption}
-)}\hypertarget{classIO_a11fdb7d4afa830fa1441fbf566f73432}{}\label{classIO_a11fdb7d4afa830fa1441fbf566f73432}
+\subsubsection{\texorpdfstring{update\+Element()}{updateElement()}}
+{\footnotesize\ttfamily void I\+O\+::update\+Element (\begin{DoxyParamCaption}\item[{int}]{ID,  }\item[{std\+::string}]{element\+Name,  }\item[{void $\ast$}]{value }\end{DoxyParamCaption})}
+
 \begin{DoxyNote}{Note}
 this method is depricated and should no longer be used. 
 \end{DoxyNote}
