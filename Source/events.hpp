@@ -20,7 +20,7 @@ void Events::userMode()
 	Interface::Menu menu({
     {"Inspect an Event", Events::inspectEvent},
 		{"Set Availability", Events::setAvailability},
-		{"Task a Task", Events::takeTask},
+		{"Take a Task", Events::takeTask},
 		{"Toggle Time Format 12/24", Interface::toggleTimeFormat},
 		{"Go back", nullptr}
 	});
@@ -258,7 +258,8 @@ void Events::takeTask(){
   int id = requestID();
   
   if(id != -1){
-      //Temporary measure, change later.
+      std::list<std::pair<std::string, std::string>>* tasks = io.obtainTasks(id);
+      std::string name = sanitizeInput("What is your name? ",",");
       do{
         quit = true;
         std::cout << "Would you like to take tasks?\n"
@@ -272,32 +273,56 @@ void Events::takeTask(){
         //If any of these happen, we do not exit the loop.
         if(userChoice.at(0) == 't'){
           quit = false;
-          
-          std::cout << "What task do you want (type in the task name)?\n"
-            << "Snacks\n"
-            << "Choice: ";
-          std::cin >> userChoice;
-          std::cin.ignore(1, '\n');
-          
-          if(userChoice != "Snacks"){
-            std::cout << "Invalid Choice. You may try again.\n";
-          }else{
-            std::cout << "You are assigned for snacks.\n";
+          if(tasks != nullptr){
+            std::cout << "Tasks Below:\n";
+            for(auto&& it = tasks->begin(); it != tasks->end(); it++){
+              if(it->second == ""){
+                std::cout << "\t" << it->first << " (UNTAKEN)\n";
+              }else{
+                std::cout << "\t" << it->first << " is being done by " << it->second << "\n";
+              }
+            }
+            
+            bool keepTrying;
+            
+            do{
+              keepTrying = true;
+              std::string input = sanitizeInput("What task do you want (type in the task name)?",",");
+              
+              for(auto&& it = tasks->begin(); it != tasks->end(); it++){
+                if(it->first == input){
+                  if(it->second == ""){
+                    std::cout << "You are now doing that task.\n";
+                    io.storeTaskAssignee(id,input,name);
+                  }else{
+                    std::cout << it->first << " is already being done by " << it->second << "\n";
+                  }
+                  keepTrying = false;
+                }
+              }
+              if(keepTrying){
+                std::cout << "That is not a task in this event.\n";
+              }
+            }while(keepTrying);
           }
-          
         }else if(userChoice.at(0) == 'v'){
           quit = false;
           
-          std::cout << "Here is a list of tasks:\n"
-            << "\tBBQ: Barbie\n"
-            << "\tPlates: Dan\n"
-            << "\tGames: Tommy\n"
-            << "\t(Takable) Snacks\n";
-          
-          std::cout << "\n";
+          if(tasks != nullptr){
+            std::cout << "Tasks Below:\n";
+            for(auto&& it = tasks->begin(); it != tasks->end(); it++){
+              if(it->second == ""){
+                std::cout << "\t" << it->first << " (UNTAKEN)\n";
+              }else{
+                std::cout << "\t" << it->first << " is being done by " << it->second << "\n";
+              }
+            }
+          }
         }
         std::cout << "\n\n";
       }while(!quit);
+      
+      delete tasks;
     }else{
       //Do nothing, the event is invalid.
     }
