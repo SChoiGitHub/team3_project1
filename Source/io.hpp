@@ -30,6 +30,18 @@ IO::~IO(){
 }
 
 //--File Manipulation---------------------------------------------------------//
+std::string IO::getEntry(std::fstream& file, std::string identifier){
+    std::string line = "";
+
+    while(std::getline(file, line, '\n')){
+        if(line.find(identifier) != std::string::npos){
+            return line.Replace(identifier, "");
+        }
+    }
+
+    return "";
+}
+
 void IO::addEntry(std::fstream& file, std::string data){
     file.clear();
 	file.seekg(0,std::fstream::end);
