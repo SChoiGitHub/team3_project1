@@ -359,9 +359,9 @@ void IO::displayEntries()
         std::cout << "ID: " << i << "\n";
         std::cout << "Creator: " << obtainEvent(i).second << "\n";
         std::cout << "Dates: ";
-        
+
         std::list<std::pair<std::string, std::list<std::string>>>* schedules = obtainSchedules(i);
-        
+
         if(schedules != nullptr){
           for(auto&& it : (*schedules)){
             std::cout << it.first << " ";
@@ -377,9 +377,9 @@ void IO::displayEntry(int id)
   std::cout << "-- " << obtainEvent(id).first  << " --" << std::endl;
   std::cout << "ID: " << id << "\n";
   std::cout << "Creator: " << obtainEvent(id).second << "\n\n";
-  
+
   std::list<std::pair<std::string, std::list<std::string>>>* schedules = obtainSchedules(id);
-  
+
   std::cout << "----\n";
   if(schedules != nullptr){
     for(auto&& it : (*schedules)){
@@ -389,7 +389,7 @@ void IO::displayEntry(int id)
         if(attendeesAtThisTime != nullptr){
           std::cout << "\tTime: " << it2 << '\n';
           std::cout << "\tAttendees Below:\n";
-          
+
           for(auto&& it3 : (*attendeesAtThisTime)){
             std::cout << "\t\t" << it3 << '\n';
           }
@@ -401,24 +401,24 @@ void IO::displayEntry(int id)
     delete schedules;
   }
   std::cout << '\n';
-  
+
   std::list<std::pair<std::string, std::string>>* tasks =  obtainTasks(id);
   if(tasks != nullptr){
     std::cout << "Tasks Below:\n";
-    for(auto&& it = tasks->begin(); it != tasks->end(); it++){
-      if(it->second == ""){
-        std::cout << "\t" << it->first << " (UNTAKEN)\n";
+    for(auto const& it : *tasks){
+      if(it.second == ""){
+        std::cout << "\t" << it.first << " (UNTAKEN)\n";
       }else{
-        std::cout << "\t" << it->first << " is being done by " << it->second << "\n";
+        std::cout << "\t" << it.first << " is being done by " << it.second << "\n";
       }
     }
     delete tasks;
   }
-  
-  
+
+
   std::cout << "\n\n";
-  
-  
+
+
 }
 
 //--Time Conversion-----------------------------------------------------------//
