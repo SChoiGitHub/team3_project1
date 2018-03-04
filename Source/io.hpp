@@ -77,6 +77,9 @@ void IO::replaceEntry(std::fstream& file, std::string fileName, std::string iden
     std::fstream temp;
     temp.open("temp.csv", std::fstream::app | std::fstream::out | std::fstream::in);
 
+    file.clear();
+    file.seekg(0, std::ios::beg);
+
     //Copy all other lines to a temp file.
     std::string line;
     while(std::getline(file, line)){
