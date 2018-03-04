@@ -80,7 +80,7 @@ void IO::replaceEntry(std::fstream& file, std::string fileName, std::string iden
     //Copy all other lines to a temp file.
     std::string line;
     while(std::getline(file, line)){
-        if(line.find(identifier) == std::string::npos){
+        if(line.substr(0, identifier.length()) != identifier){
             temp << line << std::endl;
         }
     }
@@ -401,7 +401,7 @@ void IO::displayEntry(int id)
           }else{
             std::cout << "\tTime: " << it2 << '\n';
           }
-          
+
           std::cout << "\t\tAttendees Below:\n";
 
           for(auto&& it3 : (*attendeesAtThisTime)){
