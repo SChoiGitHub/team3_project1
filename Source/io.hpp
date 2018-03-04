@@ -35,7 +35,7 @@ std::string IO::getEntry(std::fstream& file, std::string identifier){
 
     while(std::getline(file, line, '\n')){
         if(line.find(identifier) != std::string::npos){
-            return line.Replace(identifier, "");
+            return line.replace(identifier, "");
         }
     }
 
@@ -52,7 +52,7 @@ std::list<std::string>* IO::getEntries(std::fstream& file, std::string identifie
                 list->push_back(line.Replace(identifier, ""));
             }else{
                 list = new std::list<std::string>();
-                list.push_back(line.Replace(identifier, ""));
+                list->push_back(line.replace(identifier, ""));
             }
         }
     }
@@ -560,7 +560,7 @@ void IO::storeTaskAssignee(int id, std::string name, std::string assignee){
     replaceEntry(tasksFile, TASKS_FILE, identifier, revised);
 }
 
-std::list<std::pair<std::string, std::string>>>* IO::obtainTasks(int id){
+std::list<std::pair<std::string, std::string>>* IO::obtainTasks(int id){
     std::list<std::pair<std::string, std::string>>>* list = nullptr;
     std::list<std::string>* items = getEntries(tasksFile, (std:to_string(id) + ","));
 

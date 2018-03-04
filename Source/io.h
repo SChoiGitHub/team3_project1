@@ -143,7 +143,7 @@ public:
     * @param id - id of the event for which tasks are wanted
     * @return list of tasks and their repective assignee
     */
-    std::list<std::pair<std::string, std::string>>>* obtainTasks(int id);
+    std::list<std::pair<std::string, std::string>>* obtainTasks(int id);
 
 //--ATTENDENCE----------------------------------------------------------------//
 
