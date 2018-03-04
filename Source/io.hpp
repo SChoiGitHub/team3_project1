@@ -42,6 +42,24 @@ std::string IO::getEntry(std::fstream& file, std::string identifier){
     return "";
 }
 
+std::list<std::string>* IO::getEntries(std::fstream& file, std::string identifier){
+    std::list<std::string>* list = nullptr;
+    std::string line = "";
+
+    while(std::getline(file, line, '\n')){
+        if(line.find(identifier) != std::string::npos){
+            if(list != nullptr){
+                list->push_back(line.Replace(identifier, ""));
+            }else{
+                list = new std::list<std::string>();
+                list.push_back(line.Replace(identifier, ""));
+            }
+        }
+    }
+
+    return list;
+}
+
 void IO::addEntry(std::fstream& file, std::string data){
     file.clear();
 	file.seekg(0,std::fstream::end);
