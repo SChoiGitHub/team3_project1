@@ -148,15 +148,16 @@ void Events::createEvent(){
   std::string timeSlots = "";
 
 	do {
+    interface.clearScreen();
     bool copyNewItems = false;
 
-		std::cout << "Please set time slots for " << std::string(it->first) << "\n\n";
+		std::cout << "Please set time slots for " << std::string(it->first) << "\n";
 
     //Copy over new string slots!
     if(timeSlots != ""){
-      std::cout << "Would you like to copy over the previous time slots to this new date? (Yes/No)\n"
+      std::cout << "\nWould you like to copy over the previous time slots to this new date? (Yes/No)\n"
                 << "Yes: Type 'y'.\n"
-                << "No: Type anything else.\n"
+                << "No: Type 'n'.\n"
                 << "Choose: ";
       copyNewItems = yesOrNo();
     }
@@ -259,7 +260,9 @@ void Events::takeTask(){
 
   if(id != -1){
       std::list<std::pair<std::string, std::string>>* tasks = io.obtainTasks(id);
+      std::cout << "\n";
       std::string name = sanitizeInput("What is your name? ",",");
+      std::cout << "\n";
       do{
         quit = true;
         std::cout << "Would you like to take tasks?\n"
@@ -269,6 +272,8 @@ void Events::takeTask(){
           << "Choice: ";
         std::cin >> userChoice;
         std::cin.ignore(1, '\n');
+        
+        std::cout << "\n";
 
         //If any of these happen, we do not exit the loop.
         if(userChoice.at(0) == 't'){
@@ -282,7 +287,8 @@ void Events::takeTask(){
                 std::cout << "\t" << it->first << " is being done by " << it->second << "\n";
               }
             }
-
+            
+            std::cout << "\n";
             bool keepTrying;
 
             do{
@@ -768,7 +774,9 @@ void Events::inspectEvent(){
   int id = requestID();
 
   if(id != -1){
+    interface.clearScreen();
     io.displayEntry(id);
+    interface.Wait("");
   }else{
     //Do nothing;
   }
