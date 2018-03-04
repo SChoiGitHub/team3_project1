@@ -1,11 +1,38 @@
 \hypertarget{classEvents}{}\section{Events Class Reference}
 \label{classEvents}\index{Events@{Events}}
+
+
+Collaboration diagram for Events\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=182pt]{classEvents__coll__graph}
+\end{center}
+\end{figure}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 static void \hyperlink{classEvents_a2fdb7c40bf64aa2e23d3d92dc7ab4d35}{user\+Mode} ()
 \item 
 static void \hyperlink{classEvents_a2217e32868e367ec8d432ce9db2b450e}{admin\+Mode} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+static time\+\_\+t {\bfseries t} = time(N\+U\+LL)\hypertarget{classEvents_aade17141a5113ddb6f5c6c01afd520c9}{}\label{classEvents_aade17141a5113ddb6f5c6c01afd520c9}
+
+\item 
+static tm $\ast$ \hyperlink{classEvents_ad5ad3f8eb6f5d0875ab7a74fb2bb06e5}{time\+Ptr} = localtime(\&t)
+\item 
+static int \hyperlink{classEvents_a772f653c845f4eedf58ba446b7fee45a}{current\+\_\+year} = (int)\hyperlink{classEvents_ad5ad3f8eb6f5d0875ab7a74fb2bb06e5}{time\+Ptr}-\/$>$tm\+\_\+year + 1900
+\item 
+static int \hyperlink{classEvents_a8a522493c1697161ca70c39232c7464b}{current\+\_\+month} = (int)\hyperlink{classEvents_ad5ad3f8eb6f5d0875ab7a74fb2bb06e5}{time\+Ptr}-\/$>$tm\+\_\+mon + 1
+\item 
+static int \hyperlink{classEvents_acd42b7f13cdfc41a0a6c3c6fb399da2a}{current\+\_\+day} = (int)\hyperlink{classEvents_ad5ad3f8eb6f5d0875ab7a74fb2bb06e5}{time\+Ptr}-\/$>$tm\+\_\+mday
+\item 
+static \hyperlink{classInterface}{Interface} \hyperlink{classEvents_a397cb3524ec70d64e22144c12d53edda}{interface}
+\item 
+static \hyperlink{classIO}{IO} \hyperlink{classEvents_a7b8a2caf783b96de00de01145a8763d2}{io}
 \end{DoxyCompactItemize}
 
 
@@ -43,6 +70,27 @@ Start User Mode
 None 
 \end{DoxyReturn}
 
+
+\subsection{Member Data Documentation}
+\index{Events@{Events}!current\+\_\+day@{current\+\_\+day}}
+\index{current\+\_\+day@{current\+\_\+day}!Events@{Events}}
+\subsubsection[{\texorpdfstring{current\+\_\+day}{current_day}}]{\setlength{\rightskip}{0pt plus 5cm}int Events\+::current\+\_\+day = (int){\bf time\+Ptr}-\/$>$tm\+\_\+mday\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classEvents_acd42b7f13cdfc41a0a6c3c6fb399da2a}{}\label{classEvents_acd42b7f13cdfc41a0a6c3c6fb399da2a}
+The current month of the execution \index{Events@{Events}!current\+\_\+month@{current\+\_\+month}}
+\index{current\+\_\+month@{current\+\_\+month}!Events@{Events}}
+\subsubsection[{\texorpdfstring{current\+\_\+month}{current_month}}]{\setlength{\rightskip}{0pt plus 5cm}int Events\+::current\+\_\+month = (int){\bf time\+Ptr}-\/$>$tm\+\_\+mon + 1\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classEvents_a8a522493c1697161ca70c39232c7464b}{}\label{classEvents_a8a522493c1697161ca70c39232c7464b}
+The current year of the execution \index{Events@{Events}!current\+\_\+year@{current\+\_\+year}}
+\index{current\+\_\+year@{current\+\_\+year}!Events@{Events}}
+\subsubsection[{\texorpdfstring{current\+\_\+year}{current_year}}]{\setlength{\rightskip}{0pt plus 5cm}int Events\+::current\+\_\+year = (int){\bf time\+Ptr}-\/$>$tm\+\_\+year + 1900\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classEvents_a772f653c845f4eedf58ba446b7fee45a}{}\label{classEvents_a772f653c845f4eedf58ba446b7fee45a}
+Time pointer \index{Events@{Events}!interface@{interface}}
+\index{interface@{interface}!Events@{Events}}
+\subsubsection[{\texorpdfstring{interface}{interface}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Interface} Events\+::interface\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classEvents_a397cb3524ec70d64e22144c12d53edda}{}\label{classEvents_a397cb3524ec70d64e22144c12d53edda}
+The current day of the execution \index{Events@{Events}!io@{io}}
+\index{io@{io}!Events@{Events}}
+\subsubsection[{\texorpdfstring{io}{io}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf IO} Events\+::io\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classEvents_a7b8a2caf783b96de00de01145a8763d2}{}\label{classEvents_a7b8a2caf783b96de00de01145a8763d2}
+The interface, or UI. \index{Events@{Events}!time\+Ptr@{time\+Ptr}}
+\index{time\+Ptr@{time\+Ptr}!Events@{Events}}
+\subsubsection[{\texorpdfstring{time\+Ptr}{timePtr}}]{\setlength{\rightskip}{0pt plus 5cm}tm $\ast$ Events\+::time\+Ptr = localtime(\&t)\hspace{0.3cm}{\ttfamily [static]}}\hypertarget{classEvents_ad5ad3f8eb6f5d0875ab7a74fb2bb06e5}{}\label{classEvents_ad5ad3f8eb6f5d0875ab7a74fb2bb06e5}
+Time pointer 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
