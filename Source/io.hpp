@@ -612,7 +612,13 @@ void IO::storeAttendees(int id, std::string date, std::string time, std::list<st
 
 void IO::storeAttendee(int id, std::string date, std::string time, std::string attendee){
     std::string identifier = std::to_string(id) + "," + date + "," + time + ",";
-    std::string attendees = getEntry(attendenceFile, identifier)+ "," + attendee;
+    std::string attendees = getEntry(attendenceFile, identifier);
+
+    if(attendees != ""){
+        attendees += "," + attendee;
+    }else{
+        attendees = attendee;
+    }
 
     replaceEntry(attendenceFile, ATTENDENCE_FILE, identifier, (identifier + attendees));
 }
