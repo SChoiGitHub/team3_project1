@@ -569,6 +569,10 @@ std::list<std::pair<std::string, std::string>>* IO::obtainTasks(int id){
     std::list<std::pair<std::string, std::string>>* list = nullptr;
     std::list<std::string>* items = getEntries(tasksFile, (std::to_string(id) + ","));
 
+    if(items == nullptr){
+        return nullptr;
+    }
+
     for(auto const& i : *items){
         std::stringstream ss(i);
         std::string name;
@@ -589,6 +593,8 @@ std::list<std::pair<std::string, std::string>>* IO::obtainTasks(int id){
             list->push_back(std::make_pair(name, assignee));
         }
     }
+
+    delete items;
 
     return list;
 }
