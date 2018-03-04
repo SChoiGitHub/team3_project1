@@ -395,8 +395,14 @@ void IO::displayEntry(int id)
       for(auto&& it2 : (it.second)){
         std::list<std::string>* attendeesAtThisTime = obtainAttendees(id,it.first,it2);
         if(attendeesAtThisTime != nullptr){
-          std::cout << "\tTime: " << it2 << '\n';
-          std::cout << "\tAttendees Below:\n";
+          if(timeFormat){
+            //Needs to be in 12 hrs.
+            std::cout << "\tTime: " << timeFormatter(it2) << '\n';
+          }else{
+            std::cout << "\tTime: " << it2 << '\n';
+          }
+          
+          std::cout << "\t\tAttendees Below:\n";
 
           for(auto&& it3 : (*attendeesAtThisTime)){
             std::cout << "\t\t" << it3 << '\n';
