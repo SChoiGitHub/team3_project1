@@ -583,3 +583,22 @@ void IO::storeAttendee(int id, std::string date, std::string time, std::string a
 
     replaceEntry(attendenceFile, ATTENDENCE_FILE, identifier, identifier + "," + attendees);
 }
+
+std::list<std::string>* IO::obtainAttendees(int id, std::string date, std::string time){
+    std::list<std::string>* list = nullptr;
+    std::string attendees = getEntry(attendenceFile, (std::to_string(id) + "," + date + "," + time + ","));
+
+    std::stringstream ss(attendees);
+
+    std::string attendee;
+    while(std::getline(ss, attendee, ',')){
+        if(list != nullptr){
+            list->push_back(attendee);
+        }else{
+            list = new std::list<std::string>();
+            list->push_back(attendee);
+        }
+    }
+
+    return list;
+}
