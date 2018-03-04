@@ -34,6 +34,7 @@ std::string IO::getEntry(std::fstream& file, std::string identifier){
     std::string line = "";
 
     file.clear();
+    file.seekg(0, std::ios::beg);
 
     while(std::getline(file, line)){
         if(line.find(identifier) != std::string::npos){
@@ -50,6 +51,7 @@ std::list<std::string>* IO::getEntries(std::fstream& file, std::string identifie
     std::string line = "";
 
     file.clear();
+    file.seekg(0, std::ios::beg);
 
     while(std::getline(file, line)){
         if(line.find(identifier) != std::string::npos){
