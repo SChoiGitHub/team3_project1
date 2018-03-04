@@ -496,7 +496,6 @@ int IO::storeEvent(std::string name, std::string creator){
 }
 
 std::pair<std::string, std::string> IO::obtainEvent(int id){
-
     std::string event = getEntry(eventsFile, (std::to_string(id) + ","));
     std::pair<std::string, std::string> info;
 
@@ -505,9 +504,10 @@ std::pair<std::string, std::string> IO::obtainEvent(int id){
     std::getline(ss, info.first, ',');
     std::getline(ss, info.second, ',');
 
+    std::cout << event << " : " << info.first << " , " << info.second << std::endl;
+
     return info;
 }
-
 
 
 //--Schedule Management-------------------------------------------------------//
