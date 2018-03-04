@@ -35,7 +35,8 @@ std::string IO::getEntry(std::fstream& file, std::string identifier){
 
     while(std::getline(file, line, '\n')){
         if(line.find(identifier) != std::string::npos){
-            return line.replace(line.find(identifier), identifier.length(), "");
+            line.replace(line.find(identifier), identifier.length(), "");
+            return line;
         }
     }
 
