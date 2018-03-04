@@ -42,8 +42,6 @@ void Events::adminMode()
 
 void Events::setAvailability()
 {
-	bool new_attendee = false;  //for any new attendence
-	int dummy_int = 0;
 
   std::string input = ""; //Dummy variable to stop compiler from complaining for now.
   std::string name = "";
@@ -51,8 +49,52 @@ void Events::setAvailability()
   int id = requestID();
 
   if(id != -1){ //Event exists.
-    name = interface.getInput("What's your name? ");//Get name
-
+    name = sanitizeInput("What is your name?: ",",");//Get name
+    
+    std::cout << "\n\n Please look at the dates of your chosen event.";
+    std::cout << "\nWhat date do you want?\n";
+    
+    std::list<std::pair<std::string, std::list<std::string>>>* datesAndSchedules = io.obtainSchedules(id);
+    std::string date;
+    bool dateIsThere;
+    std::pair<std::string,std::list<std::string>> scheduleAtDate;
+    
+    do{
+      do{
+        dateIsThere = false;
+        
+        date = requestDate();
+        //Is the date even there?
+        for(auto&& it = datesAndSchedules->begin(); it != datesAndSchedules->end(); it++){
+          if(date == (*it).first){
+            dateIsThere = true;
+            scheduleAtDate = (*it);
+            break;
+          }
+        }
+        if(!dateIsThere){
+          std::cout << "The event does not have that date.\n";
+        }
+      }while(!dateIsThere);
+      
+      /*
+      for(auto&& it = datesAndSchedules->begin(); it != datesAndSchedules->end(); it++){
+        if(date == (*it).first){
+          dateIsThere = true;
+          break;
+        }
+      }
+      */
+      for(auto&& it = scheduleAtDate.second.begin(); it != scheduleAtDate.second.end(); it++){
+        std::cout << "Do you want to attend the event at " << *it << " on " << scheduleAtDate.first << "? (Yes/No):";
+        if(yesOrNo()){
+          io.storeAttendee(id, date, *it, name);
+        }
+      }
+      std::cout << "Would you like to attend at another date of the same event? (Yes/No)? ";
+    }while(yesOrNo());
+    
+    delete datesAndSchedules;
   }else{
     //Do nothing
   }
@@ -183,15 +225,13 @@ std::list<std::string> Events::requestTasks(){
 			
 			//Get a task.
 			interface.clearScreen();
-			std::cout << "What is the task?: ";
-			std::getline(std::cin, userChoice);
-			currentTaskList.push_back(userChoice);
+      userChoice = sanitizeInput("What is the task?: ",",");
 			
       //Tasks are unique, NO DUPLICATES.
       if(currentTaskList.end() != std::find(currentTaskList.begin(),currentTaskList.end(),userChoice)){
-        std::cout << "That event already exists. The duplicate will be ignored.\n";
-        currentTaskList.sort();
-        currentTaskList.unique();
+        std::cout << "That task already exists. The duplicate will be ignored.\n";
+      }else{
+        currentTaskList.push_back(userChoice);
       }
       
 		}else if(userChoice.at(0) == 'v'){
@@ -730,12 +770,12 @@ std::string Events::sanitizeInput(std::string message, std::string disallowed){
   std::cout << message;
   
   do {
-		std::getline(std::cin, input);
+		std::getline(std::cin,input);
 		found = input.find_first_of(disallowed);
     if(found != std::string::npos){
-      std::cout << disallowed << " cannot be in the input!\n" << message;
+      std::cout << disallowed << " cannot be in the input!\n";
     }
 	} while (found != std::string::npos);
   
-  return message;
+  return input;
 }
