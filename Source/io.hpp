@@ -33,7 +33,7 @@ IO::~IO(){
 std::string IO::getEntry(std::fstream& file, std::string identifier){
     std::string line = "";
 
-    while(std::getline(file, line, '\n')){
+    while(std::getline(file, line)){
         if(line.find(identifier) != std::string::npos){
             line.replace(line.find(identifier), identifier.length(), "");
             return line;
@@ -47,7 +47,7 @@ std::list<std::string>* IO::getEntries(std::fstream& file, std::string identifie
     std::list<std::string>* list = nullptr;
     std::string line = "";
 
-    while(std::getline(file, line, '\n')){
+    while(std::getline(file, line)){
         if(line.find(identifier) != std::string::npos){
             if(list != nullptr){
                 list->push_back(line.replace(line.find(identifier), identifier.length(), ""));
@@ -361,7 +361,6 @@ void IO::displayEntries()
         std::cout << "Creator: " << obtainEvent(i).second << "\n";
 
         std::list<std::pair<std::string, std::list<std::string>>>* schedules = obtainSchedules(i);
-
         if(schedules != nullptr){
           std::cout << "Dates: ";
           for(auto&& it : (*schedules)){
