@@ -110,8 +110,6 @@ void Interface::Menu::Header()
     "| |___\\ V /  __/ | | | |_   ____) | (__| | | |  __/ (_| | |_| | |  __/ |   \n"
     "|______\\_/ \\___|_| |_|\\__| |_____/ \\___|_| |_|\\___|\\__,_|\\__,_|_|\\___|_|" << std::endl;
     std::cout << "\n***************************************************************************\n";
-    std::cout << "   Developed by: Team 3 \tEECS 448 \tProject 1 \tKU - 2018\n";
-    std::cout << "***************************************************************************\n";
     std::cout << "        All times displayed are CDT (Central Daylight Time)\n";
     std::cout << "***************************************************************************\n\n";
 
@@ -132,7 +130,7 @@ void Interface::toggleTimeFormat()
         io.timeFormat = false;
 }
 
-std::string Interface::getName() 
+std::string Interface::getName()
 {
     std::string name;
     unsigned int found = 0;
