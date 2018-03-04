@@ -80,7 +80,11 @@ void Events::setAvailability()
       std::cout << "\n";
       
       for(auto& it : scheduleAtDate.second){
-        std::cout << "Do you want to attend the event at " << it << " on " << scheduleAtDate.first << "? (Yes/No) ";
+        if(io.timeFormat){
+          std::cout << "Do you want to attend the event at " << io.timeFormatter(it) << " on " << scheduleAtDate.first << "? (Yes/No) ";
+        }else{
+          std::cout << "Do you want to attend the event at " << it << " on " << scheduleAtDate.first << "? (Yes/No) ";
+        }
         if(yesOrNo()){
           io.storeAttendee(id, date, it, name);
         }
@@ -711,7 +715,6 @@ std::string Events::requestTimeSlots(){
         createdTimeSlots += ("\n\t" + timeSlotInterval);
 
         std::cout << "The " << timeSlotInterval << " time slot was successfully added!\n";
-
 
         //Converting from 24-hour mode to 12-hour mode.
         timeSlot = io.timeFormatter(timeSlot);
