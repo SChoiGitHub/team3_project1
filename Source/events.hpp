@@ -51,7 +51,7 @@ void Events::setAvailability()
   if(id != -1){ //Event exists.
     name = sanitizeInput("What is your name?: ",",");//Get name
 
-    std::cout << "\n\n Please look at the dates of your chosen event.";
+    std::cout << "\nPlease look at the dates of your chosen event.";
     std::cout << "\nWhat date do you want?\n";
 
     std::list<std::pair<std::string, std::list<std::string>>>* datesAndSchedules = io.obtainSchedules(id);
@@ -77,21 +77,19 @@ void Events::setAvailability()
         }
       }while(!dateIsThere);
 
-      /*
-      for(auto&& it = datesAndSchedules->begin(); it != datesAndSchedules->end(); it++){
-        if(date == (*it).first){
-          dateIsThere = true;
-          break;
+      std::cout << "\n";
+      
+      for(auto& it : scheduleAtDate.second){
+        if(io.timeFormat){
+          std::cout << "Do you want to attend the event at " << io.timeFormatter(it) << " on " << scheduleAtDate.first << "? (Yes/No) ";
+        }else{
+          std::cout << "Do you want to attend the event at " << it << " on " << scheduleAtDate.first << "? (Yes/No) ";
         }
-      }
-      */
-      for(auto & it : scheduleAtDate.second){
-        std::cout << "Do you want to attend the event at " << it << " on " << scheduleAtDate.first << "? (Yes/No):";
         if(yesOrNo()){
           io.storeAttendee(id, date, it, name);
         }
       }
-      std::cout << "Would you like to attend at another date of the same event? (Yes/No)? ";
+      std::cout << "\n\nWould you like to attend at another date of the same event? (Yes/No)? ";
     }while(yesOrNo());
 
     delete datesAndSchedules;
@@ -148,15 +146,16 @@ void Events::createEvent(){
   std::string timeSlots = "";
 
 	do {
+    interface.clearScreen();
     bool copyNewItems = false;
 
-		std::cout << "Please set time slots for " << std::string(it->first) << "\n\n";
+		std::cout << "Please set time slots for " << std::string(it->first) << "\n";
 
     //Copy over new string slots!
     if(timeSlots != ""){
-      std::cout << "Would you like to copy over the previous time slots to this new date? (Yes/No)\n"
+      std::cout << "\nWould you like to copy over the previous time slots to this new date? (Yes/No)\n"
                 << "Yes: Type 'y'.\n"
-                << "No: Type anything else.\n"
+                << "No: Type 'n'.\n"
                 << "Choose: ";
       copyNewItems = yesOrNo();
     }
@@ -196,6 +195,14 @@ void Events::createEvent(){
     }
     //Pass in schedule
     io.storeSchedule(id,it->first,parsedTimeString);
+    //Creator Attends all his/her times.
+    std::list<std::pair<std::string, std::list<std::string>>>* datesAndSchedules = io.obtainSchedules(id);
+    for(auto & it : *datesAndSchedules){
+      for(auto& it2 : it.second){
+        io.storeAttendee(id,it.first,it2,adminName);
+      }
+    }
+    delete datesAndSchedules;
   }
 
   delete dateInfo;
@@ -236,12 +243,15 @@ std::list<std::string> Events::requestTasks(){
 
 		}else if(userChoice.at(0) == 'v'){
 			quit = false;
-
-			//Just display the current list.
-			std::cout << "Your current task list:\n";
-			for(auto&& it = currentTaskList.begin(); it != currentTaskList.end(); it++){
-				std::cout << '\t' << (*it) << '\n';
-			}
+      if(currentTaskList.size() > 0){
+        //Just display the current list.
+        std::cout << "Your current task list:\n";
+        for(auto&& it = currentTaskList.begin(); it != currentTaskList.end(); it++){
+          std::cout << '\t' << (*it) << '\n';
+        }
+      }else{
+        std::cout << "There are no tasks here.\n";
+      }
 
 		}
 		std::cout << "\n\n";
@@ -259,7 +269,9 @@ void Events::takeTask(){
 
   if(id != -1){
       std::list<std::pair<std::string, std::string>>* tasks = io.obtainTasks(id);
+      std::cout << "\n";
       std::string name = sanitizeInput("What is your name? ",",");
+      std::cout << "\n";
       do{
         quit = true;
         std::cout << "Would you like to take tasks?\n"
@@ -269,6 +281,8 @@ void Events::takeTask(){
           << "Choice: ";
         std::cin >> userChoice;
         std::cin.ignore(1, '\n');
+        
+        std::cout << "\n";
 
         //If any of these happen, we do not exit the loop.
         if(userChoice.at(0) == 't'){
@@ -282,7 +296,8 @@ void Events::takeTask(){
                 std::cout << "\t" << it->first << " is being done by " << it->second << "\n";
               }
             }
-
+            
+            std::cout << "\n";
             bool keepTrying;
 
             do{
@@ -701,7 +716,6 @@ std::string Events::requestTimeSlots(){
 
         std::cout << "The " << timeSlotInterval << " time slot was successfully added!\n";
 
-
         //Converting from 24-hour mode to 12-hour mode.
         timeSlot = io.timeFormatter(timeSlot);
 
@@ -768,7 +782,9 @@ void Events::inspectEvent(){
   int id = requestID();
 
   if(id != -1){
+    interface.clearScreen();
     io.displayEntry(id);
+    interface.Wait("");
   }else{
     //Do nothing;
   }
