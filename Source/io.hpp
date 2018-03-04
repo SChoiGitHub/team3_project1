@@ -36,6 +36,7 @@ std::string IO::getEntry(std::fstream& file, std::string identifier){
     while(std::getline(file, line, '\n')){
         if(line.find(identifier) != std::string::npos){
             line.replace(line.find(identifier), identifier.length(), "");
+            std::cout << line << std::endl;
             return line;
         }
     }
@@ -504,8 +505,6 @@ std::pair<std::string, std::string> IO::obtainEvent(int id){
     std::stringstream ss(event);
     std::getline(ss, info.first, ',');
     std::getline(ss, info.second, ',');
-
-    std::cout << event << " : " << info.first << " , " << info.second << std::endl;
 
     return info;
 }
