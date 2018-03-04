@@ -35,7 +35,7 @@ std::string IO::getEntry(std::fstream& file, std::string identifier){
 
     while(std::getline(file, line, '\n')){
         if(line.find(identifier) != std::string::npos){
-            return line.Replace(identifier, "");
+            return line.replace(identifier, "");
         }
     }
 
@@ -52,7 +52,7 @@ std::list<std::string>* IO::getEntries(std::fstream& file, std::string identifie
                 list->push_back(line.Replace(identifier, ""));
             }else{
                 list = new std::list<std::string>();
-                list.push_back(line.Replace(identifier, ""));
+                list->push_back(line.replace(identifier, ""));
             }
         }
     }
@@ -549,6 +549,33 @@ void IO::storeTaskAssignee(int id, std::string name, std::string assignee){
     replaceEntry(tasksFile, TASKS_FILE, identifier, revised);
 }
 
+std::list<std::pair<std::string, std::string>>* IO::obtainTasks(int id){
+    std::list<std::pair<std::string, std::string>>>* list = nullptr;
+    std::list<std::string>* items = getEntries(tasksFile, (std:to_string(id) + ","));
+
+    for(auto const& i : *items){
+        std:stringstream ss(i);
+        std::string name;
+        std::string assignee;
+
+        std::getline(ss, name, ',');
+        if(std::getline(ss, assignee, ',') == true){
+            std::getline(ss, assignee, ',');
+        }else{
+            assignee = "";
+        }
+
+        if(list != nullptr){
+            list->push_back(std::make_pair(name, assignee));
+        }else{
+            list = new std::list<std::pair<std::string, std::string>>>()
+            list->push_back(std::make_pair(name, assignee));
+        }
+    }
+
+    return list;
+}
+
 //--Attendence Management-----------------------------------------------------//
 void IO::storeAttendees(int id, std::string date, std::string time, std::list<std::string> attendees){
     std::string line = std::to_string(id) + "," + date + "," + time;
@@ -571,4 +598,23 @@ void IO::storeAttendee(int id, std::string date, std::string time, std::string a
     delete attendence;
 
     replaceEntry(attendenceFile, ATTENDENCE_FILE, identifier, identifier + "," + attendees);
+}
+
+std::list<std::string>* IO::obtainAttendees(int id, std::string date, std::string time){
+    std::list<std::string>* list = nullptr;
+    std::string attendees = getEntry(attendenceFile, (std::to_string(id) + "," + date + "," + time + ","));
+
+    std::stringstream ss(attendees);
+
+    std::string attendee;
+    while(std::getline(ss, attendee, ',')){
+        if(list != nullptr){
+            list->push_back(attendee);
+        }else{
+            list = new std::list<std::string>();
+            list->push_back(attendee);
+        }
+    }
+
+    return list;
 }

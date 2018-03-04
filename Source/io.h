@@ -142,6 +142,15 @@ public:
     */
     void storeTaskAssignee(int id, std::string name, std::string assignee);
 
+    /**
+    * Gets the tasks for a specific event
+    * @note Will return a nullptr if no tasks are found
+    * @note if a task does not have an assignee, the assignee will be an empty string
+    * @param id - id of the event for which tasks are wanted
+    * @return list of tasks and their repective assignee
+    */
+    std::list<std::pair<std::string, std::string>>* obtainTasks(int id);
+
 //--ATTENDENCE----------------------------------------------------------------//
 
     /**
