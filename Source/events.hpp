@@ -191,6 +191,14 @@ void Events::createEvent(){
     }
     //Pass in schedule
     io.storeSchedule(id,it->first,parsedTimeString);
+    //Creator Attends all his/her times.
+    std::list<std::pair<std::string, std::list<std::string>>>* datesAndSchedules = io.obtainSchedules(id);
+    for(auto & it : *datesAndSchedules){
+      for(auto& it2 : it.second){
+        io.storeAttendee(id,it.first,it2,adminName);
+      }
+    }
+    delete datesAndSchedules;
   }
 
   delete dateInfo;
