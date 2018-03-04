@@ -560,6 +560,33 @@ void IO::storeTaskAssignee(int id, std::string name, std::string assignee){
     replaceEntry(tasksFile, TASKS_FILE, identifier, revised);
 }
 
+std::list<std::pair<std::string, std::string>>>* IO::obtainTasks(int id){
+    std::list<std::pair<std::string, std::string>>>* list = nullptr;
+    std::list<std::string>* items = getEntries(tasksFile, (std:to_string(id) + ","));
+
+    for(auto const& i : *items){
+        std:stringstream ss(i);
+        std::string name;
+        std::string assignee;
+
+        std::getline(ss, name, ',');
+        if(std::getline(ss, assignee, ',') == true){
+            std::getline(ss, assignee, ',');
+        }else{
+            assignee = "";
+        }
+
+        if(list != nullptr){
+            list->push_back(std::make_pair(name, assignee));
+        }else{
+            list = new std::list<std::pair<std::string, std::string>>>()
+            list->push_back(std::make_pair(name, assignee));
+        }
+    }
+
+    return list;
+}
+
 //--Attendence Management-----------------------------------------------------//
 void IO::storeAttendees(int id, std::string date, std::string time, std::list<std::string> attendees){
     std::string line = std::to_string(id) + "," + date + "," + time;
