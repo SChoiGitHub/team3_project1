@@ -11,17 +11,19 @@ class \hyperlink{classInterface_1_1Menu}{Menu}
 \hyperlink{classInterface_a4406d74c75bdfe150bf72be1f1cda8b1}{Interface} ()
 \item 
 \hyperlink{classInterface_a19179888f29f18f1be54a3dfe98f68c0}{$\sim$\+Interface} ()
+\item 
+std\+::string \hyperlink{classInterface_a73eee93e24c223cd265b5fb0ca1640b8}{get\+Name} ()
 \end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 static void \hyperlink{classInterface_af92bb2aeecc6a19095af23fa78b49451}{clear\+Screen} ()
 \item 
-static std\+::string \hyperlink{classInterface_aa5c0539404373d488986f030f7a84a6f}{get\+Input} (const char $\ast$message)
-\item 
 static void \hyperlink{classInterface_ab235ba2f0184e3fbfd5d5a64d5eb85ef}{Wait} (std\+::string wait\+\_\+string)
 \item 
 static void \hyperlink{classInterface_a2e002e61dc11cf4a1bd9c039704194df}{toggle\+Time\+Format} ()
+\item 
+static std\+::string \hyperlink{classInterface_aa5c0539404373d488986f030f7a84a6f}{get\+Input} (const char $\ast$message)
 \end{DoxyCompactItemize}
 
 
@@ -86,6 +88,22 @@ requests user input
 \end{DoxyPostcond}
 \begin{DoxyReturn}{Returns}
 Returns the user\textquotesingle{}s given input 
+\end{DoxyReturn}
+\index{Interface@{Interface}!get\+Name@{get\+Name}}
+\index{get\+Name@{get\+Name}!Interface@{Interface}}
+\subsubsection[{\texorpdfstring{get\+Name()}{getName()}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::string Interface\+::get\+Name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{classInterface_a73eee93e24c223cd265b5fb0ca1640b8}{}\label{classInterface_a73eee93e24c223cd265b5fb0ca1640b8}
+Method for extracting a comma-\/free name from the end-\/user \begin{DoxyPrecond}{Precondition}
+none 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+none 
+\end{DoxyPostcond}
+\begin{DoxyReturn}{Returns}
+A string sanitized of commas 
 \end{DoxyReturn}
 \index{Interface@{Interface}!toggle\+Time\+Format@{toggle\+Time\+Format}}
 \index{toggle\+Time\+Format@{toggle\+Time\+Format}!Interface@{Interface}}

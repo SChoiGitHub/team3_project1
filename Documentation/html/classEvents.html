@@ -83,11 +83,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-static-attribs">Static Public Attributes</a> &#124;
 <a href="classEvents-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Events Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+<div class="dynheader">
+Collaboration diagram for Events:</div>
+<div class="dyncontent">
+<div class="center"><img src="classEvents__coll__graph.png" border="0" usemap="#Events_coll__map" alt="Collaboration graph"/></div>
+<map name="Events_coll__map" id="Events_coll__map">
+<area shape="rect" id="node2" href="classIO.html" title="A header file for Input/Output (IO) class. " alt="" coords="5,5,44,32"/>
+<area shape="rect" id="node3" href="classInterface.html" title="Interface" alt="" coords="68,5,141,32"/>
+</map>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -95,6 +105,24 @@ Static Public Member Functions</h2></td></tr>
 <tr class="separator:a2fdb7c40bf64aa2e23d3d92dc7ab4d35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2217e32868e367ec8d432ce9db2b450e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvents.html#a2217e32868e367ec8d432ce9db2b450e">adminMode</a> ()</td></tr>
 <tr class="separator:a2217e32868e367ec8d432ce9db2b450e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
+Static Public Attributes</h2></td></tr>
+<tr class="memitem:aade17141a5113ddb6f5c6c01afd520c9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aade17141a5113ddb6f5c6c01afd520c9"></a>
+static time_t&#160;</td><td class="memItemRight" valign="bottom"><b>t</b> = time(NULL)</td></tr>
+<tr class="separator:aade17141a5113ddb6f5c6c01afd520c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad5ad3f8eb6f5d0875ab7a74fb2bb06e5"><td class="memItemLeft" align="right" valign="top">static tm *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvents.html#ad5ad3f8eb6f5d0875ab7a74fb2bb06e5">timePtr</a> = localtime(&amp;t)</td></tr>
+<tr class="separator:ad5ad3f8eb6f5d0875ab7a74fb2bb06e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a772f653c845f4eedf58ba446b7fee45a"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvents.html#a772f653c845f4eedf58ba446b7fee45a">current_year</a> = (int)<a class="el" href="classEvents.html#ad5ad3f8eb6f5d0875ab7a74fb2bb06e5">timePtr</a>-&gt;tm_year + 1900</td></tr>
+<tr class="separator:a772f653c845f4eedf58ba446b7fee45a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a522493c1697161ca70c39232c7464b"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvents.html#a8a522493c1697161ca70c39232c7464b">current_month</a> = (int)<a class="el" href="classEvents.html#ad5ad3f8eb6f5d0875ab7a74fb2bb06e5">timePtr</a>-&gt;tm_mon + 1</td></tr>
+<tr class="separator:a8a522493c1697161ca70c39232c7464b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acd42b7f13cdfc41a0a6c3c6fb399da2a"><td class="memItemLeft" align="right" valign="top">static int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvents.html#acd42b7f13cdfc41a0a6c3c6fb399da2a">current_day</a> = (int)<a class="el" href="classEvents.html#ad5ad3f8eb6f5d0875ab7a74fb2bb06e5">timePtr</a>-&gt;tm_mday</td></tr>
+<tr class="separator:acd42b7f13cdfc41a0a6c3c6fb399da2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a397cb3524ec70d64e22144c12d53edda"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classInterface.html">Interface</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvents.html#a397cb3524ec70d64e22144c12d53edda">interface</a></td></tr>
+<tr class="separator:a397cb3524ec70d64e22144c12d53edda"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b8a2caf783b96de00de01145a8763d2"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classIO.html">IO</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEvents.html#a7b8a2caf783b96de00de01145a8763d2">io</a></td></tr>
+<tr class="separator:a7b8a2caf783b96de00de01145a8763d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a2217e32868e367ec8d432ce9db2b450e"></a>
@@ -146,6 +174,133 @@ Static Public Member Functions</h2></td></tr>
 <dl class="section pre"><dt>Precondition</dt><dd>None </dd></dl>
 <dl class="section post"><dt>Postcondition</dt><dd>Start User Mode </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="acd42b7f13cdfc41a0a6c3c6fb399da2a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Events::current_day = (int)<a class="el" href="classEvents.html#ad5ad3f8eb6f5d0875ab7a74fb2bb06e5">timePtr</a>-&gt;tm_mday</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The current month of the execution </p>
+
+</div>
+</div>
+<a class="anchor" id="a8a522493c1697161ca70c39232c7464b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Events::current_month = (int)<a class="el" href="classEvents.html#ad5ad3f8eb6f5d0875ab7a74fb2bb06e5">timePtr</a>-&gt;tm_mon + 1</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The current year of the execution </p>
+
+</div>
+</div>
+<a class="anchor" id="a772f653c845f4eedf58ba446b7fee45a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Events::current_year = (int)<a class="el" href="classEvents.html#ad5ad3f8eb6f5d0875ab7a74fb2bb06e5">timePtr</a>-&gt;tm_year + 1900</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Time pointer </p>
+
+</div>
+</div>
+<a class="anchor" id="a397cb3524ec70d64e22144c12d53edda"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classInterface.html">Interface</a> Events::interface</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The current day of the execution </p>
+
+</div>
+</div>
+<a class="anchor" id="a7b8a2caf783b96de00de01145a8763d2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classIO.html">IO</a> Events::io</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The interface, or UI. </p>
+
+</div>
+</div>
+<a class="anchor" id="ad5ad3f8eb6f5d0875ab7a74fb2bb06e5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">tm * Events::timePtr = localtime(&amp;t)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Time pointer </p>
 
 </div>
 </div>

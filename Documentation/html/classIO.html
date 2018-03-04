@@ -105,6 +105,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a11fdb7d4afa830fa1441fbf566f73432"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a48e9febfbb2c6c3e01b467fd030c2529"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIO.html#a48e9febfbb2c6c3e01b467fd030c2529">displayEntries</a> ()</td></tr>
 <tr class="separator:a48e9febfbb2c6c3e01b467fd030c2529"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7d41c6f82af93956476883f9291a444"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIO.html#ad7d41c6f82af93956476883f9291a444">displayEntry</a> (int id)</td></tr>
+<tr class="separator:ad7d41c6f82af93956476883f9291a444"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac9a8c18ea44f8ced444effc51633e4d7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIO.html#ac9a8c18ea44f8ced444effc51633e4d7">storeEvent</a> (std::string name, std::string creator)</td></tr>
 <tr class="separator:ac9a8c18ea44f8ced444effc51633e4d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1a083567d802a67de01512353a64882f"><td class="memItemLeft" align="right" valign="top">std::pair&lt; std::string, std::string &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIO.html#a1a083567d802a67de01512353a64882f">obtainEvent</a> (int id)</td></tr>
@@ -119,12 +121,14 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad3e9360377df2dfaa223e36aa4a8edde"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b1673598595b2140f5f893d023813be"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIO.html#a3b1673598595b2140f5f893d023813be">storeTaskAssignee</a> (int id, std::string name, std::string assignee)</td></tr>
 <tr class="separator:a3b1673598595b2140f5f893d023813be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af2c5dffa84ae0741d41b0a3ccf5990ae"><td class="memItemLeft" align="right" valign="top">std::list&lt; std::pair&lt; std::string, std::string &gt; &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIO.html#af2c5dffa84ae0741d41b0a3ccf5990ae">obtainTasks</a> (int id)</td></tr>
+<tr class="separator:af2c5dffa84ae0741d41b0a3ccf5990ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae80862e6964e82c2f2e6d7f3b931f347"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIO.html#ae80862e6964e82c2f2e6d7f3b931f347">storeAttendee</a> (int id, std::string date, std::string time, std::string attendee)</td></tr>
 <tr class="separator:ae80862e6964e82c2f2e6d7f3b931f347"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae1b8fcfab070b9af2dcd910c1cc7eb4e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIO.html#ae1b8fcfab070b9af2dcd910c1cc7eb4e">storeAttendees</a> (int id, std::string date, std::string time, std::list&lt; std::string &gt; attendees)</td></tr>
 <tr class="separator:ae1b8fcfab070b9af2dcd910c1cc7eb4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9ac9f637e042cd7711cfdbc4dcbe540"><td class="memItemLeft" align="right" valign="top">std::list&lt; std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIO.html#ab9ac9f637e042cd7711cfdbc4dcbe540">obtainAttendees</a> (int id, std::string date, std::string time)</td></tr>
-<tr class="separator:ab9ac9f637e042cd7711cfdbc4dcbe540"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6e49698e267ae002df56bde7875107b0"><td class="memItemLeft" align="right" valign="top">std::list&lt; std::string &gt; *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classIO.html#a6e49698e267ae002df56bde7875107b0">obtainAttendees</a> (int id, std::string date, std::string time)</td></tr>
+<tr class="separator:a6e49698e267ae002df56bde7875107b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -167,12 +171,37 @@ static bool&#160;</td><td class="memItemRight" valign="bottom"><b>timeFormat</b>
 
 </div>
 </div>
-<a class="anchor" id="ab9ac9f637e042cd7711cfdbc4dcbe540"></a>
+<a class="anchor" id="ad7d41c6f82af93956476883f9291a444"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::list&lt;std::string&gt;* IO::obtainAttendees </td>
+          <td class="memname">void IO::displayEntry </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>A method that displays more information on a single event. </p><dl class="section pre"><dt>Precondition</dt><dd>None </dd></dl>
+<dl class="section post"><dt>Postcondition</dt><dd>Displays all information on one event </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>The id of the specific event to display </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>None </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a6e49698e267ae002df56bde7875107b0"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::list&lt; std::string &gt; * IO::obtainAttendees </td>
           <td>(</td>
           <td class="paramtype">int&#160;</td>
           <td class="paramname"><em>id</em>, </td>
@@ -291,6 +320,32 @@ static bool&#160;</td><td class="memItemRight" valign="bottom"><b>timeFormat</b>
 </dl>
 <dl class="section pre"><dt>Precondition</dt><dd>the id is a valid id that has some schedule </dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>a list of schedules which are a date and times for that date </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="af2c5dffa84ae0741d41b0a3ccf5990ae"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::list&lt; std::pair&lt; std::string, std::string &gt; &gt; * IO::obtainTasks </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Gets the tasks for a specific event </p><dl class="section note"><dt>Note</dt><dd>Will return a nullptr if no tasks are found </dd>
+<dd>
+if a task does not have an assignee, the assignee will be an empty string </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">id</td><td>- id of the event for which tasks are wanted </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>list of tasks and their repective assignee </dd></dl>
 
 </div>
 </div>

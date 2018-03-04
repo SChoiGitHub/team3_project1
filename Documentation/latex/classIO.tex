@@ -18,6 +18,8 @@ void \hyperlink{classIO_a11fdb7d4afa830fa1441fbf566f73432}{update\+Element} (int
 \item 
 void \hyperlink{classIO_a48e9febfbb2c6c3e01b467fd030c2529}{display\+Entries} ()
 \item 
+void \hyperlink{classIO_ad7d41c6f82af93956476883f9291a444}{display\+Entry} (int id)
+\item 
 int \hyperlink{classIO_ac9a8c18ea44f8ced444effc51633e4d7}{store\+Event} (std\+::string name, std\+::string creator)
 \item 
 std\+::pair$<$ std\+::string, std\+::string $>$ \hyperlink{classIO_a1a083567d802a67de01512353a64882f}{obtain\+Event} (int id)
@@ -32,11 +34,13 @@ void \hyperlink{classIO_ad3e9360377df2dfaa223e36aa4a8edde}{store\+Task} (int id,
 \item 
 void \hyperlink{classIO_a3b1673598595b2140f5f893d023813be}{store\+Task\+Assignee} (int id, std\+::string name, std\+::string assignee)
 \item 
+std\+::list$<$ std\+::pair$<$ std\+::string, std\+::string $>$ $>$ $\ast$ \hyperlink{classIO_af2c5dffa84ae0741d41b0a3ccf5990ae}{obtain\+Tasks} (int id)
+\item 
 void \hyperlink{classIO_ae80862e6964e82c2f2e6d7f3b931f347}{store\+Attendee} (int id, std\+::string date, std\+::string time, std\+::string attendee)
 \item 
 void \hyperlink{classIO_ae1b8fcfab070b9af2dcd910c1cc7eb4e}{store\+Attendees} (int id, std\+::string date, std\+::string time, std\+::list$<$ std\+::string $>$ attendees)
 \item 
-std\+::list$<$ std\+::string $>$ $\ast$ \hyperlink{classIO_ab9ac9f637e042cd7711cfdbc4dcbe540}{obtain\+Attendees} (int id, std\+::string date, std\+::string time)
+std\+::list$<$ std\+::string $>$ $\ast$ \hyperlink{classIO_a6e49698e267ae002df56bde7875107b0}{obtain\+Attendees} (int id, std\+::string date, std\+::string time)
 \end{DoxyCompactItemize}
 \subsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
@@ -88,15 +92,36 @@ Displays all elements in file, one at a time
 \begin{DoxyReturn}{Returns}
 None 
 \end{DoxyReturn}
+\index{IO@{IO}!display\+Entry@{display\+Entry}}
+\index{display\+Entry@{display\+Entry}!IO@{IO}}
+\subsubsection[{\texorpdfstring{display\+Entry(int id)}{displayEntry(int id)}}]{\setlength{\rightskip}{0pt plus 5cm}void I\+O\+::display\+Entry (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)}\hypertarget{classIO_ad7d41c6f82af93956476883f9291a444}{}\label{classIO_ad7d41c6f82af93956476883f9291a444}
+A method that displays more information on a single event. \begin{DoxyPrecond}{Precondition}
+None 
+\end{DoxyPrecond}
+\begin{DoxyPostcond}{Postcondition}
+Displays all information on one event 
+\end{DoxyPostcond}
+
+\begin{DoxyParams}{Parameters}
+{\em id} & The id of the specific event to display \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
 \index{IO@{IO}!obtain\+Attendees@{obtain\+Attendees}}
 \index{obtain\+Attendees@{obtain\+Attendees}!IO@{IO}}
-\subsubsection[{\texorpdfstring{obtain\+Attendees(int id, std\+::string date, std\+::string time)}{obtainAttendees(int id, std::string date, std::string time)}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::list$<$std\+::string$>$$\ast$ I\+O\+::obtain\+Attendees (
+\subsubsection[{\texorpdfstring{obtain\+Attendees(int id, std\+::string date, std\+::string time)}{obtainAttendees(int id, std::string date, std::string time)}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::list$<$ std\+::string $>$ $\ast$ I\+O\+::obtain\+Attendees (
 \begin{DoxyParamCaption}
 \item[{int}]{id, }
 \item[{std\+::string}]{date, }
 \item[{std\+::string}]{time}
 \end{DoxyParamCaption}
-)}\hypertarget{classIO_ab9ac9f637e042cd7711cfdbc4dcbe540}{}\label{classIO_ab9ac9f637e042cd7711cfdbc4dcbe540}
+)}\hypertarget{classIO_a6e49698e267ae002df56bde7875107b0}{}\label{classIO_a6e49698e267ae002df56bde7875107b0}
 Gets the attendees for a specific date. \begin{DoxyNote}{Note}
 Will return a null pointer if a list of attendees can not be found 
 \end{DoxyNote}
@@ -174,6 +199,26 @@ the id is a valid id that has some schedule
 \end{DoxyPrecond}
 \begin{DoxyReturn}{Returns}
 a list of schedules which are a date and times for that date 
+\end{DoxyReturn}
+\index{IO@{IO}!obtain\+Tasks@{obtain\+Tasks}}
+\index{obtain\+Tasks@{obtain\+Tasks}!IO@{IO}}
+\subsubsection[{\texorpdfstring{obtain\+Tasks(int id)}{obtainTasks(int id)}}]{\setlength{\rightskip}{0pt plus 5cm}std\+::list$<$ std\+::pair$<$ std\+::string, std\+::string $>$ $>$ $\ast$ I\+O\+::obtain\+Tasks (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+)}\hypertarget{classIO_af2c5dffa84ae0741d41b0a3ccf5990ae}{}\label{classIO_af2c5dffa84ae0741d41b0a3ccf5990ae}
+Gets the tasks for a specific event \begin{DoxyNote}{Note}
+Will return a nullptr if no tasks are found 
+
+if a task does not have an assignee, the assignee will be an empty string 
+\end{DoxyNote}
+
+\begin{DoxyParams}{Parameters}
+{\em id} & -\/ id of the event for which tasks are wanted \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+list of tasks and their repective assignee 
 \end{DoxyReturn}
 \index{IO@{IO}!retrieve\+Element@{retrieve\+Element}}
 \index{retrieve\+Element@{retrieve\+Element}!IO@{IO}}
