@@ -622,9 +622,10 @@ void IO::storeAttendees(int id, std::string date, std::string time, std::list<st
     addEntry(attendenceFile, line);
 }
 
-void IO::storeAttendee(int id, std::string date, std::string time, std::string attendee){
-    std::string identifier = std::to_string(id) + "," + date + "," + time + ",";
+void IO::storeAttendee(int id, std::string date, std::string slot, std::string attendee){
+    std::string identifier = std::to_string(id) + "," + date + "," + slot + ",";
     std::string attendees = getEntry(attendenceFile, identifier);
+    std::cout << attendees << std::endl;
 
     if(attendees != ""){
         attendees += "," + attendee;
