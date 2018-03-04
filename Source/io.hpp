@@ -33,6 +33,8 @@ IO::~IO(){
 std::string IO::getEntry(std::fstream& file, std::string identifier){
     std::string line = "";
 
+    file.clear();
+
     while(std::getline(file, line)){
         if(line.find(identifier) != std::string::npos){
             line.replace(line.find(identifier), identifier.length(), "");
@@ -46,6 +48,8 @@ std::string IO::getEntry(std::fstream& file, std::string identifier){
 std::list<std::string>* IO::getEntries(std::fstream& file, std::string identifier){
     std::list<std::string>* list = nullptr;
     std::string line = "";
+
+    file.clear();
 
     while(std::getline(file, line)){
         if(line.find(identifier) != std::string::npos){
