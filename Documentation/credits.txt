@@ -1,0 +1,5 @@
+Credits:
+	Originial Project
+		Created by Team 3
+	Extension of Multi-Date Events and Task Creation and Assignment
+		Extended by Team 8
