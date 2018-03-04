@@ -35,7 +35,7 @@ std::string IO::getEntry(std::fstream& file, std::string identifier){
 
     while(std::getline(file, line, '\n')){
         if(line.find(identifier) != std::string::npos){
-            return line.replace(identifier, "");
+            return line.replace(line.find(identifier), identifier.length(), "");
         }
     }
 
@@ -49,10 +49,10 @@ std::list<std::string>* IO::getEntries(std::fstream& file, std::string identifie
     while(std::getline(file, line, '\n')){
         if(line.find(identifier) != std::string::npos){
             if(list != nullptr){
-                list->push_back(line.Replace(identifier, ""));
+                list->push_back(line.replace(line.find(identifier), identifier.length(), ""));
             }else{
                 list = new std::list<std::string>();
-                list->push_back(line.replace(identifier, ""));
+                list->push_back(line.replace(line.find(identifier), identifier.length(), ""));
             }
         }
     }
@@ -550,8 +550,8 @@ void IO::storeTaskAssignee(int id, std::string name, std::string assignee){
 }
 
 std::list<std::pair<std::string, std::string>>* IO::obtainTasks(int id){
-    std::list<std::pair<std::string, std::string>>>* list = nullptr;
-    std::list<std::string>* items = getEntries(tasksFile, (std:to_string(id) + ","));
+    std::list<std::pair<std::string, std::string>>* list = nullptr;
+    std::list<std::string>* items = getEntries(tasksFile, (std::to_string(id) + ","));
 
     for(auto const& i : *items){
         std::stringstream ss(i);
@@ -559,7 +559,8 @@ std::list<std::pair<std::string, std::string>>* IO::obtainTasks(int id){
         std::string assignee;
 
         std::getline(ss, name, ',');
-        if(std::getline(ss, assignee, ',') == true){
+        std::getline(ss, assignee, ',');
+        if(assignee == "true"){
             std::getline(ss, assignee, ',');
         }else{
             assignee = "";
@@ -568,7 +569,7 @@ std::list<std::pair<std::string, std::string>>* IO::obtainTasks(int id){
         if(list != nullptr){
             list->push_back(std::make_pair(name, assignee));
         }else{
-            list = new std::list<std::pair<std::string, std::string>>>();
+            list = new std::list<std::pair<std::string, std::string>>();
             list->push_back(std::make_pair(name, assignee));
         }
     }
