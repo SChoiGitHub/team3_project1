@@ -406,7 +406,7 @@ void IO::displayEntry(int id)
   if(tasks != nullptr){
     std::cout << "Tasks Below:\n";
     for(auto&& it = tasks->begin(); it != tasks->end(); it++){
-      if(it->second != ""){
+      if(it->second == ""){
         std::cout << "\t" << it->first << " (UNTAKEN)\n";
       }else{
         std::cout << "\t" << it->first << " is being done by " << it->second << "\n";
