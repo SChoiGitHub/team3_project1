@@ -562,7 +562,7 @@ void IO::storeTaskAssignee(int id, std::string name, std::string assignee){
 
 std::list<std::pair<std::string, std::string>>* IO::obtainTasks(int id){
     std::list<std::pair<std::string, std::string>>* list = nullptr;
-    std::list<std::string>* items = getEntries(tasksFile, (std:to_string(id) + ","));
+    std::list<std::string>* items = getEntries(tasksFile, (std::to_string(id) + ","));
 
     for(auto const& i : *items){
         std::stringstream ss(i);
@@ -571,7 +571,7 @@ std::list<std::pair<std::string, std::string>>* IO::obtainTasks(int id){
 
         std::getline(ss, name, ',');
         std::getline(ss, assignee, ',');
-        if(assignee == true){
+        if(assignee == "true"){
             std::getline(ss, assignee, ',');
         }else{
             assignee = "";
