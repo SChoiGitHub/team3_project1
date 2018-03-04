@@ -36,7 +36,6 @@ std::string IO::getEntry(std::fstream& file, std::string identifier){
     while(std::getline(file, line, '\n')){
         if(line.find(identifier) != std::string::npos){
             line.replace(line.find(identifier), identifier.length(), "");
-            std::cout << line << std::endl;
             return line;
         }
     }
@@ -360,17 +359,19 @@ void IO::displayEntries()
         std::cout << "-- " << obtainEvent(i).first  << " --" << std::endl;
         std::cout << "ID: " << i << "\n";
         std::cout << "Creator: " << obtainEvent(i).second << "\n";
-        std::cout << "Dates: ";
 
         std::list<std::pair<std::string, std::list<std::string>>>* schedules = obtainSchedules(i);
 
         if(schedules != nullptr){
+          std::cout << "Dates: ";
           for(auto&& it : (*schedules)){
             std::cout << it.first << " ";
           }
-          std::cout << "\n\n";
+          std::cout << "\n";
         }
         delete schedules;
+
+        std::cout << std::endl;
     }
 }
 void IO::displayEntry(int id)
