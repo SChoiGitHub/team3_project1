@@ -51,7 +51,7 @@ void Events::setAvailability()
   if(id != -1){ //Event exists.
     name = sanitizeInput("What is your name?: ",",");//Get name
 
-    std::cout << "\n\n Please look at the dates of your chosen event.";
+    std::cout << "\nPlease look at the dates of your chosen event.";
     std::cout << "\nWhat date do you want?\n";
 
     std::list<std::pair<std::string, std::list<std::string>>>* datesAndSchedules = io.obtainSchedules(id);
@@ -77,21 +77,15 @@ void Events::setAvailability()
         }
       }while(!dateIsThere);
 
-      /*
-      for(auto&& it = datesAndSchedules->begin(); it != datesAndSchedules->end(); it++){
-        if(date == (*it).first){
-          dateIsThere = true;
-          break;
-        }
-      }
-      */
-      for(auto & it : scheduleAtDate.second){
-        std::cout << "Do you want to attend the event at " << it << " on " << scheduleAtDate.first << "? (Yes/No):";
+      std::cout << "\n";
+      
+      for(auto& it : scheduleAtDate.second){
+        std::cout << "Do you want to attend the event at " << it << " on " << scheduleAtDate.first << "? (Yes/No) ";
         if(yesOrNo()){
           io.storeAttendee(id, date, it, name);
         }
       }
-      std::cout << "Would you like to attend at another date of the same event? (Yes/No)? ";
+      std::cout << "\n\nWould you like to attend at another date of the same event? (Yes/No)? ";
     }while(yesOrNo());
 
     delete datesAndSchedules;
@@ -237,12 +231,15 @@ std::list<std::string> Events::requestTasks(){
 
 		}else if(userChoice.at(0) == 'v'){
 			quit = false;
-
-			//Just display the current list.
-			std::cout << "Your current task list:\n";
-			for(auto&& it = currentTaskList.begin(); it != currentTaskList.end(); it++){
-				std::cout << '\t' << (*it) << '\n';
-			}
+      if(currentTaskList.size() > 0){
+        //Just display the current list.
+        std::cout << "Your current task list:\n";
+        for(auto&& it = currentTaskList.begin(); it != currentTaskList.end(); it++){
+          std::cout << '\t' << (*it) << '\n';
+        }
+      }else{
+        std::cout << "There are no tasks here.\n";
+      }
 
 		}
 		std::cout << "\n\n";
