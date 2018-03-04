@@ -580,7 +580,7 @@ std::list<std::pair<std::string, std::string>>* IO::obtainTasks(int id){
         if(list != nullptr){
             list->push_back(std::make_pair(name, assignee));
         }else{
-            list = new std::list<std::pair<std::string, std::string>>>();
+            list = new std::list<std::pair<std::string, std::string>>();
             list->push_back(std::make_pair(name, assignee));
         }
     }
