@@ -196,15 +196,15 @@ void Events::createEvent(){
     //Pass in schedule
     io.storeSchedule(id,it->first,parsedTimeString);
     //Creator Attends all his/her times.
-    std::list<std::pair<std::string, std::list<std::string>>>* datesAndSchedules = io.obtainSchedules(id);
-    for(auto & it : *datesAndSchedules){
-      for(auto& it2 : it.second){
-        io.storeAttendee(id,it.first,it2,adminName);
-      }
-    }
-    delete datesAndSchedules;
+    
   }
-
+  std::list<std::pair<std::string, std::list<std::string>>>* datesAndSchedules = io.obtainSchedules(id);
+  for(auto&& it = datesAndSchedules->begin(); it != datesAndSchedules->end(); it++){
+    for(auto&& it2 = it->second.begin(); it2 != it->second.end(); it2++){
+      io.storeAttendee(id,it->first,(*it2),adminName);
+    }
+  }
+  delete datesAndSchedules;
   delete dateInfo;
 }
 std::list<std::string> Events::requestTasks(){
@@ -268,11 +268,12 @@ void Events::takeTask(){
   int id = requestID();
 
   if(id != -1){
-      std::list<std::pair<std::string, std::string>>* tasks = io.obtainTasks(id);
+      std::list<std::pair<std::string, std::string>>* tasks;
       std::cout << "\n";
       std::string name = sanitizeInput("What is your name? ",",");
       std::cout << "\n";
       do{
+        tasks = io.obtainTasks(id);
         quit = true;
         std::cout << "Would you like to take tasks?\n"
           << "\tTake a task: input 't'.\n"
@@ -335,9 +336,10 @@ void Events::takeTask(){
           }
         }
         std::cout << "\n\n";
+        delete tasks;
       }while(!quit);
 
-      delete tasks;
+      
     }else{
       //Do nothing, the event is invalid.
     }
