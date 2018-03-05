@@ -303,7 +303,7 @@ void Events::takeTask(){
 
             do{
               keepTrying = true;
-              std::string input = sanitizeInput("What task do you want (type in the task name)?",",");
+              std::string input = sanitizeInput("What task do you want (type in the task name)? ",",");
 
               for(auto&& it = tasks->begin(); it != tasks->end(); it++){
                 if(it->first == input){
