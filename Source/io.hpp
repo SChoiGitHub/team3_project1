@@ -391,7 +391,7 @@ void IO::displayEntry(int id)
 
   std::list<std::pair<std::string, std::list<std::string>>>* schedules = obtainSchedules(id);
 
-  std::cout << "----\n";
+  std::cout << "--------\n";
   if(schedules != nullptr){
     for(auto&& it : (*schedules)){
       std::cout << "Date: " << it.first << "\n";
@@ -405,7 +405,7 @@ void IO::displayEntry(int id)
             std::cout << "\tTime: " << it2 << '\n';
           }
 
-          std::cout << "\t\tAttendees Below:\n";
+          std::cout << "\t\t"<< attendeesAtThisTime->size() <<" Attendee(s) Below:\n";
 
           for(auto&& it3 : (*attendeesAtThisTime)){
             std::cout << "\t\t" << it3 << '\n';
@@ -413,7 +413,7 @@ void IO::displayEntry(int id)
           delete attendeesAtThisTime;
         }
       }
-      std::cout << "----\n";
+      std::cout << "--------\n";
     }
     delete schedules;
   }
@@ -628,7 +628,6 @@ void IO::storeAttendees(int id, std::string date, std::string time, std::list<st
 void IO::storeAttendee(int id, std::string date, std::string slot, std::string attendee){
     std::string identifier = std::to_string(id) + "," + date + "," + slot + ",";
     std::string attendees = getEntry(attendenceFile, identifier);
-    std::cout << attendees << std::endl;
 
     if(attendees != ""){
         attendees += "," + attendee;
